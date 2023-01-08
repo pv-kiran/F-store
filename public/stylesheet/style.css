@@ -4,6 +4,9 @@
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
  }
+ a {
+   text-decoration: none;
+ }
  html {
     font-size: 62.5%;
  }
@@ -75,7 +78,6 @@
 
  .item-container li:hover i , .item-container li:hover a {
     color: #f3f4f6;
-
  }
 
  .item-container li a {
@@ -142,6 +144,16 @@
     outline: none;
     font-size: 1.5rem;
  }
+  
+ .btn-search {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    background-color: transparent;
+    /* outline: none; */
+    border: 0;
+    width: 1.5rem;
+ }
 
  .dashboard-right{
     display: flex;
@@ -159,8 +171,11 @@
     height: 3.5rem;
     object-fit: cover;
     border-radius: 50%;
-}
+ }
 
+ 
+
+ 
 
 
 .dashboard-heading {
@@ -168,7 +183,6 @@
     padding: 3rem 3rem 0 3rem;
     font-size: 2.4rem;
     font-weight: 600;
-
     margin-top: 7rem;
 }
 
@@ -182,14 +196,13 @@
 
 .box {
     background-color: #fff;
-    width: 23rem;
+    width: 26rem;
     padding: 1.6rem 2rem;
     border-radius: .5rem;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 2rem;
-
     box-shadow: 2rem 1.5rem 4rem rgba(0, 0, 0, .1);
 }
 
@@ -236,6 +249,42 @@ tr {
    border-bottom: 1px solid #eef0f7;
 }
 
+tbody tr a {
+   /* border: 1px red solid; */
+   padding: .5rem;
+   text-align: center;
+   display: block;
+   width: 10rem;
+   border-radius: 1.2rem;
+   font-weight: 400;
+   font-size: 1.3rem;
+ }
+ tbody tr a:hover {
+   text-decoration: none;
+   cursor: pointer;
+ }
+
+ tbody tr .unblock {
+   border: 1px rgb(120, 205, 120) solid;
+   color: rgb(49, 117, 49);
+   transition: all .2s;
+ }
+
+tbody tr .block {
+   border: 1px rgb(217, 86, 86) solid;
+   color: rgb(174, 33, 33);
+   transition: all .2s;
+
+}
+tbody tr .block:hover {
+   background-color: rgb(217, 94, 94);
+   color: #ddd2d2;
+}
+tbody tr .unblock:hover {
+   background-color: rgb(119, 200, 119);
+   color: #ddd2d2;
+}
+
 thead td {
    font-size: 1.4rem;
    text-transform: uppercase;
@@ -247,8 +296,187 @@ thead td {
 
 tbody tr td {
    padding: 1rem 1.5rem;
-   font-size: 1.2rem;
+   font-size: 1.6rem;
    color: #323b4e;
+}
+
+.item-container .active {
+   background-color: #253047;
+   cursor: pointer;
+   color: #f3f4f6;
+}
+
+/* REGISTRATION STYLE */
+.form-heading {
+   font-size: 3rem;
+   font-weight: 800;
+   letter-spacing: .6rem;
+   color: rgb(50, 49, 49);
+   text-align: center;
+   margin-bottom: 3rem;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.form-container {
+   width: 100vw;
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+#register_form {
+   width: 65rem;
+   padding: 2.5rem 3rem;
+   box-shadow: 2rem 1.5rem 4rem rgba(0, 0, 0, .1);
+   border-radius: 1rem;
+}
+
+.input-container {
+   display: flex;
+   flex-direction: column;
+}
+
+.input-container label {
+   font-size: 1.2rem;
+   font-weight: 400;
+   color: #323b4e;
+   margin-bottom: .5rem;
+   letter-spacing: .1rem;
+}
+
+.form-container input[type='text'] {
+  outline: none;
+  font-size: 1.4rem;
+  padding: .5rem 1.2rem;
+  margin-bottom: 2.5rem;
+  border: .1rem solid rgb(202, 202, 202);
+  border-radius: .3rem;
+  color: rgb(46, 44, 44);
+}
+
+.btn-submit {
+   width: 10rem;
+   text-align: centerS;
+   padding: 1rem 1.5rem;
+   background-color: rgb(48, 44, 44);
+   color: #fff;
+   border-radius: .5rem;
+   border: none;
+   cursor: pointer;
+}
+
+.signin_text a  {
+   text-decoration: none;
+   font-size: 1.3rem;
+   padding-left: .5rem ;
+}
+.btn-container {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+.signin_text {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 0;
+}
+
+
+/* Validation error message styling */
+
+.error {
+   /* width: 80%; */
+   height: 0;
+   margin: -.5rem auto .8rem;
+   background-color: rgb(220, 95, 95);
+   /* transform: scale(0); */
+   /* display: none; */
+   transition: all .2s;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: white;
+   font-size: 1.4rem;
+   border-radius: .4rem;
+}
+
+.errorMsg {
+   background-color: rgb(220, 95, 95);
+   padding: 1rem .3rem;
+   color: white;
+   border-radius: .5rem;
+   font-weight: 300;
+   text-align: center;
+   font-size: 1.3rem;
+   margin: -1rem 0 1rem;
+}
+.warning_msg {
+   background-color: rgb(194, 194, 47);
+   text-transform: capitalize;
+   
+}
+
+.signin_text {
+   text-align: center;
+   padding: 1.7rem 0;
+}
+.resend {
+   color: #4e45cb;
+   cursor: pointer;
+}
+
+
+
+/* POPUP STYLING */
+
+.popup {
+   width: 25rem;
+   background-color: white;
+   border-radius: .5rem;
+   height: 20rem;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   box-shadow: 2rem 1.5rem 4rem rgba(0, 0, 0, .1);
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform-origin: center;
+   transform: translate(-50% , -50%);
+   transform: scale(0);
+   transition: transform .4s;
+}
+
+.open_popup {
+   transform-origin: center;
+   transform: scale(1);
+   z-index: 10;
+}
+
+.popup h2 {
+   padding: 1.5rem 1rem;
+   text-transform: uppercase;
+   font-size: 1.5rem;
+}
+.popup p {
+   padding: 2rem 1.5rem;
+   text-align: center;
+   font-size: 1.3rem;
+   color: #42506c;
+}
+.popup button {
+   padding: .5rem 1rem;
+   background-color: rgb(29, 29, 141);
+   color: #d7dbe6;
+   outline: none;
+   border: none;
+   font-size: 1.3rem;
+   border-radius: .5rem;
+   cursor: pointer;
+   width: 7rem;
+   margin-top: 1rem 2rem;
 }
 
 
@@ -303,6 +531,17 @@ tbody tr td {
   #register_form {
    width: 30rem;
   }
+  .signin_text {
+   flex-direction: column;
+  }
+  tbody tr td {
+   padding: 1rem 1.5rem;
+   font-size: .8rem;
+   color: #323b4e;
+  }
+  .popup {
+   left: 20%;
+  }
 }
 
 @media (max-width: 476px) {
@@ -333,65 +572,9 @@ tbody tr td {
    .dashboard {
       /* width: 93.5%; */
       margin: 3rem 1.5rem 3rem 1.5rem;
-      
    }
-   
 }
 
 
 
 
-/* REGISTRATION STYLE */
-.form-heading {
-   font-size: 2.5rem;
-   font-weight: 400;
-   color: rgb(50, 49, 49);
-   text-align: center;
-   margin-bottom: 4.5rem;
-}
-.form-container {
-   width: 100vw;
-   height: 100vh;
-
-   display: flex;
-   justify-content: center;
-   align-items: center;
-}
-
-#register_form {
-   width: 65rem;
-   padding: 1rem 2rem;
-}
-
-.input-container {
-   display: flex;
-   flex-direction: column;
-}
-
-.input-container label {
-   font-size: 1.5rem;
-   font-weight: 400;
-   color: #323b4e;
-   margin-bottom: .5rem;
-   letter-spacing: .1rem;
-}
-
-.form-container input[type='text'] {
-  outline: none;
-  font-size: 2rem;
-  padding: .5rem 1.5rem;
-  margin-bottom: 3rem;
-  border: .1rem solid rgb(202, 202, 202);
-  border-radius: .3rem;
-  color: rgb(46, 44, 44);
-}
-
-.btn-submit {
-   width: 10rem;
-   padding: 1rem 1.5rem;
-   background-color: rgb(48, 44, 44);
-   color: #fff;
-   border-radius: .5rem;
-   border: none;
-   cursor: pointer;
-}

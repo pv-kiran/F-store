@@ -1,22 +1,28 @@
 <section class="form-container">
-        <form id="register_form">
-            <h2 class="form-heading">Create Account</h2>
+        <form id="register_form" action="/user/register" method="post">
+            <h2 class="form-heading">Register</h2>
             <div class="input-container">
                 <label for="fullname">Name</label>
-                <input type="text" name="fullname" id="fullname">
+                <input type="text" name="name" id="name" value="{{name}}">
             </div>
             <div class="input-container">
                 <label for="email">Email</label>
-                <input type="text" name="email" id="fullname">
+                <input type="text" name="email" id="email" value="{{email}}">
             </div>
             <div class="input-container">
                 <label for="fullname">Password</label>
-                <input type="text" name="password" id="fullname">
+                <input type="text" name="password" id="password" value="{{password}}">
             </div>
             <div class="input-container">
                 <label for="fullname">Confirm Password</label>
-                <input type="text" name="confirm_password" id="fullname">
+                <input type="text" name="confirm_password" id="confirmPswd">
             </div>
+            <div class="error"></div>
+            {{#if isRegitered}}
+                    <div class="errorMsg">{{errMessage}}</div>
+            {{/if}}
             <input type="submit" value="Register" class="btn-submit">
+            <h3 class="signin_text">Have an account ? <a href="/user/signin">Login</a></h3>
+
         </form>
     </section>

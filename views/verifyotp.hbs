@@ -1,0 +1,21 @@
+<section class="form-container">
+        <form id="register_form" action="/user/verify" method="post">
+            <h2 class="form-heading">VERIFY OTP</h2>
+            <div class="input-container">
+                <label for="email">EMAIL</label>
+                <input type="text" name="email" id="email" value="{{email}}" readonly>
+            </div>
+            <div class="input-container">
+                <label for="email">ENTER OTP</label>
+                <input type="text" name="otp" id="otp">
+            </div>
+            <div class="error"></div>
+            {{#if isVerified}}
+                    <div class="errorMsg warning_msg">{{errMessage}}</div>
+            {{/if}}
+            <div class="btn-container">
+                <input type="submit" value="Verify" class="btn-submit">
+               <h3 class="signin_text"><a class="resend" data-url="{{email}}">Resend OTP</a></h3>
+            </div>
+        </form>
+</section>

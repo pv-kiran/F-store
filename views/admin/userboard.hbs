@@ -1,0 +1,115 @@
+    <nav class="nav-menu">
+         <div class="logo">
+             <img src="/images/app-logo.webp" alt="LOGO">
+             <h2>FSTORE</h2>
+         </div>
+         <ul class="item-container">
+            <li class="list-item active">
+                <i class="fas fa-users-cog"></i>
+                <a class="active" href="/admin/users">User Management</a>
+            </li>
+            <li class="list-item">
+                <i class="fab fa-product-hunt"></i>
+                <a href="/admin/products">Product Management</a>
+            </li>
+            <li class="list-item">
+                <i class="fas fa-people-carry"></i>
+                <a href="/admin/orders">Order Management</a>
+            </li>
+            <li class="list-item">
+                <i class="fas fa-images"></i>
+                <a href="/admin/orders">New Banner</a>
+            </li>
+            <li class="list-item">
+                <i class="fas fa-percent"></i>
+                <a href="/admin/orders">Add Coupon</a>
+            </li>
+         </ul>
+     </nav>
+     <div class="popup" id="popup">
+        <h2>Are you Sure ??</h2>
+        <p>Please confirm if you really want to change the status of the User</p>
+        <button class="btn-confirm">Confirm</button>
+     </div>
+     <section class="dashboard-container">
+         <div class="dashboard-nav">
+            <div class="dashboard-left">
+                <div>
+                    <i id="menu-btn" class="fas fa-bars"></i>
+                </div>
+                <form class="search" action="/admin/search" method="post">
+                    <input type="text" name="name" id="search" placeholder="search">
+                    <button class="btn-search" type="submit"><i class="fas fa-search"></i></button>
+                    {{!-- <i class="fas fa-search"></i> --}}
+                </form>
+            </div>
+            <div class="dashboard-right">
+                <i class="far fa-bell notification"></i>
+                <img src="/images/admin.webp" alt="admin">
+            </div>
+         </div>
+
+
+         <h3 class="dashboard-heading">
+             USER MANAGEMENT
+         </h3>
+
+
+         <div class="box-container">
+            <div class="box">
+                <i class="fas fa-users"></i>
+                <div>
+                    <h3>8234</h3>
+                    <span>Users</span>
+                </div>
+            </div>
+            <div class="box">
+                <i class="fab fa-product-hunt"></i>
+                <div>
+                    <h3>824</h3>
+                    <span>Products</span>
+                </div>
+            </div>
+            <div class="box">
+                <i class="fas fa-people-carry"></i>
+                <div>
+                    <h3>8234</h3>
+                    <span>Order</span>
+                </div>
+            </div>
+         </div>
+
+
+         <div class="dashboard">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Email</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each userList}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{email}}</td>
+                         <td>
+                             {{#if isBlocked}}
+                            <a class="unblock" data-url="{{_id}}">UNBLOCK</a>
+                            {{else}}
+                            <a class="block" data-url="{{_id}}">BLOCK</a>
+                            {{/if}}   
+                        </td> 
+                    </tr>
+                    {{/each}} 
+                    
+                </tbody>
+                
+            </table>
+         </div>
+
+     </section>
+     
+
+     <script src="/javascript/admin.js"></script>
