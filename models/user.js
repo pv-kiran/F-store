@@ -23,8 +23,15 @@ const userSchema = new mongoose.Schema({
     otp : {
         type: Number 
     } ,
+    otpExpiry: {
+        type: Date
+    } ,
+
     forgetPasswordToken: {
        type: String
+    } ,
+    forgotPswdExpiry: {
+       type: Date
     } ,
     isVerified: {
         type: Boolean ,

@@ -69,12 +69,14 @@ router.post('/register' , async (req,res) => {
     // console.log(encPassword);
 
     const otp = 1000 + Math.floor(Math.random() * 9000);
-
+    const otpExpiry = Date.now() + 1*60*1000;
+    
     const newUser = await User.create({
         name: name ,
         email: email ,
         password: encPassword ,
-        otp: otp
+        otp: otp ,
+        otpExpiry: otpExpiry
     });
 
 
@@ -114,12 +116,22 @@ router.post('/verify' , async (req,res) => {
     console.log(otp);
     console.log(email);
     const user = await User.find({email:email});
+    // console.log(Date.now());
+    // console.log(user[0].otpExpiry);
     // console.log(user);
+    console.log(Date.now() < user[0].otpExpiry);
     if(parseInt(otp) === user[0].otp) {
-       const updateUser = await User.findOneAndUpdate({email:email} , { $set : {isVerified: true}});
-       user[0].otp = undefined;
-       await user[0].save();
-       res.redirect('/user/signin');
+       if(Date.now() < user[0].otpExpiry) {
+            await User.findOneAndUpdate({email:email} , { $set : {isVerified: true}});
+            user[0].otp = undefined;
+            user[0].otpExpiry = undefined;
+            await user[0].save();
+            res.redirect('/user/signin');
+       } else {
+            const isVerified = true ;
+            const errorMessage = 'OTP is already expired'
+            res.render('verifyotp' , {email: email , isVerified: isVerified , errMessage:errorMessage});
+       }
     } else {
         const isVerified = true ;
         const errorMessage = 'OTP is invalid'
@@ -199,7 +211,9 @@ router.post('/resetpswd' , async (req,res) => {
     const user = await User.find({email: email});
     if(user.length === 1) {
         let random = (Math.random() + 1).toString(36).substring(3);
+        const forgotPswdExpiry = Date.now() + 1*60*1000;
         user[0].forgetPasswordToken = random;
+        user[0].forgotPswdExpiry = forgotPswdExpiry;
         await user[0].save();
         const link = `${req.protocol}://${req.get("host")}/user/reset/${random}`;
         console.log(link);
@@ -207,7 +221,7 @@ router.post('/resetpswd' , async (req,res) => {
             from: 'admin@gmail.com',
             to: `${email}`,
             subject: 'OTP VERIFICATION',
-            html: `<a href=${link}>Please Click here</a>`
+            html: `To create a new password please <a href=${link}>Click here</a>`
          };
     
          await transporter.sendMail(mailOptions);
@@ -243,10 +257,19 @@ router.post('/reset/:token' , async (req,res) => {
     const { password } = req.body ;
     const user = await User.find({forgetPasswordToken: token });
     if(user.length === 1) {
-        const encPassword = await bcrypt.hash(password , 10);
-        user[0].password = encPassword;
-        user[0].save();
-        res.render('signin' , {email: user[0].email});
+        if(Date.now() < user[0].forgotPswdExpiry) {
+            const encPassword = await bcrypt.hash(password , 10);
+            user[0].password = encPassword;
+            user[0].forgetPasswordToken = undefined ;
+            user[0].forgotPswdExpiry = undefined;
+            user[0].save();
+            res.render('signin' , {email: user[0].email});
+        }  else {
+            const isUserExist = true;
+            const errMessage = 'Token is already expired';
+            res.render('resetpswd' , {isUserExist: isUserExist , errMessage: errMessage});
+        }
+        
     } else {
         const isUserExist = true;
         const errMessage = 'Invalid token, Please checkyour email and try again';
