@@ -19,16 +19,6 @@ function validate() {
     var text ;
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-    if(document.querySelector('#email')) {
-        var email = document.querySelector('#email').value;
-        if(email.match(mailformat) === null) {
-            text = "Please enter a valid email";
-            err.textContent = text ;
-            err.style.height = '4rem';
-            return false;
-        }
-    }
-
     if(document.querySelector('#name')) {
         var name = document.querySelector('#name').value;
         
@@ -46,6 +36,17 @@ function validate() {
         }
     }
 
+    if(document.querySelector('#email')) {
+        var email = document.querySelector('#email').value;
+        if(email.match(mailformat) === null) {
+            text = "Please enter a valid email";
+            err.textContent = text ;
+            err.style.height = '4rem';
+            return false;
+        }
+    }
+
+   
     
     if(document.querySelector('#password')) {
         var password = document.querySelector('#password').value;
