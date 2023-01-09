@@ -12,7 +12,7 @@ router.use((req, res, next) => {
 const bcrypt = require('bcryptjs');
 
 
-// nodemailer setup
+// nodemailer setup --- latest comment
 const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -117,6 +117,8 @@ router.post('/verify' , async (req,res) => {
     // console.log(user);
     if(parseInt(otp) === user[0].otp) {
        const updateUser = await User.findOneAndUpdate({email:email} , { $set : {isVerified: true}});
+       user[0].otp = undefined;
+       await user[0].save();
        res.redirect('/user/signin');
     } else {
         const isVerified = true ;
@@ -188,6 +190,71 @@ router.put('/newotp' , async (req,res) => {
     }
     res.render('verifyotp',{email: email});
 })
+
+router.get('/resetpswd' , (req,res) => {
+    res.render('resetpswd');
+})
+router.post('/resetpswd' , async (req,res) => {
+    const {email} = req.body ;
+    const user = await User.find({email: email});
+    if(user.length === 1) {
+        let random = (Math.random() + 1).toString(36).substring(3);
+        user[0].forgetPasswordToken = random;
+        await user[0].save();
+        const link = `${req.protocol}://${req.get("host")}/user/reset/${random}`;
+        console.log(link);
+        const mailOptions = {
+            from: 'admin@gmail.com',
+            to: `${email}`,
+            subject: 'OTP VERIFICATION',
+            html: `<a href=${link}>Please Click here</a>`
+         };
+    
+         await transporter.sendMail(mailOptions);
+         const isUserExist = true;
+         const errMessage = `Link is delivered to your email to chnage the password`;
+         res.render('resetpswd' , {isUserExist: isUserExist , errMessage: errMessage });
+
+    } else {
+       const isUserExist = true;
+       const errMessage = `User doesn't exist, Please check your email.`;
+       res.render('resetpswd' , {isUserExist: isUserExist , errMessage: errMessage ,email: email});
+    }
+    console.log(user);
+})
+
+router.get('/reset/:token' , async (req,res) => {
+    // console.log(req.params.token);
+    const {token} = req.params;
+    const user = await User.find({forgetPasswordToken: token });
+    if(user.length === 1) {
+        res.render('newpassword.hbs' , {token: token});
+    } else {
+        const isUserExist = true;
+        const errMessage = 'Invalid token, Please checkyour email and try again';
+        res.render('resetpswd' , {isUserExist: isUserExist , errMessage: errMessage});
+    }
+})
+
+
+router.post('/reset/:token' , async (req,res) => {
+    console.log(req.params.token);
+    const {token} = req.params;
+    const { password } = req.body ;
+    const user = await User.find({forgetPasswordToken: token });
+    if(user.length === 1) {
+        const encPassword = await bcrypt.hash(password , 10);
+        user[0].password = encPassword;
+        user[0].save();
+        res.render('signin' , {email: user[0].email});
+    } else {
+        const isUserExist = true;
+        const errMessage = 'Invalid token, Please checkyour email and try again';
+        res.render('resetpswd' , {isUserExist: isUserExist , errMessage: errMessage});
+    }
+})
+
+
 
 
 router.get('/logout',(req,res) => {

@@ -21,8 +21,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean
     } ,
     otp : {
-        type: Number ,
-        required: true
+        type: Number 
+    } ,
+    forgetPasswordToken: {
+       type: String
     } ,
     isVerified: {
         type: Boolean ,

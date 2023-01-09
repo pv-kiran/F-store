@@ -1,0 +1,16 @@
+<section class="form-container">
+        <form id="register_form" action="/user/resetpswd" method="post">
+            <h2 class="form-heading">RESET PASSWORD</h2>
+            <div class="input-container">
+                <label for="email">EMAIL</label>
+                <input type="text" name="email" id="email" value="{{email}}">
+            </div>
+            <div class="error"></div>
+            {{#if isUserExist}}
+                    <div class="errorMsg ">{{errMessage}}</div>
+            {{/if}}
+            <div class="btn-container">
+                <input type="submit" value="SUBMIT" class="btn-submit">
+            </div>
+        </form>
+</section>
