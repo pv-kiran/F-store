@@ -1,0 +1,63 @@
+
+    <section class="product_form-container">
+        <form id="product_form" action="/admin/addproduct" method="post" enctype="multipart/form-data">
+            <h2 class="form-heading dfull">ADD PRODUCT</h2>
+            <div class="input-container">
+                <label for="productName">Product Name</label>
+                <input type="text" name="productName" id="productName">
+            </div>
+            <div class="input-container">
+                <label for="price">Price</label>
+                <input type="number" name="price" id="price">
+            </div>
+            <div class="input-container">
+                <label for="material">Material</label>
+                <input type="text" name="material" id="material">
+            </div>
+            <div class="input-container">
+                <label for="manufacturedBy">Manufactured By</label>
+                <input type="text" name="manufacturedBy" id="manufacturedBy">
+            </div>
+            <div class="input-container">
+                <label for="marketedBy">Marketed By</label>
+                <input type="text" name="marketedBy" id="marketedBy">
+            </div>
+            <div class="input-container">
+                <label for="stock">Stock</label>
+                <input type="number" name="stock" id="stock">
+            </div>
+            <div class="input-container">
+                <label for="productDimension">Product Dimension</label>
+                <input type="text" name="productDimension" id="productDimension">
+            </div>
+            <div class="input-container">
+                <label for="">Country of Origin</label>
+                <input type="text" name="countryOfOrigin" id="countryOfOrigin">
+            </div>
+            
+            <div class="input-container">
+                <label for="fullname">Category</label>
+                <select name="categories" id="categories">
+                    <option value="Table">Select</option>
+                    <option value="Table">Table</option>
+                    <option value="Chair">Saab</option>
+                    <option value="Light">Opel</option>
+                </select>
+            </div>
+            <div class="input-container dfull">
+                <label for="description">Product Description</label>
+                <textarea name="description" rows="3" id="description"></textarea>
+            </div>
+            <div class="input-container" id="image">
+                <label for="imagefile">Product Image</label>
+                <input type="file" name="imagefile" id="imagefile" multiple >
+            </div>
+            <div class="error dfull"></div>
+            {{#if isExisting}}
+                    <div class="errorMsg dfull">{{errMessage}}</div>
+            {{/if}}
+            <input type="submit" value="ADD PRODUCT" class="btn-submit btn-product">
+        </form>
+    </section>
+
+<script src="/javascript/admin.js"></script>

@@ -1,7 +1,7 @@
 // Model
 const User = require('../models/user');
 
-// hashing module
+// hashing module*
 const bcrypt = require('bcryptjs');
 
 // nodemailer setup --- latest comment
@@ -304,7 +304,8 @@ const postResetTokenController = async (req,res) => {
     }
     
 }
- const logoutController = (req,res) => {
+
+const logoutController = (req,res) => {
     req.session.destroy();
     res.redirect('/user/signin');
 }

@@ -7,6 +7,7 @@ const hbs = require('express-handlebars');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 const cors = require('cors');
 
+const fileupload = require('express-fileupload');
 
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', true);
@@ -27,11 +28,18 @@ require('dotenv').config()
 
 const {PORT , MONGO_URL } = process.env ;
 
+
+
 // built in middleware setup
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(fileupload({useTempFiles: true , tempFileDir:'/temp/'}));
 app.use(cors())
+
+
+
+
 
 
 // session setup
@@ -42,6 +50,7 @@ app.use(sessions({
     cookie: { maxAge: oneDay },
     resave: false 
 }));
+
 
 
 
