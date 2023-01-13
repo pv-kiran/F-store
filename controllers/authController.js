@@ -39,6 +39,14 @@ const homeController = async (req,res) => {
     }
 }
 
+// const homeController = async (req,res) => {
+//     res.render('home')
+// }
+
+
+
+
+
 const signUpController = (req,res) => {
     session=req.session;
     console.log(session);

@@ -77,24 +77,27 @@ app.engine(
 
 
 const authRouter = require('./router/auth/auth');
+const homeRouter = require('./router/home/home');
 const adminRouter = require('./router/admin/admin');
-
+const productRouter = require('./router/product/product');
+app.use('/' , homeRouter);
 app.use('/user' , authRouter);
 app.use('/admin' , adminRouter);
+app.use('/product', productRouter );
 
-app.get('/' , (req,res) => {
-  session=req.session;
-  console.log(session);
-    if(session.userid){
-        // res.send("Welcome User <a href=\'/logout'>click to logout</a>");
-        res.redirect('/user')
-    }else
-    res.redirect('/user/signin');
-})
+// app.get('/' , (req,res) => {
+//   session=req.session;
+//   console.log(session);
+//     if(session.userid){
+//         // res.send("Welcome User <a href=\'/logout'>click to logout</a>");
+//         res.redirect('/user')
+//     }else
+//     res.redirect('/user/signin');
+// })
 
-app.get('/dashboard' , (req,res) => {
-   res.render('admin/dashboard');
-})
+// app.get('/dashboard' , (req,res) => {
+//    res.render('admin/dashboard');
+// })
 
 mongoose.connect(MONGO_URL)
 .then(() => {

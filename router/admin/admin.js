@@ -124,6 +124,23 @@ router.get('/getproducts' , async (req,res) => {
 
 })
 
+router.put('/productstatus/:id' , async (req,res) => {
+   const {id} = req.params ;
+   console.log(id);
+   const product = await Product.findById({ _id: id});
+   const isBlocked = product.isBlocked ;
+   product.isBlocked = !isBlocked;
+   await product.save();
+   console.log(product);
+   res.json({redirect: '/admin/getproducts'});
+})
+
+
+
+
+
+
+
 router.get('/orders' , (req,res) => {
    res.render('admin/orderboard');
 })

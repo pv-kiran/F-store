@@ -8,6 +8,8 @@ if(menuBtn) {
     })
 }
 
+console.log('Hello');
+
 
 let form = document.querySelector("#product_form");
 if(form) {
@@ -169,6 +171,40 @@ async function blockUser(e) {
     const userId = e.target.dataset.url;
     console.log(userId);
     const url = `http://localhost:4000/admin/user/${userId}` ;
+    console.log(url);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
+                
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+    
+}
+
+
+//
+
+// Blocking/Unblocking the user 
+let actionItems = document.querySelector('table');
+console.log(actionItems);
+if(actionItems) {
+    actionItems.addEventListener('click' , (e) => {
+
+        if(e.target.classList.contains('btn-block')) {
+            console.log('Heloo');
+                blockProducts(e);
+        }  
+    })
+}
+
+async function blockProducts(e) {
+    const userId = e.target.dataset.url;
+    console.log(userId);
+    const url = `http://localhost:4000/admin/productstatus/${userId}` ;
     console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',

@@ -130,7 +130,30 @@ if(resendBtn) {
 }
 
 
+// NAVBAR RESPONSIVENESS
+const btnToggler = document.querySelector('.btn-toggler');
+      const navContainer = document.querySelector('.nav-container ');
+      const navList = document.querySelector('.nav-list');
+      btnToggler.addEventListener('click' , () => {
+        navContainer.classList.toggle('active');
+        navList.classList.toggle('active');
+})
 
+
+// CHANGING IMAGES ON CLICK
+let imageContainer = document.querySelector('.product-sub-img');
+console.log(imageContainer);
+if(imageContainer) {
+    imageContainer.addEventListener('click' , (e) => {
+
+        if(e.target.classList.contains('sub-img')) {
+          let subImg = e.target.src ;
+          let mainImg = document.querySelector('.mainImg').getAttribute('src') ;
+          e.target.src = mainImg ;
+          document.querySelector('.mainImg').src = subImg ;  
+        }  
+    })
+}
 
 
 

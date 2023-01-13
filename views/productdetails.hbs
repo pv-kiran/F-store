@@ -1,0 +1,45 @@
+<section class="navigation-container">
+        <nav class="nav-container">
+           <i class="fas fa-bars btn-toggler"></i>
+           <img src="/images/logo.png" alt="LOGO" class="logo-img">
+           <ul class="nav-list">
+              <li class="nav-item">
+                <a href="#">PRODUCTS</a>
+              </li>
+              <li class="nav-item">
+                <a href="#">PROFILE</a>
+              </li>
+              <li class="nav-item">
+                <a href="#">
+                  <i class="fas fa-shopping-cart"></i>
+                </a>
+              </li>
+           </ul>
+        </nav>    
+    </section>
+<section class="details-container">
+    
+        <div class="details">
+                <div class="product-img">
+                    <img src="{{product.images.[0].secured_url}}" alt="mainImg" class="mainImg">
+                    <div class="product-sub-img">
+                        <img src="{{product.images.[1].secured_url}}" alt="firstImage" class="sub-img">
+                        <img src="{{product.images.[2].secured_url}}" alt="secondImage"
+                        class="sub-img">
+                        <img src="{{product.images.[3].secured_url}}" alt="thirdImage"
+                        class="sub-img">
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h1>{{product.productName}}</h1>
+                    <h2>{{product.price}}</h2>
+                    <h3>{{product.description}}</h3>
+                    <h3>{{product.productDimension}}</h3>
+                    <h3>{{product.countryOfOrigin}}</h3>
+                    <h3>{{product.manufacturedBy}}</h3>
+                    <h3>{{product.marketedBy}}</h3>
+                    <a href="#">Add To Cart</a>
+                </div>
+        </div>
+    
+</section>
