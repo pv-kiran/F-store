@@ -80,10 +80,14 @@ const authRouter = require('./router/auth/auth');
 const homeRouter = require('./router/home/home');
 const adminRouter = require('./router/admin/admin');
 const productRouter = require('./router/product/product');
-app.use('/' , homeRouter);
+const cartController = require('./router/cart/cart');
+
+
 app.use('/user' , authRouter);
+app.use('/' , homeRouter);
 app.use('/admin' , adminRouter);
 app.use('/product', productRouter );
+app.use('/cart' , cartController);
 
 // app.get('/' , (req,res) => {
 //   session=req.session;
