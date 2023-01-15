@@ -26,6 +26,17 @@ const userSchema = new mongoose.Schema({
     otpExpiry: {
         type: Date
     } ,
+    cart: [
+        {
+           id: {
+             type: mongoose.SchemaTypes.ObjectId ,
+             ref: "product"
+           } ,
+           quantity: {
+             type: Number
+           }
+        }
+     ]  ,
 
     forgetPasswordToken: {
        type: String

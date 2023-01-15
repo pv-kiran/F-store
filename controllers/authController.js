@@ -169,7 +169,7 @@ const loginController = async (req,res) => {
                         session = req.session;
                         session.userid = req.body.email;
                         console.log(req.session);
-                        res.redirect('/user');
+                        res.redirect('/');
                     } else {
                         const isLogin = true ;
                         const errMessage = 'User is blocked by admin';

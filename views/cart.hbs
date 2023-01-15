@@ -21,32 +21,34 @@
     
     <section class="cart-page-container">
             <div class="cart-items-container">
+               {{#each cartItems}}
                 <div class="cart-card">
                     <div class="cart-details-container">
-                        <img  src="/images/admin.webp" alt="Image" class="cart-item-image">
+                        <img  src="{{id.images.[0].secured_url}}" alt="Image" class="cart-item-image">
                         <div class="cart-details">
-                        <h1>Product name</h1>
-                        <h3>1000</h3>
+                        <h1>{{id.productName}}</h1>
+                        <h3>{{id.price}}</h3>
                         </div>
                     </div>
                     <div class="card-quantity-details">
                             
-                        <a href="#" class="quantity-up">
+                        <a href="#" class="quantity-up" data-url = "{{id._id}}">
                             <i class="fas fa-sort-up"></i>
                         </a>
-                        <h1 class="quantity">12</h1>
-                        <a href="#" class="quantity-down">
+                        <h1 class="quantity">{{quantity}}</h1>
+                        <a href="#" class="quantity-down" data-url = "{{id._id}}">
                             <i class="fas fa-sort-down"></i>
                         </a>
                         
                     </div>
                     <div class="cart-details-action">
-                        <a href="#">
+                        <a href="" data-url = "{{id._id}}">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>
                 </div>
-                <div class="cart-card">
+                {{/each}}
+                {{!-- <div class="cart-card">
                     <div class="cart-details-container">
                         <img  src="/images/admin.webp" alt="Image" class="cart-item-image">
                         <div class="cart-details">
@@ -95,7 +97,7 @@
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="cart-items-details">
                 <div class="cart-box">
@@ -106,3 +108,5 @@
                 <a href="#" class="btn-order">PLACE ORDER</a>
             </div>
      </section>
+
+     <script src="/javascript/cart.js"></script>

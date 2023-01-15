@@ -32,12 +32,11 @@
            </div>
       </section>
       <section class="best-products-container">
-          <div class="best-products-heading">
-            <h4>Trending</h4>
-            <h2>The best of the best</h2>
-            <p>The coolest, hottest furniture pieces.</p>
-          </div>
-        
+        <div class="best-products-heading">
+            <h4>A little bit of everything</h4>
+            <h2>All of our products</h2>
+            <p>Everything you need in one place</p>
+        </div>
         <div class="best-products-list">
             {{#each productList}}
               <div class="best-product">
@@ -45,8 +44,12 @@
                       <img src="{{images.[0].secured_url}}" alt="best">
                       <p class="price">{{price}}</p>
                       <h3 class="product_name">{{productName}}</h3>
-                      <a href="/product/{{_id}}" class="btn-cart">Add to Cart</a>
-                      <a href="/product/{{_id}}">View Product</a>  
+                      <a href="/cart/{{_id}}" class="btn-add-cart">
+                         <i class="fas fa-cart-plus"></i>
+                      </a>
+                      <a href="/product/{{_id}}" class="btn-view-product">
+                         <i class="fas fa-eye"></i>
+                      </a>  
                   </div>
               </div>
             {{/each}} 

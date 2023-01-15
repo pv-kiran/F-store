@@ -11,9 +11,9 @@ if(menuBtn) {
 console.log('Hello');
 
 
-let form = document.querySelector("#product_form");
-if(form) {
-    form.addEventListener('submit' , function(e) {
+let productForm = document.querySelector("#product_form");
+if(productForm) {
+    productForm.addEventListener('submit' , function(e) {
         e.preventDefault(); 
         let isValid = validate();
         if(isValid) {

@@ -58,55 +58,60 @@ router.get('/addproduct' , (req,res) => {
 
 // to add the product
 router.post('/addproduct' , async (req,res) => {
-
+    
     const { productName , price , description , categories, material , productDimension ,manufacturedBy , marketedBy , stock , countryOfOrigin } = req.body ;
    //  console.log(req.files);
     const imgArr = [];
-    const product = await Product.find({productName: productName});
+    try {
+         const product = await Product.find({productName: productName});
 
-    if(product.length >= 1) {
-        const isExisting = true;
-        const errMessage = 'Product already added .. Please go with another product';
-        res.render('admin/addproduct' , {isExisting: isExisting , errMessage: errMessage});
-
-    } else {
-
-         if(req.files) {
-            console.log(req.files);
-
-            // uploading the product images to the cloudinary
-            for (let index = 0; index < req.files.imagefile.length; index++) {
+         if(product.length >= 1) {
+            const isExisting = true;
+            const errMessage = 'Product already added .. Please go with another product';
+            res.render('admin/addproduct' , {isExisting: isExisting , errMessage: errMessage});
    
-               result = await cloudinary.uploader.upload(req.files.imagefile[index].tempFilePath , {
-                     folder: 'furnitures'
-               });
-               imgArr.push({
-                     id: result.public_id ,
-                     secured_url: result.secure_url
-               });
+         } else {
    
+            if(req.files) {
+               console.log(req.files);
+   
+               // uploading the product images to the cloudinary
+               for (let index = 0; index < req.files.imagefile.length; index++) {
+      
+                  result = await cloudinary.uploader.upload(req.files.imagefile[index].tempFilePath , {
+                        folder: 'furnitures'
+                  });
+                  imgArr.push({
+                        id: result.public_id ,
+                        secured_url: result.secure_url
+                  });
+      
+               }
+   
+               console.log(imgArr);
             }
-
-            console.log(imgArr);
+      
+            const newProduct = await Product.create({
+               productName: productName ,
+               price: parseInt(price) ,
+               description: description ,
+               categories: categories ,
+               material: material ,
+               productDimension: productDimension ,
+               manufacturedBy: manufacturedBy ,
+               marketedBy: marketedBy ,
+               stock: parseInt(stock) ,
+               countryOfOrigin: countryOfOrigin ,
+               images: imgArr
+            })
+   
+            console.log(newProduct);
+            
          }
-  
-         const newProduct = await Product.create({
-            productName: productName ,
-            price: parseInt(price) ,
-            description: description ,
-            categories: categories ,
-            material: material ,
-            productDimension: productDimension ,
-            manufacturedBy: manufacturedBy ,
-            marketedBy: marketedBy ,
-            stock: parseInt(stock) ,
-            countryOfOrigin: countryOfOrigin ,
-            images: imgArr
-         })
-
-         console.log(newProduct);
-
+    } catch(e) {
+      console.log(e);
     }
+    
     
 })
 

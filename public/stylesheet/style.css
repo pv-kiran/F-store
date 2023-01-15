@@ -738,13 +738,41 @@ li {
    justify-content: space-around;
 }
 .best-product {
+   position: relative;
    width: 23%;
-   height: 30rem;
+   /* height: 30rem; */
+   /* border: 1px red solid; */
+   
  } 
  .best-product img {
    width: 100%;
    height: 100%;
  }
+
+ .card {
+   position: static;
+   z-index:-4; 
+ }
+ .btn-add-cart , .btn-view-product {
+   position: absolute;
+   display: inline-block;
+   font-size: 2.3rem;
+   color: #273656;
+ }
+ .btn-add-cart {
+   bottom: 2rem;
+   right: 5.5rem;
+ }
+ .btn-view-product {
+   bottom: 2rem;
+   right: 1.5rem;
+ }
+
+ .card img {
+   height: 20rem;
+ } 
+
+
 
  .price {
    font-size: 1.7rem;
@@ -826,7 +854,7 @@ footer h1 {
    font-size: 1.8rem;
 }
 
-.best-product a , .details .product-details a {
+.details .product-details a {
    display: inline-block;
    background-color: rgb(25, 51, 64);
    color: #ecf2ff;
@@ -845,14 +873,7 @@ footer h1 {
    margin-top: 1.8rem;
 }
 
-.card {
-   border: 1px rgb(143, 135, 135) solid;
-   padding: 1rem;
-   border-radius: .2rem;
 
-   position: static;
-   z-index:-1;
-}
 
 .card .btn-cart {
    background-color: rgb(151, 199, 225);
@@ -874,6 +895,7 @@ footer h1 {
 
 .product-img {
    width: 45%;
+   /* display: flex; */
 }
 .product-details {
    width: 45%;
@@ -906,14 +928,23 @@ footer h1 {
    width: 100%;
    display: block;
 }
+.product-img .mainImg {
+   height: 35rem;
+   border-radius: 1rem;
+   /* object-fit: contain; */
+}
 .product-sub-img {
    display: flex;
+   /* flex-direction: column; */
    justify-content: space-between;
    align-items: end;
    padding: 1rem 0;
 }
 .product-sub-img img {
-  width: 27%;
+  width: 28%;
+  height: 10rem;
+  border-radius: 1rem;
+  /* object-fit: contain; */
 }
 
 /* Cart page styling */
@@ -1196,9 +1227,9 @@ footer h1 {
    .btn-container-product a {
       margin: .7rem;
    }
-   .best-product a {
+   /* .best-product a {
       width: 100%;
-   }
+   } */
    .details {
       flex-direction: column;
    }
@@ -1223,6 +1254,15 @@ footer h1 {
    
    .cart-items-details {
       width: 100%;
+   }
+
+   .btn-view-product {
+     bottom: 0rem;
+   } 
+
+   .btn-add-cart {
+      bottom: 0rem;
+      right: 6rem;
    }
 }
 
@@ -1284,9 +1324,9 @@ footer h1 {
       height: 25rem;
       margin: 3rem .5rem;
     } 
-    .best-product a {
+    /* .best-product a {
       width: 100%;
-    }
+    } */
     .best-products-heading h2 {
        font-size: 3rem;
     }
@@ -1301,6 +1341,10 @@ footer h1 {
 
     .details {
       flex-direction: column;
+    }
+
+    #btn-submit {
+      margin-top: 0rem;
     }
     
 }

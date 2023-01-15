@@ -1,8 +1,8 @@
 // client side validation
-let form = document.querySelector("#register_form");
+let registerForm = document.querySelector("#register_form");
 let resendBtn = document.querySelector('.resend');
-if(form) {
-    form.addEventListener('submit' , function(e) {
+if(registerForm) {
+    registerForm.addEventListener('submit' , function(e) {
         e.preventDefault(); 
         let isValid = validate();
         if(isValid) {
@@ -132,17 +132,20 @@ if(resendBtn) {
 
 // NAVBAR RESPONSIVENESS
 const btnToggler = document.querySelector('.btn-toggler');
-      const navContainer = document.querySelector('.nav-container ');
-      const navList = document.querySelector('.nav-list');
-      btnToggler.addEventListener('click' , () => {
+if(btnToggler) {
+    btnToggler.addEventListener('click' , () => {
+        const navContainer = document.querySelector('.nav-container ');
+        const navList = document.querySelector('.nav-list');
         navContainer.classList.toggle('active');
         navList.classList.toggle('active');
-})
+    })
+}
+
 
 
 // CHANGING IMAGES ON CLICK
 let imageContainer = document.querySelector('.product-sub-img');
-console.log(imageContainer);
+// console.log(imageContainer);
 if(imageContainer) {
     imageContainer.addEventListener('click' , (e) => {
 
