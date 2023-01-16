@@ -49,7 +49,7 @@
    letter-spacing: .8rem;
  }
  .item-container {
-    margin-top: 2.5rem;
+    /* margin-top: 2.5rem; */
  }
 
  .item-container li {
@@ -155,15 +155,30 @@
     width: 1.5rem;
  }
 
- .dashboard-right{
+ .dashboard-right {
     display: flex;
     justify-content: flex-start;
     align-items: center;
  }
- .dashboard-right i {
+
+ /* .dashboard-right a {
+   border: 1px red solid;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   color: #111827;
+   font-size: 1.5rem;
+   width: 8rem;
+   border: 1px red solid;
+ } */
+ 
+
+ .dashboard-right a  {
     margin-right: 2rem;
     font-size: 2rem;
     font-weight: 400;
+    color: rgb(66, 65, 65);
+    margin-top: 1rem;
  }
 
  .dashboard-right  img {
@@ -343,6 +358,12 @@ tbody tr td img {
 }
 
 /* REGISTRATION STYLE */
+.icon-container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
 .form-heading {
    font-size: 3rem;
    font-weight: 800;
@@ -476,9 +497,9 @@ tbody tr td img {
    justify-content: center;
    align-items: center;
    box-shadow: 2rem 1.5rem 4rem rgba(0, 0, 0, .1);
-   position: absolute;
-   top: 50%;
-   left: 50%;
+   position: fixed;
+   top: 30%;
+   left: 40%;
    transform-origin: center;
    transform: translate(-50% , -50%);
    transform: scale(0);
@@ -517,6 +538,24 @@ tbody tr td img {
 
 
 /* Styling add product page */
+
+.add-btn-container {
+   text-align: right;
+}
+
+.btn-add-product , .btn-add-product:hover {
+   background-color: red;
+   margin: 1rem 0;
+   margin-right: 2.5rem;
+   font-size: 1.5rem;
+   background-color: rgb(51, 51, 115);
+   display: inline-block;
+   color: white;
+   border-radius: 1rem;
+
+   border: none;
+   padding: 1rem 3rem;
+}
 
 .product_form-container {
    width: 100vw;
@@ -629,6 +668,7 @@ li {
 
  .logo-img {
    width: 8rem;
+   margin-top: -1rem;
  }
   
 
@@ -642,9 +682,16 @@ li {
  }
 
  .nav-item a {
-   display: block;
+   display: flex;
    font-size: 1.5rem;
    color: #323336;
+
+   justify-content: space-between;
+   align-items: center;
+ }
+
+ .nav-item a span {
+   margin-right: 1rem;
  }
 
 .btn-toggler {
@@ -736,13 +783,14 @@ li {
 .best-products-list {
    display: flex;
    justify-content: space-around;
+   flex-wrap: wrap;
 }
 .best-product {
    position: relative;
    width: 23%;
+   margin-bottom: 2rem;
    /* height: 30rem; */
    /* border: 1px red solid; */
-   
  } 
  .best-product img {
    width: 100%;
@@ -954,7 +1002,7 @@ footer h1 {
    display: flex;
    justify-content: space-around;
 
-   margin-top: 7rem;
+   margin-top: 10rem;
 }
 
 .cart-items-container {
@@ -1001,25 +1049,34 @@ footer h1 {
 
 .cart-details h1 , .cart-details h3 {
    padding: .6rem .6rem;
+   margin-left: 1rem;
+}
+.cart-details h1 {
+   font-size: 1.7rem;
 }
 .cart-details h3 {
    margin-top: -1rem;
+   color: #727479;
 }
 
 
 
 .card-quantity-details {
    display: flex;
-   flex-direction: column;
+   flex-direction: row;
    justify-content: space-around;
    align-items: center;
    padding-bottom: 1rem;
 }
-.card-quantity-details a {
+.card-quantity-details button , .card-quantity-details a {
    color: #27385d;
    font-size: 2rem;
 }
 
+.quantity {
+   font-size: 1.8rem;
+   margin-top: .5rem;
+}
 
 
 .cart-details-action {
@@ -1028,9 +1085,24 @@ footer h1 {
    align-items: center;
 }
 
-.cart-details-action a {
+.card-quantity-details button {
+   border: none;
+   outline: none;
+   width: 2.3rem;
+   height: 3rem;
+   border-radius: .5rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: 1rem;
+}
+
+.cart-details-action button i , .cart-details-action a i {
    font-size: 1.6rem;
    color: rgb(169, 52, 52);
+}
+.cart-details-action a {
+   cursor: pointer;
 }
 
 .cart-box {
@@ -1152,6 +1224,7 @@ footer h1 {
    .nav-container {
       flex-direction: column;
       align-items: flex-start;
+      
       padding: .7rem .5rem;
       height: 7vh;
       overflow: hidden;
@@ -1164,9 +1237,13 @@ footer h1 {
    }
    .logo-img  {
       width: 6.5rem;
+      margin-top: .5rem;
    }
    .nav-item  {
       padding: 2rem 1.2rem 1.5rem;
+   }
+   .nav-item a {
+      justify-content: flex-start;
    }
    .btn-toggler  {
       display: block;
@@ -1346,6 +1423,5 @@ footer h1 {
     #btn-submit {
       margin-top: 0rem;
     }
-    
 }
 

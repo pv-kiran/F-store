@@ -4,7 +4,7 @@ const Product = require('../../models/product');
 
 
 router.get('/' , async (req,res) => {
-    const product = await Product.find({});
+    const product = await Product.find({ isBlocked: false});
     res.render('home' , {productList : product});
 })
 

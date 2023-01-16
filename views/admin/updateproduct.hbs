@@ -1,38 +1,38 @@
 
     <section class="product_form-container">
         <form id="product_form" action="/admin/addproduct" method="post" enctype="multipart/form-data">
-            <h2 class="form-heading dfull">ADD PRODUCT</h2>
+            <h2 class="form-heading dfull">EDIT PRODUCT</h2>
             <div class="input-container">
                 <label for="productName">Product Name</label>
-                <input type="text" name="productName" id="productName">
+                <input type="text" name="productName" id="productName" value="{{product.productName}}">
             </div>
             <div class="input-container">
                 <label for="price">Price</label>
-                <input type="number" name="price" id="price">
+                <input type="number" name="price" id="price" value="{{product.price}}">
             </div>
             <div class="input-container">
                 <label for="material">Material</label>
-                <input type="text" name="material" id="material">
+                <input type="text" name="material" id="material" value="{{product.material}}">
             </div>
             <div class="input-container">
                 <label for="manufacturedBy">Manufactured By</label>
-                <input type="text" name="manufacturedBy" id="manufacturedBy">
+                <input type="text" name="manufacturedBy" id="manufacturedBy" value="{{product.manufacturedBy}}">
             </div>
             <div class="input-container">
                 <label for="marketedBy">Marketed By</label>
-                <input type="text" name="marketedBy" id="marketedBy">
+                <input type="text" name="marketedBy" id="marketedBy" value="{{product.marketedBy}}">
             </div>
             <div class="input-container">
                 <label for="stock">Stock</label>
-                <input type="number" name="stock" id="stock">
+                <input type="number" name="stock" id="stock" value="{{product.stock}}">
             </div>
             <div class="input-container">
                 <label for="productDimension">Product Dimension</label>
-                <input type="text" name="productDimension" id="productDimension">
+                <input type="text" name="productDimension" id="productDimension" value="{{product.productDimension}}">
             </div>
             <div class="input-container">
                 <label for="">Country of Origin</label>
-                <input type="text" name="countryOfOrigin" id="countryOfOrigin">
+                <input type="text" name="countryOfOrigin" id="countryOfOrigin" value="{{product.countryOfOrigin}}">
             </div>
             
             <div class="input-container">
@@ -50,7 +50,7 @@
             </div>
             <div class="input-container dfull">
                 <label for="description">Product Description</label>
-                <textarea name="description" rows="3" id="description"></textarea>
+                <textarea name="description" rows="3" id="description">{{product.description}}</textarea>
             </div>
             <div class="input-container" id="image">
                 <label for="imagefile">Product Image</label>

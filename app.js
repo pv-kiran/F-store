@@ -84,10 +84,11 @@ const cartController = require('./router/cart/cart');
 
 
 app.use('/user' , authRouter);
-app.use('/' , homeRouter);
 app.use('/admin' , adminRouter);
 app.use('/product', productRouter );
 app.use('/cart' , cartController);
+app.use('/' , homeRouter);
+
 
 // app.get('/' , (req,res) => {
 //   session=req.session;

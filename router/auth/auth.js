@@ -10,7 +10,7 @@ router.use((req, res, next) => {
 });
 
 // home route for user
-router.get('/' , homeController );
+
 
 router.get('/signup' , signUpController);
 
@@ -22,6 +22,9 @@ router.post('/verify' , verifyController);
 
 router.post('/login' , loginController);
 
+router.get('/logout', logoutController);
+
+
 router.put('/newotp' , newOtpController);
 
 router.get('/resetpswd' , getResetController);
@@ -32,7 +35,12 @@ router.get('/reset/:token' , getResetTokenController);
 
 router.post('/reset/:token' , postResetTokenController);
 
-router.get('/logout', logoutController);
+
+
+router.get('/:id' , async (req,res) => {
+    console.log(req.params.id);
+    res.send('Hello');
+})
 
 
 

@@ -33,8 +33,10 @@ const productSchema =new mongoose.Schema({
         enum: {
             values : [
                 'Table',
-                'Chair' ,
-                'Light'
+                'Sofa' ,
+                'Light',
+                'Bed' ,
+                'Chair'
             ]
         }
     } , 

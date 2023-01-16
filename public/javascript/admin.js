@@ -188,15 +188,18 @@ async function blockUser(e) {
 
 //
 
-// Blocking/Unblocking the user 
+// Blocking/Unblocking the products
 let actionItems = document.querySelector('table');
 console.log(actionItems);
 if(actionItems) {
     actionItems.addEventListener('click' , (e) => {
 
         if(e.target.classList.contains('btn-block')) {
-            console.log('Heloo');
+            popUp.classList.add('open_popup');
+            hideAlert.addEventListener('click' , () => {
+                popUp.classList.remove('open_popup');
                 blockProducts(e);
+            })
         }  
     })
 }

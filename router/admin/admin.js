@@ -49,7 +49,6 @@ router.post('/search' , async (req,res) => {
 })
 
 
-
 // To get product form
 router.get('/addproduct' , (req,res) => {
    res.render('admin/addproduct');
@@ -105,7 +104,7 @@ router.post('/addproduct' , async (req,res) => {
                images: imgArr
             })
    
-            console.log(newProduct);
+            res.redirect('/admin/getproducts');
             
          }
     } catch(e) {
@@ -140,6 +139,12 @@ router.put('/productstatus/:id' , async (req,res) => {
    res.json({redirect: '/admin/getproducts'});
 })
 
+
+router.get('/product/:id' , async (req,res) => {
+    const {id} = req.params ;
+    const product = await Product.find({_id:id});
+    res.render('admin/updateproduct' , {product : product[0]});
+})
 
 
 

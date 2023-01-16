@@ -14,17 +14,18 @@ const userSchema = new mongoose.Schema({
         type: String ,
         required: true
     } , 
-    role: {
-        type: String
-    } ,
     isBlocked: {
-        type: Boolean
+        type: Boolean,
+        default: false
     } ,
     otp : {
         type: Number 
     } ,
     otpExpiry: {
         type: Date
+    } ,
+    role: {
+        type: Boolean
     } ,
     cart: [
         {
@@ -34,6 +35,12 @@ const userSchema = new mongoose.Schema({
            } ,
            quantity: {
              type: Number
+           } ,
+           isUpDisable: {
+             type: Boolean
+           } ,
+           isDownDisable: {
+             type: Boolean
            }
         }
      ]  ,
@@ -47,7 +54,10 @@ const userSchema = new mongoose.Schema({
     isVerified: {
         type: Boolean ,
         default: false
-    }
+    } ,
+    role: {
+        type: String
+    } 
 })
 
 

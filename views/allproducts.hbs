@@ -1,22 +1,44 @@
-    <section class="navigation-container">
+    {{!-- <section class="navigation-container">
         <nav class="nav-container">
            <i class="fas fa-bars btn-toggler"></i>
            <img src="/images/logo.png" alt="LOGO" class="logo-img">
            <ul class="nav-list">
               <li class="nav-item">
-                <a href="#">PRODUCTS</a>
+                <a href="/product">
+                  <span class="material-symbols-outlined">
+                    chair
+                  </span>
+                  PRODUCTS
+                </a>
               </li>
               <li class="nav-item">
-                <a href="#">PROFILE</a>
+                <a href="/user/{{id}}">
+                <span class="material-symbols-outlined">
+                  account_circle
+                </span>
+                  PROFILE
+                </a>
               </li>
               <li class="nav-item">
-                <a href="#">
-                  <i class="fas fa-shopping-cart"></i>
+                <a href="/cart">
+                  <span class="material-symbols-outlined">
+                    shopping_cart
+                  </span>
+                  Cart
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/user/logout">
+                  <span class="material-symbols-outlined">
+                    logout
+                  </span>
+                  Logout
                 </a>
               </li>
            </ul>
         </nav>    
-    </section>
+    </section> --}}
+    {{>nav}}
     <section class="home-container buy-product"> 
       <section class="best-products-container">
            <div class="best-products-heading">

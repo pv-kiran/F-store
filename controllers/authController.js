@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 
 // nodemailer setup --- latest comment
 const nodemailer = require('nodemailer');
+
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -18,33 +19,6 @@ const transporter = nodemailer.createTransport({
         ciphers:'SSLv3'
     }
 });
-
-
-const homeController = async (req,res) => {
-    session=req.session;
-    console.log(session);
-    if(session.userid){
-        try {
-            const user = await User.find({email: session.userid});
-            let isAdmin = false;
-            if(user[0].role === 'admin') {
-                isAdmin = true ;
-            }
-            res.render('home' , {email: session.userid, isAdmin: isAdmin });
-        } catch(e) {
-            console.log(e);
-        }
-    } else {
-        res.redirect('/user/signin');
-    }
-}
-
-// const homeController = async (req,res) => {
-//     res.render('home')
-// }
-
-
-
 
 
 const signUpController = (req,res) => {
@@ -159,17 +133,31 @@ const loginController = async (req,res) => {
     try {
 
         const user = await User.find({email: email});
-        console.log(user);
+        // console.log(user);
         if(user.length === 1) {
+
             const isValidPassword = await bcrypt.compare(password , user[0].password);
             console.log(isValidPassword);
+
             if(isValidPassword) {
                 if(user[0].isVerified) {
                     if(!user[0].isBlocked) {
-                        session = req.session;
-                        session.userid = req.body.email;
-                        console.log(req.session);
-                        res.redirect('/');
+                        console.log(user[0]);
+                        if(user[0].role === 'admin') {
+                            session = req.session;
+                            session.adminEmail = req.body.email;
+                            session.adminId = user[0]._id ;
+                            console.log(req.session);
+                            res.redirect('/admin/users');
+                        }
+                        else {
+                            session = req.session;
+                            session.userid = req.body.email;
+                            session._userId = user[0]._id ;
+                            console.log(req.session);
+                            res.redirect('/');
+                        }
+                        
                     } else {
                         const isLogin = true ;
                         const errMessage = 'User is blocked by admin';
@@ -320,7 +308,6 @@ const logoutController = (req,res) => {
 
 
 module.exports = {
-    homeController , 
     signUpController , 
     registerController ,
     signInController , 
