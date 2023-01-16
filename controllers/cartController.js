@@ -1,7 +1,4 @@
-
 const User = require('../models/user');
-
-
 
 const getCart = async (req,res) => {
 
