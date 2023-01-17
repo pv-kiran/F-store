@@ -3,11 +3,13 @@ const router = express.Router();
 
 const { getCart , addToCart ,cartIncrement, cartDecrement , cartDelete } = require('../../controllers/cartController')
 
-router.get( '/' , getCart );
-router.get('/:id' , addToCart );
-router.put('/inc/:id' , cartIncrement );
-router.put('/dec/:id' , cartDecrement);
-router.delete('/:id' , cartDelete)
+const {isLoggedIn} = require('../../middlewares/authmiddleware');
+
+router.get( '/' , isLoggedIn , getCart );
+router.get('/:id' , isLoggedIn , addToCart );
+router.put('/inc/:id' , isLoggedIn, cartIncrement );
+router.put('/dec/:id' , isLoggedIn , cartDecrement);
+router.delete('/:id' , isLoggedIn , cartDelete)
 
 
 
