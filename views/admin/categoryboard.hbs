@@ -1,0 +1,125 @@
+<nav class="nav-menu">
+
+            {{!-- <div class="logo">
+                
+                    <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_j29ggt.json" background="transparent"  speed="1"  style="width: 50px; height: 50px;" loop autoplay></lottie-player>
+
+            </div>  --}}
+
+            <ul class="item-container">
+                <li class="list-item active">
+                    <i class="fas fa-users-cog"></i>
+                    <a class="active" href="/admin/users">User Management</a>
+                </li>
+                <li class="list-item">
+                    <i class="fab fa-product-hunt"></i>
+                    <a href="/admin/getproducts">Product Management</a>
+                </li>
+                <li class="list-item">
+                    <i class="fas fa-people-carry"></i>
+                    <a href="/admin/orders">Order Management</a>
+                </li>
+                <li class="list-item">
+                    <i class="fas fa-images"></i>
+                    <a href="/admin/orders">New Banner</a>
+                </li>
+                <li class="list-item">
+                    <i class="fas fa-percent"></i>
+                    <a href="/admin/orders">Add Coupon</a>
+                </li>
+            </ul>
+    </nav>
+
+    <section class="dashboard-container">
+         <div class="dashboard-nav">
+            <div class="dashboard-left">
+                <div>
+                    <i id="menu-btn" class="fas fa-bars"></i>
+                </div>
+                <div class="search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" name="search" id="search" placeholder="search">
+                </div>
+            </div>
+            <div class="dashboard-right">
+                <i class="far fa-bell notification"></i>
+                <img src="/images/admin.jpg" alt="admin">
+            </div>
+         </div>
+
+
+         <h3 class="dashboard-heading">
+             Category
+         </h3>
+         <form class ="category_form" action="/admin/addcategory" method="post">
+             <input type="text" name="category" id="category">
+             <button type="submit">Save</button>   
+         </form>
+
+
+         {{!-- <div class="box-container">
+            <div class="box">
+                <i class="fas fa-users"></i>
+                <div>
+                    <h3>8234</h3>
+                    <span>Users</span>
+                </div>
+            </div>
+            <div class="box">
+                <i class="fab fa-product-hunt"></i>
+                <div>
+                    <h3>824</h3>
+                    <span>Products</span>
+                </div>
+            </div>
+            <div class="box">
+                <i class="fas fa-people-carry"></i>
+                <div>
+                    <h3>8234</h3>
+                    <span>Order</span>
+                </div>
+            </div>
+         </div> --}}
+    
+    
+         <div class="dashboard">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td>Category</td>
+                        <td>Status</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each categoryList}}
+                    <tr>
+                        <td>{{categoryName}}</td>
+                        {{#if isAvailable}}
+                          <td>Availabe</td>
+                        {{else}}
+                           <td>Not Available</td>
+                        {{/if}}
+                        <td class="product-action">
+                            {{#if isAvailable}}
+                            <a data-url="{{_id}}" class="btn-category-block">
+                                <i class="fas fa-times-circle cross"></i>
+                            </a>
+                            {{else}}
+                            <a data-url="{{_id}}" class="btn-category-block">
+                                <i class="fas fa-check-square tick"></i>
+                            </a>
+                            {{/if}} 
+                        </td>
+                    </tr>
+                    {{/each}} 
+                    
+                </tbody>
+            </table>
+         </div>
+
+    </section>
+
+     {{>popup}}
+
+     <script src="/javascript/admin.js"></script>

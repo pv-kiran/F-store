@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 
+const Category = require('../../models/category');
+
 const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct } = require('../../controllers/adminController');
 
 const {isAdminLoggedIn} = require('../../middlewares/authmiddleware');
@@ -34,8 +36,39 @@ router.put('/productstatus/:id' , isAdminLoggedIn , updateProductStatus);
 router.get('/product/:id' , isAdminLoggedIn , getProduct);
 
 
+router.get('/categories' , async (req,res) => {
+   const categoryList = await Category.find({});
+   console.log(categoryList);
+   res.render('admin/categoryboard' , {categoryList: categoryList});
+})
 
+router.post('/addcategory' , async (req,res) => {
+   const {category} = req.body ; 
+   try {
+      const newCategory = await Category.create({
+          categoryName: category ,
+          isAvailable: true
+      });
+      res.redirect('/admin/categories')
+   } catch(e) {
+      console.log(e);
+   }
+    
+})
 
+router.put('/categorystatus/:id' , async (req,res) => {
+   const {id} = req.params ;
+    console.log(id);
+    try {
+        const category = await Category.findById({ _id: id});
+        const isAvailable = category.isAvailable ;
+        category.isAvailable = !isAvailable;
+        await category.save();
+        res.json({redirect: '/admin/categories'});
+    } catch(e) {
+        console.log(e);
+    } 
+})
 
 
 router.get('/orders' , (req,res) => {

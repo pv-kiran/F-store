@@ -9,7 +9,7 @@ router.get( '/' , isLoggedIn , getCart );
 router.get('/:id' , isLoggedIn , addToCart );
 router.put('/inc/:id' , isLoggedIn, cartIncrement );
 router.put('/dec/:id' , isLoggedIn , cartDecrement);
-router.delete('/:id' , isLoggedIn , cartDelete)
+router.delete('/:id' , isLoggedIn , cartDelete);
 
 
 

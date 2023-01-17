@@ -77,10 +77,11 @@ app.engine(
 
 
 const authRouter = require('./router/auth/auth');
-const homeRouter = require('./router/home/home');
 const adminRouter = require('./router/admin/admin');
 const productRouter = require('./router/product/product');
 const cartController = require('./router/cart/cart');
+const homeRouter = require('./router/home/home');
+
 
 
 app.use('/user' , authRouter);

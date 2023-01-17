@@ -221,3 +221,39 @@ async function blockProducts(e) {
     window.location.href = redirectPath.redirect;
     
 }
+
+
+
+// changing the status of categories
+let editCategory = document.querySelector('table');
+console.log(editCategory);
+if(editCategory) {
+    editCategory.addEventListener('click' , (e) => {
+
+        if(e.target.classList.contains('btn-category-block')) {
+            popUp.classList.add('open_popup');
+            hideAlert.addEventListener('click' , () => {
+                popUp.classList.remove('open_popup');
+                changeCategoryStatus(e);
+            })
+        }  
+    })
+}
+
+async function changeCategoryStatus(e) {
+    const userId = e.target.dataset.url;
+    console.log(userId);
+    const url = `http://localhost:4000/admin/categorystatus/${userId}` ;
+    console.log(url);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
+                
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+    
+}
