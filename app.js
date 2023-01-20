@@ -74,6 +74,10 @@ app.engine(
 );
 
 
+app.use((req, res, next) => {
+  res.set('cache-control', 'no-cache,private,no-store,must-revalidate,max-stale=0,post-check=0,pre-check=0')
+  next();
+});
 
 
 const authRouter = require('./router/auth/auth');
@@ -81,13 +85,15 @@ const adminRouter = require('./router/admin/admin');
 const productRouter = require('./router/product/product');
 const cartController = require('./router/cart/cart');
 const homeRouter = require('./router/home/home');
-
-
+const profileRouter = require('./router/user/profile');
+const orderRouter = require('./router/order/order');
 
 app.use('/user' , authRouter);
 app.use('/admin' , adminRouter);
 app.use('/product', productRouter );
+app.use('/profile' ,profileRouter );
 app.use('/cart' , cartController);
+app.use('/order' , orderRouter);
 app.use('/' , homeRouter);
 
 

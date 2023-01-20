@@ -1,0 +1,79 @@
+ {{>nav}}
+ <section class="profile-page-container">
+        <section class="profile-page">
+            <section class="profile">
+                <div class="profile-info-container">
+                    <div class="profile-info">
+                    <img src="/images/admin.jpg" alt="myuser">
+                    <div class="welcome">
+                        <h3>Hello , </h3>
+                        <h1>{{user.name}}</h1>
+                    </div>
+                    </div>
+                </div>
+                <div class="profile-details-container">
+                    <div class="personal-info">
+                        <form  class="personal-info-form">
+                        <div class="input-container">
+                            <label for="name">Email</label>
+                            <input type="text" name="email" id="email" value="{{user.email}}" readonly>
+                        </div>
+                        <div class="input-container">
+                            <label for="email">Email</label>
+                            <input type="text" name="name" id="email" value="{{user.name}}">
+                        </div>
+                        <div class="input-container">
+                            <input type="submit" value="Change">
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <section class="profile-actions">
+                <div class="profile-actions-nav">
+                    <a href="#">Address Info</a>
+                    <a href="#">Order Info</a>
+                    <a href="#">Change Password</a>
+                </div>
+            
+                <section class="adress-form-container">
+                    <h1 class="address-heading">Update Your Address</h1>
+                    <form  class="adress-update-form">
+                        <div class="row-one">
+                            <div class="input-container">
+                                <label for="name">House Name</label>
+                                <input type="text" name="houseName" id="houseName" value="{{address.houseName}}">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">Phone</label>
+                                <input type="text" name="phone" id="phone" value="{{address.phone}}">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">City</label>
+                                <input type="text" name="city" id="city" value="{{address.city}}">
+                            </div>
+                        </div>
+                        <div class="row-one">
+                            <div class="input-container">
+                                <label for="name">Postal Code</label>
+                                <input type="text" name="postalCode" id="postalCode" value="{{address.postalCode}}">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">State</label>
+                                <input type="text" name="state" id="state" value="{{address.state}}">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">Country</label>
+                                <input type="text" name="coutry" id="coutry" value="{{address.coutry}}">
+                            </div>
+                        </div>
+                        <div class="row-one">
+                            <input type="submit" value="Update" class="btn-address" 
+                            id="btn-address-update" data-url="{{address._id}}">
+                        </div>
+                    </form>
+                </section>
+            </section>
+        </section>  
+      
+ </section>

@@ -28,17 +28,8 @@ const productSchema =new mongoose.Schema({
         }
     ] ,
     categories: {
-        type: String ,
-        required: true ,
-        enum: {
-            values : [
-                'Table',
-                'Sofa' ,
-                'Light',
-                'Bed' ,
-                'Chair'
-            ]
-        }
+        type: mongoose.SchemaTypes.ObjectId ,
+        ref: 'category'
     } , 
     material: {
         type: String , 

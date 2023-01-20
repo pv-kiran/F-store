@@ -4,8 +4,19 @@ const Product = require('../../models/product');
 
 
 router.get('/' , async (req,res) => {
-    const product = await Product.find({ isBlocked: false});
-    res.render('home' , {productList : product});
+    let isLoggedIn;
+    if(req.session.userid) {
+      isLoggedIn = true
+    } else {
+        isLoggedIn = false
+    }
+    try {
+        const product = await Product.find({ isBlocked: false});
+        res.render('home' , {productList : product , id: req.session._userId , isLoggedIn: isLoggedIn});
+    } catch (e) {
+        console.log(e);
+    }
+    
 })
 
 

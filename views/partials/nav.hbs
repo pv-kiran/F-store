@@ -11,14 +11,16 @@
                   PRODUCTS
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/user/{{id}}">
-                <span class="material-symbols-outlined">
-                  account_circle
-                </span>
-                  PROFILE
-                </a>
-              </li>
+              {{#if isLoggedIn}}
+                <li class="nav-item">
+                  <a href="/profile/{{id}}">
+                  <span class="material-symbols-outlined">
+                    account_circle
+                  </span>
+                    PROFILE
+                  </a>
+                </li>
+              {{/if}}
               <li class="nav-item">
                 <a href="/cart">
                   <span class="material-symbols-outlined">
@@ -27,6 +29,7 @@
                   Cart
                 </a>
               </li>
+              {{#if isLoggedIn}}
               <li class="nav-item">
                 <a href="/user/logout">
                   <span class="material-symbols-outlined">
@@ -35,6 +38,17 @@
                   Logout
                 </a>
               </li>
+              {{else}}
+              <li class="nav-item">
+                <a href="/user/signin">
+                  <span class="material-symbols-outlined">
+                    login
+                  </span>
+                  Login
+                </a>
+              </li>
+              {{/if}}
+
         </ul>
     </nav>    
 </section>

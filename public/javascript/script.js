@@ -160,16 +160,75 @@ if(imageContainer) {
 
 
 
+// updating the user address
+
+let upadateAddressForm = document.querySelector('.adress-update-form');
+if(upadateAddressForm) {
+    upadateAddressForm.addEventListener('submit' , function(e) {
+        e.preventDefault();
+        console.log('Success');
+        sendAddressUpdateReq();
+    })
+}
 
 
 
+async function sendAddressUpdateReq(){
+    const userId = document.getElementById('btn-address-update').dataset.url;
+    console.log(userId);
+    const url = `http://localhost:4000/profile/address/${userId}`;
+    console.log(url);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        houseName: document.getElementById('houseName').value,
+                        phone: document.getElementById('phone').value,
+                        city: document.getElementById('city').value,
+                        postalCode: document.getElementById('postalCode').value,
+                        state: document.getElementById('state').value,
+                        coutry: document.getElementById('coutry').value
+                    })
+                })
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+}
 
 
+//removing the address
 
+// Blocking/Unblocking the user 
+let addressContainer = document.querySelector('.address-container');
+console.log(addressContainer);
+if(addressContainer) {
+    console.log('clicked');
+    addressContainer.addEventListener('click' , (e) => {
+        if(e.target.classList.contains('address-remove')) {
+             removeAddress(e);
+        }   
+    })
+}
 
-
-
-
+async function removeAddress(e) {
+    const userId = e.target.dataset.url;
+    console.log(userId);
+    const url = `http://localhost:4000/profile/address/${userId}`;
+    console.log(url);
+    const res = await fetch(url, {
+                    method: 'DELETE',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
+                
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+    
+}
 
 
 

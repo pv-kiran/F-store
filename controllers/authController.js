@@ -25,7 +25,7 @@ const signUpController = (req,res) => {
     session=req.session;
     console.log(session);
     if(session.userid){
-        res.redirect('/user');
+        res.redirect('/');
     } else {
         res.render('signup');
     }

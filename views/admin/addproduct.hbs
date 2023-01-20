@@ -39,11 +39,13 @@
                 <label for="fullname">Category</label>
                 <select name="categories" id="categories">
                     <option value="Table">Select</option>
-                    <option value="Table">Table</option>
-                    <option value="Sofa">Sofa</option>
+                    {{#each categoryList}}
+                        <option value="{{ _id}}">{{categoryName}}</option>
+                    {{/each}}
+                    {{!-- <option value="Sofa">Sofa</option>
                     <option value="Light">Light</option>
                     <option value="Bed">Bed</option>
-                    <option value="Chair">Chair</option>
+                    <option value="Chair">Chair</option> --}}
 
 
                 </select>

@@ -1,0 +1,93 @@
+ {{>nav}}
+ <section class="profile-page-container">
+        <section class="profile-page">
+            <section class="profile">
+                <div class="profile-info-container">
+                    <div class="profile-info">
+                    <img src="/images/admin.jpg" alt="myuser">
+                    <div class="welcome">
+                        <h3>Hello , </h3>
+                        <h1>{{user.name}}</h1>
+                    </div>
+                    </div>
+                </div>
+                <div class="profile-details-container">
+                    <div class="personal-info">
+                        <form  class="personal-info-form">
+                        <div class="input-container">
+                            <label for="name">Email</label>
+                            <input type="text" name="email" id="email" value="{{user.email}}" readonly>
+                        </div>
+                        <div class="input-container">
+                            <label for="email">Email</label>
+                            <input type="text" name="name" id="email" value="{{user.name}}">
+                        </div>
+                        <div class="input-container">
+                            <input type="submit" value="Change">
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <section class="profile-actions">
+                <div class="profile-actions-nav">
+                    <a href="#">Address Info</a>
+                    <a href="#">Order Info</a>
+                    <a href="#">Change Password</a>
+                </div>
+            
+                <section class="adress-form-container">
+                    <h1 class="address-heading">Add New Address</h1>
+                    <form action="/profile/address/{{user.id}}" method="post" class="adress-form">
+                        <div class="row-one">
+                            <div class="input-container">
+                                <label for="name">House Name</label>
+                                <input type="text" name="houseName" id="name">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">Phone</label>
+                                <input type="text" name="phone" id="email">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">City</label>
+                                <input type="text" name="city" id="email">
+                            </div>
+                        </div>
+                        <div class="row-one">
+                            <div class="input-container">
+                                <label for="name">Postal Code</label>
+                                <input type="text" name="postalCode">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">State</label>
+                                <input type="text" name="state">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">Country</label>
+                                <input type="text" name="coutry">
+                            </div>
+                        </div>
+                        <div class="row-one">
+                            <input type="submit" value="Save" class="btn-address">
+                        </div>
+                    </form>
+                </section>
+            </section>
+        </section>  
+      
+        <section class="address-container">
+            {{#each user.address}}
+            <div class="address-list">
+                <h2>{{houseName}}</h2>
+                <h4>{{phone}}</h4>
+                <h4>{{city}} , {{postalCode}}</h4>
+                <h4>{{state}} , {{coutry}}</h4>
+                <h4>
+                    <a href="/profile/address/{{_id}}" class="address-edit">Edit</a>
+                    <a style="cursor: pointer;" 
+                    data-url="{{_id}}" class="address-remove">Remove</a>
+                </h4>
+            </div>
+            {{/each}}
+        </section>
+ </section>

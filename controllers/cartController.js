@@ -2,6 +2,12 @@ const User = require('../models/user');
 
 const getCart = async (req,res) => {
 
+    let isLoggedIn;
+    if(req.session.userid) {
+      isLoggedIn = true
+    } else {
+        isLoggedIn = false
+    }
 
     try {
 
@@ -31,7 +37,7 @@ const getCart = async (req,res) => {
             }
         })
         console.log(cartItems);
-        res.render('cart' , {cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice});
+        res.render('cart' , {cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId});
     } catch (e) {
         console.log(e);
     }

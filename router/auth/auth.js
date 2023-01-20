@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const { homeController, signUpController, registerController, signInController, verifyController, loginController,   newOtpController, getResetController, postResetController, getResetTokenController, postResetTokenController, logoutController} = require('../../controllers/authController');
+const {  signUpController, registerController, signInController, verifyController, loginController,   newOtpController, getResetController, postResetController, getResetTokenController, postResetTokenController, logoutController} = require('../../controllers/authController');
 
 
-router.use((req, res, next) => {
-    res.set('cache-control', 'no-cache,private,no-store,must-revalidate,max-stale=0,post-check=0,pre-check=0')
-    next();
-});
+// router.use((req, res, next) => {
+//     res.set('cache-control', 'no-cache,private,no-store,must-revalidate,max-stale=0,post-check=0,pre-check=0')
+//     next();
+// });
 
 // home route for user
 
@@ -23,7 +23,6 @@ router.post('/verify' , verifyController);
 router.post('/login' , loginController);
 
 router.get('/logout', logoutController);
-
 
 router.put('/newotp' , newOtpController);
 

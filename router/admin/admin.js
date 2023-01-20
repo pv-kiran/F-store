@@ -19,11 +19,11 @@ router.post('/search' , isAdminLoggedIn , searchUser)
 
 
 // To get product form
-router.get('/addproduct' , isAdminLoggedIn , getProductForm );
+router.get('/addproduct' , getProductForm );
 
 
 // to add the product
-router.post('/addproduct' , isAdminLoggedIn , addProduct);
+router.post('/addproduct'  , addProduct);
 
 
 // to view the product

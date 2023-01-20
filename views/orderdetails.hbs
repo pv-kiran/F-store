@@ -1,0 +1,95 @@
+ {{>nav}}
+ <section class="order-page-container">
+    <section class="order-page-left">
+           
+        <section class="adress-details-card-container">
+                {{#each user.address}}
+                <div class="adress-details-card">
+                    <input type="radio" id="address" name="address" value="{{_id}}">
+                    <div class="address-details">
+                        <h2>{{houseName}}</h2>
+                        {{!-- <h4>Gokulam</h4> --}}
+                        <h4>{{phone}}</h4>
+                        <h4>{{city}} , {{postalCode}}</h4>
+                        <h4>{{state}} , {{coutry}}</h4>
+                    </div>
+                </div>
+                {{/each}}
+        </section>
+        <section class="adress-form-container" id="adress-form">
+                <h1 class="address-heading">Add New Address</h1>
+                <form action="/order/address/{{user.id}}" method="POST" class="adress-form">
+                        <div class="row-one">
+                            <div class="input-container">
+                                <label for="name">House Name</label>
+                                <input type="text" name="houseName" id="name">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">Phone</label>
+                                <input type="text" name="phone" id="email">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">City</label>
+                                <input type="text" name="city" id="email">
+                            </div>
+                        </div>
+                        <div class="row-one">
+                            <div class="input-container">
+                                <label for="name">Postal Code</label>
+                                <input type="text" name="postalCode">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">State</label>
+                                <input type="text" name="state">
+                            </div>
+                            <div class="input-container">
+                                <label for="email">Country</label>
+                                <input type="text" name="coutry">
+                            </div>
+                        </div>
+                        <div class="row-one">
+                            <input type="submit" value="Save" class="btn-address">
+                        </div>
+                </form>
+        </section>
+            
+    </section>
+    <section class="order-page-right">
+            <div class="order-details-container">
+                {{#each cartItems}}
+                <div class="order-details">
+                    <img src="{{id.images.[0].secured_url}}" alt="product-img">
+                    <div class="my-order">
+                        <h1>{{id.productName}}</h1>
+                        <h3>{{id.price}}</h3>
+                    </div>
+                    <h1>{{quantity}}</h1>
+                </div>
+                {{/each}}
+                {{!-- <div class="order-details">
+                    <img src="./admin.webp" alt="product-img">
+                    <div class="my-order">
+                        <h1>Product Name</h1>
+                        <h3>3000</h3>
+                    </div>
+                    <h1>3</h1>
+                </div> --}}
+            </div>
+            <div class="order-summary">
+                <div class="orders">
+                    <h1>Order Summary</h1>
+                    <div class="total-order-items">
+                    <h3>Total Items</h3>
+                    <h3>{{totalQuantity}}</h3>
+                    </div>
+                    <div class="total-order-items">
+                        <h3>Total Amount</h3>
+                        <h3> {{totalPrice}}</h3>
+                    </div>
+                    <a class="btn-payment">Cash On Delivery</a>
+                    <a class="btn-payment">Razorpay</a>
+
+                </div>
+            </div>
+    </section>
+</section>

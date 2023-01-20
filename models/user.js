@@ -10,6 +10,34 @@ const userSchema = new mongoose.Schema({
         type: String ,
         required: true
     } ,
+    address: [
+        {
+            houseName: {
+              type : String ,
+              required: true
+            } ,
+            phone: {
+              type : Number ,
+              required: true
+            },
+            city: {
+              type : String ,
+              required: true
+            } ,
+            postalCode: {
+              type : String ,
+              required: true
+            },
+            state: {
+              type : String ,
+              required: true
+            },
+            coutry: {
+              type : String ,
+              required: true
+            }
+        }
+    ] ,
     password: {
         type: String ,
         required: true

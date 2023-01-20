@@ -8,6 +8,8 @@ cloudinary.config({
 
 const User = require('../models/user');
 const Product = require('../models/product');
+const Category = require('../models/category');
+
 
 
 const getAllUsers = async (req,res) => {
@@ -43,8 +45,10 @@ const searchUser = async (req,res) => {
      res.render('admin/userboard' , {userList: user});
 }
 
-const getProductForm = (req,res) => {
-    res.render('admin/addproduct');
+const getProductForm = async  (req,res) => {
+    const categories = await Category.find({isAvailable: true});
+    console.log(categories);
+    res.render('admin/addproduct' , {categoryList: categories});
 };
 
 const addProduct = async (req,res) => {
@@ -131,8 +135,10 @@ const updateProductStatus = async (req,res) => {
  const getProduct = async (req,res) => {
     const {id} = req.params ;
     try {
+        const category = await Category.find({isAvailable:true});
         const product = await Product.find({_id:id});
-        res.render('admin/updateproduct' , {product : product[0]});
+        res.render('admin/updateproduct' , 
+                   {product : product[0] , category: category});
     } catch(e) {
         console.log(e);
     }
