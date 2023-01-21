@@ -1,6 +1,3 @@
-console.log(1);
-
-
 let codBtn = document.querySelector('.btn-cod');
 if(codBtn){
     codBtn.addEventListener('click' , () => {
@@ -9,10 +6,7 @@ if(codBtn){
 }
 
 
-
-
 async function createOrder() {
-
     const url = `http://localhost:4000/order/create`;
     console.log(url);
     const res = await fetch(url, {
@@ -27,8 +21,8 @@ async function createOrder() {
                         shippingInfo: document.querySelector('input[name="address"]:checked').value
                     })
                 })
-    // const redirectPath = await res.json();
-    // window.location.href = redirectPath.redirect;
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
 }
 
 
@@ -55,7 +49,7 @@ async function removeOrder(e) {
                     }
                 });
 
-    // const redirectPath = await res.json();
-    // window.location.href = redirectPath.redirect;
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
     
 }

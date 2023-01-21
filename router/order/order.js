@@ -1,139 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../../models/user');
-const Order = require('../../models/order');
-const Product = require('../../models/product');
 
 
-router.get('/' , async (req,res) => {
-
-    let isLoggedIn;
-    if(req.session.userid) {
-      isLoggedIn = true
-    } else {
-        isLoggedIn = false
-    }
-
-    try {
-
-        const user = await User.find({email: req.session.userid}).populate('cart.id');
-        user[0].cart.forEach((item) => {
-            if(item.quantity >= item.id.stock) {
-                console.log(item.quantity) ;
-                console.log(item.id.stock);
-            }
-        }) ;
-        const cartItems = user[0].cart.filter(item => item.id.isBlocked === false);
-        console.log(cartItems)
-        const totalQuantity = cartItems.reduce((total , item) => {
-            return total+item.quantity;
-        } , 0);
-        const totalPrice = cartItems.reduce((total , item) => {
-            return total+ (item.quantity * item.id.price) 
-        } , 0);
-        cartItems.forEach((item) => {
-            if(item.quantity >= item.id.stock) {
-                console.log(item.quantity);
-                console.log(item.id.stock)
-                item.isUpDisable = true
-            } 
-            else if(item.quantity === 1) {
-                item.isDownDisable = true;
-            }
-        })
-        console.log(cartItems);
-        res.render('orderdetails' , {user: user[0] ,cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId});
-    } catch (e) {
-        console.log(e);
-    }
-    
-})
-
-router.post('/address/:id' , async (req,res) => {
-    const {id} = req.params;
-    try {
-        const user = await User.find({_id: id});
-        user[0].address.push(req.body);
-        user[0].save();
-        res.redirect(`/order`);
-    } catch(e) {
-        console.log(e);
-    }
-})
+const { getOrderDetails , 
+        newShippingAddress , 
+        createOrder , 
+        getUserOrder, 
+        cancelOrder } = require('../../controllers/orderController')
 
 
-router.post('/create' , async (req,res) => {
-    const { totalAmount , orderStatus , paymentMethod , shippingInfo  } = req.body ;
-    const user = await User.find({_id: req.session._userId});
-    const index = user[0].address.findIndex((item) => {
-        return item._id.valueOf() == shippingInfo ;
-    })
-    let shippingAddres = user[0].address[index];
+// Order details page
+router.get('/' , getOrderDetails );
 
-    // crating the order
-    const newOrder = await Order.create({
-        shippingInfo: shippingAddres ,
-        user: req.session._userId ,
-        orderItems: user[0].cart ,
-        totalAmount: totalAmount ,
-        orderStatus: orderStatus ,
-        paymentMode: paymentMethod ,
-    })
+//adding new address from order details page
+router.post('/address/:id' , newShippingAddress );
 
-    // removing the cart items
-    await user[0].cart.splice(0);
-    console.log(user[0].cart);
-    await user[0].save({validateBeforeSave: false});
-    
-    // updating the product stock
-    const updateStock = async (productId , quantity) => {
-         const product = await Product.find({_id:productId});
-         product[0].stock = product[0].stock - quantity ;
-         product[0].save({validateBeforeSave: false});
-    }
+// Placing the orders
+router.post('/create' , createOrder);
 
-    newOrder.orderItems.forEach(async (item) => {
-        await updateStock(item.id , item.quantity )
-    })
+// get user specific order
+router.get('/myorder', getUserOrder ) ;
 
-    //saving the order
-    await newOrder.save();
-})
-
-
-router.get('/myorder', async  (req,res) => {
-    // const {id} = req.params;
-    let isLoggedIn;
-    if(req.session.userid) {
-      isLoggedIn = true;
-    } else {
-        isLoggedIn = false;
-    }
-    const orders = await Order.find({user: req.session._userId}).populate('orderItems.id');
-    console.log(orders);
-    console.log(orders[0].orderItems);
-    res.render('userorders' , {order: orders ,isLoggedIn: isLoggedIn , id: req.session._userId});
-})
-
-router.put('/cancel/:id' ,async (req,res) => {
-    const id = req.params.id;
-    const order = await Order.find({id: id});
-    console.log(order[0].orderItems);
-
-    const updateStock = async (productId , quantity) => {
-        const product = await Product.find({_id:productId});
-        product[0].stock = product[0].stock + quantity ;
-        product[0].save({validateBeforeSave: false});
-   }
-
-   order[0].orderItems.forEach(async (item) => {
-       await updateStock(item.id , item.quantity )
-   })
-
-   const cancelOrder = await Order.findOneAndUpdate({_id: id} , {isCancelled: true});
-   console.log(cancelOrder);
-
-}) 
+//cancelling the order
+router.put('/cancel/:id' , cancelOrder); 
 
 
 

@@ -12,32 +12,39 @@ const getCart = async (req,res) => {
     try {
 
         const user = await User.find({email: req.session.userid}).populate('cart.id');
-        user[0].cart.forEach((item) => {
-            if(item.quantity >= item.id.stock) {
-                console.log(item.quantity) ;
-                console.log(item.id.stock);
-            }
-        }) ;
-        const cartItems = user[0].cart.filter(item => item.id.isBlocked === false);
-        console.log(cartItems)
-        const totalQuantity = cartItems.reduce((total , item) => {
-            return total+item.quantity;
-        } , 0);
-        const totalPrice = cartItems.reduce((total , item) => {
-            return total+ (item.quantity * item.id.price) 
-        } , 0);
-        cartItems.forEach((item) => {
-            if(item.quantity >= item.id.stock) {
-                console.log(item.quantity);
-                console.log(item.id.stock)
-                item.isUpDisable = true
-            } 
-            else if(item.quantity === 1) {
-                item.isDownDisable = true;
-            }
-        })
-        console.log(cartItems);
-        res.render('cart' , {cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId});
+        if(user[0].cart.length === 0) {
+               
+            res.send('No items on the cart');
+
+        } else {
+            user[0].cart.forEach((item) => {
+                if(item.quantity >= item.id.stock) {
+                    console.log(item.quantity) ;
+                    console.log(item.id.stock);
+                }
+            }) ;
+            const cartItems = user[0].cart.filter(item => item.id.isBlocked === false);
+            console.log(cartItems)
+            const totalQuantity = cartItems.reduce((total , item) => {
+                return total+item.quantity;
+            } , 0);
+            const totalPrice = cartItems.reduce((total , item) => {
+                return total+ (item.quantity * item.id.price) 
+            } , 0);
+            cartItems.forEach((item) => {
+                if(item.quantity >= item.id.stock) {
+                    console.log(item.quantity);
+                    console.log(item.id.stock)
+                    item.isUpDisable = true
+                } 
+                else if(item.quantity === 1) {
+                    item.isDownDisable = true;
+                }
+            })
+            console.log(cartItems);
+            res.render('cart' , {cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId});
+        }
+        
     } catch (e) {
         console.log(e);
     }

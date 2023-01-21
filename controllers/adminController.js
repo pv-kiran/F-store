@@ -11,7 +11,6 @@ const Product = require('../models/product');
 const Category = require('../models/category');
 
 
-
 const getAllUsers = async (req,res) => {
     try {
        const user = await User.find({});
@@ -132,7 +131,7 @@ const updateProductStatus = async (req,res) => {
     } 
  }
 
- const getProduct = async (req,res) => {
+const getProduct = async (req,res) => {
     const {id} = req.params ;
     try {
         const category = await Category.find({isAvailable:true});
@@ -145,6 +144,105 @@ const updateProductStatus = async (req,res) => {
    
 }
 
+const getCategories = async (req,res) => {
+    try {
+       const categoryList = await Category.find({});
+       console.log(categoryList);
+       res.render('admin/categoryboard' , {categoryList: categoryList});
+    } catch(e) {
+       console.log(e);
+    }
+}
+
+const addCategory = async (req,res) => {
+    const {category} = req.body ; 
+    try {
+       const newCategory = await Category.create({
+           categoryName: category ,
+           isAvailable: true
+       });
+       res.redirect('/admin/categories')
+    } catch(e) {
+       console.log(e);
+    }
+ 
+}
+
+const updateCategory = async (req,res) => {
+    const {id} = req.params ;
+     console.log(id);
+     try {
+         const category = await Category.findById({ _id: id});
+         const isAvailable = category.isAvailable ;
+         category.isAvailable = !isAvailable;
+         await category.save();
+         res.json({redirect: '/admin/categories'});
+     } catch(e) {
+         console.log(e);
+     } 
+}
+
+const getOrders = async  (req,res) => {
+    try {
+        const orders = await Order.find({}).populate('orderItems.id').populate('user');
+        console.log(orders);
+        console.log(orders[0].orderItems);
+        res.render('admin/orderboard' , {orders: orders});
+    } catch(e) {
+        console.log(e);
+    }
+    
+}
+
+const cancelOrders = async (req,res) => {
+    const id = req.params.id;
+    try {
+        const order = await Order.find({id: id});
+        console.log(order[0].orderItems);
+    
+        const updateStock = async (productId , quantity) => {
+            const product = await Product.find({_id:productId});
+            product[0].stock = product[0].stock + quantity ;
+            product[0].save({validateBeforeSave: false});
+        }
+    
+        order[0].orderItems.forEach(async (item) => {
+            await updateStock(item.id , item.quantity )
+        })
+        
+        const cancellOrder = await Order.findOneAndUpdate({_id: id} , {isCancelled: true});
+        console.log(cancellOrder);
+    } catch(e) {
+        console.log(e);
+    }
+     
+}
+
+const deliverOrder = async (req,res) => {
+     const id = req.params.id;
+     try {
+        const order = await Order.find({id: id});
+        console.log(order[0].orderItems);
+    
+        const updateStock = async (productId , quantity) => {
+            const product = await Product.find({_id:productId});
+            product[0].stock = product[0].stock + quantity ;
+            product[0].save({validateBeforeSave: false});
+       }
+    
+       order[0].orderItems.forEach(async (item) => {
+           await updateStock(item.id , item.quantity )
+       })
+    
+       const deliveredOrder = await Order.findOneAndUpdate({_id: id} , {isDelivered: true});
+       console.log(deliveredOrder);
+     } catch(e) {
+        console.log(e);
+     }
+    
+}
+
+
 module.exports = {
     getAllUsers ,
     softDelete ,
@@ -153,5 +251,11 @@ module.exports = {
     addProduct ,
     getAllProducts ,
     updateProductStatus ,
-    getProduct
+    getProduct ,
+    getCategories ,
+    addCategory ,
+    updateCategory ,
+    getOrders ,
+    cancelOrders ,
+    deliverOrder
 };
