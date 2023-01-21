@@ -1,177 +1,98 @@
- {{!-- <nav class="nav-menu">
-         <div class="logo">
-             <img src="/images/app-logo.webp" alt="LOGO">
-             <h2>FSTORE</h2>
-         </div>
-         <ul class="item-container">
-            <li class="list-item">
-                <!-- <i class="fas fa-users"></i> -->
-                <!-- <i class="far fa-users-cog"></i> -->
-                <i class="fas fa-users-cog"></i>
-                <a href="/admin/users">User Management</a>
-            </li>
-            <li class="list-item">
-                <i class="fab fa-product-hunt"></i>
-                <a href="/admin/products">Product Management</a>
-            </li>
-            <li class="list-item active">
-                <i class="fas fa-people-carry"></i>
-                <a class="active" href="/admin/orders">Order Management</a>
-            </li>
-         </ul>
-</nav> --}}
-    <nav class="nav-menu">
-
-            {{!-- <div class="logo">
-                
-                    <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_j29ggt.json" background="transparent"  speed="1"  style="width: 50px; height: 50px;" loop autoplay></lottie-player>
-
-            </div>  --}}
-
-            <ul class="item-container">
-                <li class="list-item active">
-                    <i class="fas fa-users-cog"></i>
-                    <a class="active" href="/admin/users">User Management</a>
-                </li>
-                <li class="list-item">
-                    <i class="fab fa-product-hunt"></i>
-                    <a href="/admin/getproducts">Product Management</a>
-                </li>
-                <li class="list-item">
-                    <i class="fas fa-people-carry"></i>
-                    <a href="/admin/orders">Order Management</a>
-                </li>
-                <li class="list-item">
-                    <i class="fas fa-images"></i>
-                    <a href="/admin/orders">New Banner</a>
-                </li>
-                <li class="list-item">
-                    <i class="fas fa-percent"></i>
-                    <a href="/admin/orders">Add Coupon</a>
-                </li>
-            </ul>
-    </nav>
-
-    <section class="dashboard-container">
+ {{>adminsidenav}}
+     <section class="dashboard-container">
          <div class="dashboard-nav">
             <div class="dashboard-left">
                 <div>
                     <i id="menu-btn" class="fas fa-bars"></i>
                 </div>
-                <div class="search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" name="search" id="search" placeholder="search">
-                </div>
+                <form class="search" action="/admin/search" method="post">
+                    <input type="text" name="name" id="search" placeholder="search">
+                    <button class="btn-search" type="submit"><i class="fas fa-search"></i></button>
+                </form>
             </div>
             <div class="dashboard-right">
-                <i class="far fa-bell notification"></i>
-                <img src="/images/admin.webp" alt="admin">
+                <a href="/user/logout">
+                    <span class="material-symbols-outlined">
+                        logout
+                    </span>
+                </a>
+                <img src="/images/admin.jpg" alt="admin">
             </div>
          </div>
-
 
          <h3 class="dashboard-heading">
-             ORDER MANAGEMENT
+             ORDER DASHBOARD
          </h3>
 
-
-         <div class="box-container">
-            <div class="box">
-                <i class="fas fa-users"></i>
-                <div>
-                    <h3>8234</h3>
-                    <span>Users</span>
-                </div>
-            </div>
-            <div class="box">
-                <i class="fab fa-product-hunt"></i>
-                <div>
-                    <h3>824</h3>
-                    <span>Products</span>
-                </div>
-            </div>
-            <div class="box">
-                <i class="fas fa-people-carry"></i>
-                <div>
-                    <h3>8234</h3>
-                    <span>Order</span>
-                </div>
-            </div>
-         </div>
-
+         
 
          <div class="dashboard">
             <table width="100%">
                 <thead>
                     <tr>
-                        <td>Name</td>
-                        <td>Email</td>
+                        <td>Cutomer</td>
+                        <td>Product</td>
+                        <td>Image</td>
+                        <td>Status</td>
+                        <td>Payment</td>
+                        <td>Total Price</td>
                         <td>Action</td>
                     </tr>
                 </thead>
                 <tbody>
+                    {{#each orders}}
                     <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
+                        <td>{{user.name}}</td>
+                        <td>
+                            {{#each orderItems}}
+                             <p>{{id.productName}}</p>
+                            {{/each}}
+                        </td>
+                        <td class="order-image-container">
+                            {{#each orderItems}}
+                              <img src="{{id.images.[0].secured_url}}" alt="IMAGE">
+                            {{/each}}
+                        </td>
+                        <td>
+                          {{#if isDelivered}}
+                            Deleivered
+                          {{else}}
+                            {{#if isCancelled}}
+                               Cancelled
+                            {{else}}
+                               Processing
+                            {{/if}}
+                          {{/if}}
+                        </td>
+                        <td>{{paymentMode}}</td>
+                        <td>{{totalAmount}}</td>
+                        <td>
+                            <div class="order-action">
+                                {{#if isDelivered}}
+                                      <a class="success">Processed</a>
+                                {{else}} 
+                                   {{#if isCancelled}}
+                                      <a class="danger">Cancelled</a>
+                                    {{else}}
+                                        <a data-url="{{id}}" class="order-delivered-btn">
+                                            Deliver
+                                        </a>
+                                        <a data-url="{{id}}" class="order-cancel-btn">
+                                            Cancel
+                                        </a>
+                                    {{/if}}
+                                {{/if}}
+                            </div>
+                           
+                        </td>
+                       
                     </tr>
-                    <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
-                    </tr> 
-                    <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
-                    </tr> 
-                    <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
-                    </tr>
-                    <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
-                    </tr>
-                    <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
-                    </tr> 
-                    <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
-                    </tr> 
-                    <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
-                    </tr>
-                    <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
-                    </tr>
-                    <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
-                    </tr> 
-                    <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
-                    </tr> 
-                    <tr>
-                        <td>KIRAN PV</td>
-                        <td>kiran@gmail.com</td>
-                        <td>VIEW</td>
-                    </tr>
+                    {{/each}} 
                 </tbody>
             </table>
          </div>
 
-    </section>
+     </section>
+     {{>popup}}
+
+     <script src="/javascript/admin.js"></script>

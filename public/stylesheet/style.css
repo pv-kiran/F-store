@@ -1515,6 +1515,115 @@ footer h1 {
    color: white;
 }
 
+
+/* Order user page */
+.userorder-container {
+   margin-top: 18vh;
+   width: 100%;
+   padding: 1rem 6rem;
+}
+.userorder-container h1 {
+   font-size: 1.5rem;
+   font-weight: 200;
+   margin-bottom: .7rem;
+}
+.my-details-order {
+   border: .4px rgb(77, 75, 75) solid;
+   width: 80%;
+   display: flex;
+   justify-content: space-between;
+   padding: 1rem 1.5rem;
+   border-radius: .4rem;
+   margin-bottom: 5rem;
+}
+.order-products-image {
+   display: flex;
+}
+.order-products-image img {
+    width: 7rem;
+    height: 7rem;
+    display: block;
+    margin-right: 1rem;
+    object-fit: cover;
+}
+
+.order-shipping-address h4 , 
+.order-products h4 , 
+.order-payment-mode h4 ,
+.order-total h4 {
+   font-size: 1.4rem;
+   font-weight: 200;
+   margin-bottom: .4rem;
+} 
+
+.order-image-container {
+   display: flex;
+   flex-direction: column;
+}
+
+.order-image-container img {
+   width: 4rem;
+   height: 4rem;
+   margin-bottom: .5rem;
+}
+
+.order-cancel {
+   font-size: 1.4rem;
+   cursor: pointer;
+   color: rgb(60, 60, 203);
+}
+
+.order-cancel a {
+   display: block;
+   padding: .5rem;
+   border-radius: .2rem;
+}
+
+/* .order-cancel .success {
+   color: green;
+} */
+
+.order-action {
+  display: flex;
+  justify-content: flex-start;
+  
+}
+.order-action a {
+   display: inline;
+   border-radius: .4rem;
+   padding: .3rem .1rem;
+   margin-right: .5rem;
+}
+.order-delivered-btn {
+  border: 1px rgb(106, 115, 219) solid;
+  color: rgb(106, 115, 219);
+}
+.order-delivered-btn:hover {
+  background-color: rgb(106, 115, 219);
+  color: white;
+}
+
+
+.order-cancel-btn {
+   border: 1px rgb(201, 28, 28) solid;
+   color: rgb(201, 28, 28);
+ }
+ .order-cancel-btn:hover {
+   background-color: rgb(185, 38, 38);
+   color: rgb(222, 217, 217);
+ }
+
+ .success {
+   border: 1px rgb(89, 175, 52) solid;
+   color: white;
+   background-color: rgb(123, 219, 82);
+ }
+ .danger {
+   border: 1px rgb(205, 30, 30) solid;
+   color: white;
+   background-color: rgb(205, 30, 30);
+ }
+
 @media (max-width: 820px) {
    .nav-menu {
       width: 30rem;

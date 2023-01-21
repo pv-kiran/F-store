@@ -257,3 +257,54 @@ async function changeCategoryStatus(e) {
     window.location.href = redirectPath.redirect;
     
 }
+
+
+
+// Cancelling the orders
+let orderItems = document.querySelector('table');
+if(orderItems) {
+    orderItems.addEventListener('click' , (e) => {
+        if(e.target.classList.contains('order-cancel-btn')) {
+                orderCancell(e);
+        }
+        else if(e.target.classList.contains('order-delivered-btn')) {
+                orderDeliver(e);
+        }    
+    })
+}
+
+async function orderCancell(e) {
+    const orderId = e.target.dataset.url;
+    console.log(orderId);
+    const url = `http://localhost:4000/admin/order/cancel/${orderId}` ;
+    console.log(url);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
+                
+    // const redirectPath = await res.json();
+    // window.location.href = redirectPath.redirect;
+    
+}
+
+async function orderDeliver(e) {
+    const orderId = e.target.dataset.url;
+    console.log(orderId);
+    const url = `http://localhost:4000/admin/order/deliver/${orderId}` ;
+    console.log(url);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
+                
+    // const redirectPath = await res.json();
+    // window.location.href = redirectPath.redirect;
+    
+}

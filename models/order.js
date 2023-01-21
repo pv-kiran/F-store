@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Order = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
 
     shippingInfo: {
 
@@ -29,13 +29,11 @@ const Order = new mongoose.Schema({
             required: true
           }
     } ,
-
     user: {
-       type: mongoose.SchemaType.ObjectId ,
+       type: mongoose.SchemaTypes.ObjectId ,
        ref: 'user' ,
        required: true
     } ,
-    
     orderItems: [
         {
             id: {
@@ -45,20 +43,24 @@ const Order = new mongoose.Schema({
             quantity: {
               type: Number
             } 
-         }
+        }
     ] ,
 
     totalAmount : {
         type: Number ,
         required: true
     } ,
-    orderStatus: {
-        type: String ,
-        required: true
-    } ,
     paymentMode: {
         type: String ,
         required: true
+    } ,
+    isDelivered: {
+      type: Boolean ,
+      default: false
+    } ,
+    isCancelled: {
+       type: Boolean ,
+       default: false
     } ,
     createdAt: {
         type: Date ,
@@ -67,5 +69,8 @@ const Order = new mongoose.Schema({
     deliveredAt: {
         type: Date
     }
-
+    
 })
+
+
+module.exports = mongoose.model('order' , orderSchema )

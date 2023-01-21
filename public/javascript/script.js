@@ -202,7 +202,6 @@ async function sendAddressUpdateReq(){
 
 // Blocking/Unblocking the user 
 let addressContainer = document.querySelector('.address-container');
-console.log(addressContainer);
 if(addressContainer) {
     console.log('clicked');
     addressContainer.addEventListener('click' , (e) => {

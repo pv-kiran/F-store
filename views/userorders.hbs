@@ -1,0 +1,64 @@
+{{>nav}}
+
+<section class="userorder-container">
+    {{#each order}}
+        <h1 class="date">{{createdAt}}</h1>
+        <div class="my-details-order">
+            <div class="order-shipping-address">
+                <h4>{{shippingInfo.houseName}}</h4>
+                <h4>{{shippingInfo.phone}}</h4>
+                <h4>{{shippingInfo.city}}, {{shippingInfo.postalCode}}</h4>
+                <h4>{{shippingInfo.state}} , {{shippingInfo.coutry}}</h4>
+            </div>
+            <div class="order-products-image">
+                {{#each orderItems}}
+                <img src="{{id.images.[0].secured_url}}" alt="hello">
+                {{/each}}
+            </div>
+            <div class="order-products">
+                {{#each orderItems}}
+                    <h4>{{id.productName}}</h4>
+                {{/each}}
+            </div>
+            <div class="order-payment-mode">
+                {{!-- <h4>{{orderStatus}}</h4> --}}
+                {{#if isDelivered}}
+                        <h4>Deleivered</h4> 
+                    {{else}}
+                        {{#if isCancelled}}
+                           <h4>Cancelled</h4> 
+                        {{else}}
+                            <h4>Processing</h4>
+                        {{/if}}
+                {{/if}}
+            </div>
+            <div class="order-payment-status">
+                <h4>{{paymentMode}}</h4>
+            </div>
+            <div class="order-total">
+                <h4>{{totalAmount}}</h4>
+            </div>
+            {{#if isDelivered}}
+                <div  class="order-cancel">
+                    <a class="success">Success</a>
+                </div>
+            {{else}} 
+                <div class="order-cancel">
+                    {{!-- <a data-url="{{id}}" class="order-cancel-btn">Cancel</a> --}}
+                    {{#if isDelivered}}
+                            <a class="success">Processed</a>
+                        {{else}} 
+                            {{#if isCancelled}}
+                                  <a class="danger">Cancelled</a>
+                                {{else}}
+                                  <a data-url="{{id}}" class="order-cancel-btn">
+                                      Cancel
+                                  </a>
+                            {{/if}}
+                    {{/if}}
+                </div>
+            {{/if}}
+        </div>
+    {{/each}}
+</section>
+<script src="/javascript/order.js"></script>

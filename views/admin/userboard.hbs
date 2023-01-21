@@ -1,90 +1,90 @@
    
-    {{>adminsidenav}}
-     <section class="dashboard-container">
-         <div class="dashboard-nav">
-            <div class="dashboard-left">
-                <div>
-                    <i id="menu-btn" class="fas fa-bars"></i>
-                </div>
-                <form class="search" action="/admin/search" method="post">
-                    <input type="text" name="name" id="search" placeholder="search">
-                    <button class="btn-search" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                   
-                </form>
-            </div>
-            <div class="dashboard-right">
-                
-                <a href="/user/logout">
-                    <span class="material-symbols-outlined">
-                        logout
-                    </span>
-                </a>
-                <img src="/images/admin.webp" alt="admin">
-            </div>
-         </div>
-
-         <h3 class="dashboard-heading">
-             USER MANAGEMENT
-         </h3>
-
-
-         {{!-- <div class="box-container">
-            <div class="box">
-                <i class="fas fa-users"></i>
-                <div>
-                    <h3>8234</h3>
-                    <span>Users</span>
-                </div>
-            </div>
-            <div class="box">
-                <i class="fab fa-product-hunt"></i>
-                <div>
-                    <h3>824</h3>
-                    <span>Products</span>
-                </div>
-            </div>
-            <div class="box">
-                <i class="fas fa-people-carry"></i>
-                <div>
-                    <h3>8234</h3>
-                    <span>Order</span>
-                </div>
-            </div>
-         </div> --}}
-
-
-         <div class="dashboard">
-            <table width="100%">
-                <thead>
-                    <tr>
-                        <td>Name</td>
-                        <td>Email</td>
-                        <td>Action</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each userList}}
-                    <tr>
-                        <td>{{name}}</td>
-                        <td>{{email}}</td>
-                         <td>
-                             {{#if isBlocked}}
-                            <a class="unblock" data-url="{{_id}}">UNBLOCK</a>
-                            {{else}}
-                            <a class="block" data-url="{{_id}}">BLOCK</a>
-                            {{/if}}   
-                        </td> 
-                    </tr>
-                    {{/each}} 
+     {{>adminsidenav}}
+        <section class="dashboard-container">
+            <div class="dashboard-nav">
+                <div class="dashboard-left">
+                    <div>
+                        <i id="menu-btn" class="fas fa-bars"></i>
+                    </div>
+                    <form class="search" action="/admin/search" method="post">
+                        <input type="text" name="name" id="search" placeholder="search">
+                        <button class="btn-search" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
                     
-                </tbody>
-                
-            </table>
-         </div>
+                    </form>
+                </div>
+                <div class="dashboard-right">
+                    
+                    <a href="/user/logout">
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+                    </a>
+                    <img src="/images/admin.webp" alt="admin">
+                </div>
+            </div>
 
-     </section>
+            <h3 class="dashboard-heading">
+                USER MANAGEMENT
+            </h3>
+
+
+            {{!-- <div class="box-container">
+                <div class="box">
+                    <i class="fas fa-users"></i>
+                    <div>
+                        <h3>8234</h3>
+                        <span>Users</span>
+                    </div>
+                </div>
+                <div class="box">
+                    <i class="fab fa-product-hunt"></i>
+                    <div>
+                        <h3>824</h3>
+                        <span>Products</span>
+                    </div>
+                </div>
+                <div class="box">
+                    <i class="fas fa-people-carry"></i>
+                    <div>
+                        <h3>8234</h3>
+                        <span>Order</span>
+                    </div>
+                </div>
+            </div> --}}
+
+
+            <div class="dashboard">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            <td>Email</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each userList}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{email}}</td>
+                            <td>
+                                {{#if isBlocked}}
+                                <a class="unblock" data-url="{{_id}}">UNBLOCK</a>
+                                {{else}}
+                                <a class="block" data-url="{{_id}}">BLOCK</a>
+                                {{/if}}   
+                            </td> 
+                        </tr>
+                        {{/each}} 
+                        
+                    </tbody>
+                    
+                </table>
+            </div>
+
+        </section>
      {{>popup}}
      
 
