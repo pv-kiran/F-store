@@ -12,7 +12,11 @@
                     </div>
                 </div>
                 <div class="dashboard-right">
-                    <i class="far fa-bell notification"></i>
+                    <a href="/admin/logout">
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+                    </a>
                     <img src="/images/admin.jpg" alt="admin">
                 </div>
             </div>
@@ -70,7 +74,7 @@
                             {{else}}
                             <td>Not Available</td>
                             {{/if}}
-                            <td class="product-action">
+                            <td >
                                 {{#if isAvailable}}
                                 <a data-url="{{_id}}" class="btn-category-block">
                                     <i class="fas fa-times-circle cross"></i>

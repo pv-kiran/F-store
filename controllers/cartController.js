@@ -11,6 +11,7 @@ const getCart = async (req,res) => {
 
     try {
 
+        // find the user and user's cart
         const user = await User.find({email: req.session.userid}).populate('cart.id');
         if(user[0].cart.length === 0) {
                
@@ -23,14 +24,22 @@ const getCart = async (req,res) => {
                     console.log(item.id.stock);
                 }
             }) ;
+
+            // removing the blocked products from th cart
             const cartItems = user[0].cart.filter(item => item.id.isBlocked === false);
             console.log(cartItems)
+
+            // finding the total quantity of cart items
             const totalQuantity = cartItems.reduce((total , item) => {
                 return total+item.quantity;
             } , 0);
+            // finding the total price of cart items
             const totalPrice = cartItems.reduce((total , item) => {
                 return total+ (item.quantity * item.id.price) 
             } , 0);
+
+
+            // logic for button disabling based on quantity
             cartItems.forEach((item) => {
                 if(item.quantity >= item.id.stock) {
                     console.log(item.quantity);
@@ -42,6 +51,8 @@ const getCart = async (req,res) => {
                 }
             })
             console.log(cartItems);
+
+            // rendering the cart page
             res.render('cart' , {cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId});
         }
         
@@ -55,23 +66,31 @@ const addToCart = async (req,res) => {
     const {id} = req.params ;
     
     try {
+        // finding the user
         const user = await User.find({email: req.session.userid});
+
+        // initiliasing the cart item
         const item = {
             id: id ,
             quantity: 1
         };
+
+        // if cart is empty
         if(user[0].cart.length === 0) {
             user[0].cart.push(item);
             user[0].save();
         } else {
             
+            // check for existing item in the cart
             const res = user[0].cart.findIndex((item) => {
                 return item.id.valueOf() === `${id}`
             })
 
+            // item is not present in the cart
             if(res === -1) {
                 user[0].cart.push(item);
             } else {
+                // item is present in the cart
                 user[0].cart[res].quantity = user[0].cart[res].quantity + 1;
             }
             

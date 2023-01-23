@@ -97,11 +97,70 @@ const removeAddressController = async (req,res) => {
     
 }
 
+const updateUserController = async (req,res) => {
+    const {id} = req.params ;
+    console.log(id);
+    console.log(req.body);
+    try {
+       const user = await User.findByIdAndUpdate(id , req.body , {
+           new: true
+       });
+       res.json({redirect: `/profile/${id}`});
+    } catch(e) {
+       console.log(e);
+    }
+}
+
+const getChangePasswordForm = async (req,res) => {
+    let isLoggedIn;
+    if(req.session.userid) {
+      isLoggedIn = true
+    } else {
+        isLoggedIn = false
+    }
+    try {
+        const user = await User.find({_id: req.session._userId});
+        console.log(user);
+        res.render('changepassword' , {user: user[0] , isLoggedIn: isLoggedIn , id: req.session._userId}); 
+    } catch(e) {
+        console.log(e);
+    }
+}
+
+
+const changeUserPassword = async (req,res) => {
+    let isLoggedIn;
+    if(req.session.userid) {
+      isLoggedIn = true
+    } else {
+        isLoggedIn = false
+    }
+    try {
+
+        const encPassword = await bcrypt.hash(req.body.password , 10);
+        console.log(encPassword);
+        
+
+        req.body.password = encPassword;
+        // console.log(req.body);
+        // console.log(req.body);
+
+        const user = await User.findByIdAndUpdate(req.session.id , req.body);
+
+        res.json({redirect: `/profile/${req.session._userId}`});
+    
+    } catch(e) {
+        console.log(e);
+    }
+}
 
 module.exports = {
     getUserProfile , 
     addAdressController , 
     getAddressController ,
     updateAddressController ,
-    removeAddressController
+    removeAddressController ,
+    updateUserController ,
+    getChangePasswordForm ,
+    changeUserPassword
 }

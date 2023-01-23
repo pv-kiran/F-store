@@ -55,5 +55,11 @@ router.put('/order/cancel/:id' , isAdminLoggedIn , cancelOrder);
 // deliver order
 router.put('/order/deliver/:id' , isAdminLoggedIn , deliverOrder);
 
+router.get('/logout' , (req,res) => {
+    req.session.adminEmail = null;
+    req.session.adminId = null;
+    res.redirect('/user/signin');
+})
+
 
 module.exports = router;

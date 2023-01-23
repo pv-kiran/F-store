@@ -46,6 +46,41 @@ async function sendUserNameUpdateReq(){
     window.location.href = redirectPath.redirect;
 }
 
+// validation for changing the password
+
+const passwordForm = document.querySelector(".password-change-form");
+if(passwordForm) {
+    passwordForm.addEventListener('submit' , function(e) {
+        console.log('Submission of change username');
+        e.preventDefault(); 
+        let isValid = validate();
+        if(isValid) {
+            sendChangePasswordRequest();
+        }
+    })
+}
+
+
+async function sendChangePasswordRequest(){
+    // const userId = document.getElementById('btn-username-change').dataset.url;
+    // console.log(userId);
+    const url = `http://localhost:4000/profile/user/password`;
+    console.log(url);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        password: document.getElementById('password').value
+                    })
+                })
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+}
+
+
 
 // validation for user register and login
 function validate() {
@@ -100,8 +135,9 @@ function validate() {
 
     if(document.querySelector('#confirmPswd')) {
         let confirmPswd = document.querySelector('#confirmPswd').value;
-        // console.log(confirmPswd);
-        // console.log(password);
+        let password = document.querySelector('#password').value;
+        console.log(confirmPswd);
+        console.log(password);
         
         if( confirmPswd === '' ) {
             text = "Please cofirm the password";
@@ -197,6 +233,8 @@ function addressvalidation() {
     let addressErr = document.querySelector('.addr-error');
     let text ;
 
+    // let phoneNumberformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
     if(document.querySelector('#houseName')) {
         let houseName = document.querySelector('#houseName').value;
         
@@ -218,6 +256,8 @@ function addressvalidation() {
             addressErr.style.height = '4rem';
             return false;
         }
+
+        // phone number validation is required
 
     }
 
@@ -346,6 +386,7 @@ if(addressContainer) {
         }   
     })
 }
+
 // request for removing address
 async function removeAddress(e) {
     const userId = e.target.dataset.url;
@@ -364,10 +405,6 @@ async function removeAddress(e) {
     window.location.href = redirectPath.redirect;
     
 }
-
-
-
-
 
 
 

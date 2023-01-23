@@ -970,7 +970,7 @@ footer h1 {
    font-size: 2.7rem;
 }
 .best-products-heading .primary_head {
-   font-size: 6rem;
+   font-size: 5.5rem;
    font-weight: 400;
 }
 
@@ -1148,7 +1148,7 @@ footer h1 {
 }
 
 .cart-btn {
-  transform: translateY(6.5rem);
+  transform: translateY(4.5rem);
 }
 
 
@@ -1333,7 +1333,9 @@ footer h1 {
 .adress-form .row-one .input-container input[type='text']  ,
 .adress-update-form .row-one .input-container input[type='text'] ,
 .personal-info-form .input-container input[type='submit'] ,
-.btn-address  {
+.personal-info-form .input-container input[type='password'] ,
+.btn-address ,
+.btn-password {
    height: 3rem;
    padding: .5rem;
    border: .3px rgb(160, 168, 172) solid;
@@ -1344,12 +1346,30 @@ footer h1 {
    outline: none;
 }
 
-.personal-info-form .input-container input[type='submit'] , .btn-address  {
+.password-change-form input[type='password'] {
+   height: 3rem;
+   padding: .5rem;
+   border: .3px rgb(160, 168, 172) solid;
+   border-radius: .2rem;
+   font-size: 1.3rem;
+}
+
+.password-change-form input[type='password']:focus {
+   outline: none;
+}
+ 
+.password-change-form .input-container {
+   margin-bottom: 2rem;
+}
+
+
+
+.personal-info-form .input-container input[type='submit'] , .btn-address , .btn-password {
    background-color: #32323d;
    color: white;
    outline: none;
    border: 0;
-   margin-top: 1rem;
+   margin-top: .6rem;
    cursor: pointer;
 }
 .btn-address {
@@ -1359,7 +1379,6 @@ footer h1 {
 
 .input-container input[type='submit']:hover {
    background-color: #1d1d1f;
-   
 }
 
 /* Profile actions */
@@ -1432,6 +1451,9 @@ footer h1 {
    padding: .5rem;
 }
 
+.password-container {
+   margin-top: 8rem;
+}
 
 .order-page-container {
    display: flex;

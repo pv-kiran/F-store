@@ -11,7 +11,7 @@ router.get('/' , async (req,res) => {
         isLoggedIn = false
     }
     try {
-        const product = await Product.find({ isBlocked: false});
+        const product = await Product.find({ isBlocked: false , stock: {$gt: 0}}).limit(4);
         res.render('home' , {productList : product , id: req.session._userId , isLoggedIn: isLoggedIn});
     } catch (e) {
         console.log(e);

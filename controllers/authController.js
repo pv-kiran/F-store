@@ -301,8 +301,14 @@ const postResetTokenController = async (req,res) => {
     
 }
 
+// const logoutController = (req,res) => {
+//     req.session.destroy();
+//     res.redirect('/user/signin');
+// }
+
 const logoutController = (req,res) => {
-    req.session.destroy();
+    req.session.userid = null;
+    req.session._userId = null;
     res.redirect('/user/signin');
 }
 

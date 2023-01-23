@@ -8,7 +8,15 @@ const getAllProducts = async (req,res) => {
         isLoggedIn = false
     }
     try {
-        const product = await Product.find({isBlocked: false});
+        // const product = await Product.find({isBlocked: false , stock: {$gt: 0}}).populate('categories');
+        // console.log(product);
+        let product = await Product.find({isBlocked: false , stock: {$gt: 0}}).populate('categories');
+        product = product.filter((item) => {
+            if(item.categories.isAvailable === true) {
+                return item;
+            }
+        })
+        // console.log(product);
         res.render('allproducts' , {productList: product , id: req.session._userId , isLoggedIn: isLoggedIn});
     } catch(e) {
         console.log(e);
