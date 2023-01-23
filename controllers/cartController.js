@@ -14,7 +14,7 @@ const getCart = async (req,res) => {
         const user = await User.find({email: req.session.userid}).populate('cart.id');
         if(user[0].cart.length === 0) {
                
-            res.send('No items on the cart');
+            res.render('emptyCart' , { isLoggedIn: isLoggedIn , id: req.session._userId });
 
         } else {
             user[0].cart.forEach((item) => {
@@ -82,7 +82,7 @@ const addToCart = async (req,res) => {
         console.log(e);
     }
 
-    res.redirect('/product');
+    res.redirect('/cart');
     
 }
 

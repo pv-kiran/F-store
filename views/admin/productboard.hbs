@@ -77,9 +77,9 @@
                         <td>{{price}}</td>
                         <td><img src="{{images.[0].secured_url}}" alt="IMAGE"></td>
                         {{#if isBlocked}}
-                          <td>Blocked</td>
+                          <td>Unavailable</td>
                         {{else}}
-                           <td>Active</td>
+                           <td>Available</td>
                         {{/if}}
                         <td class="product-action">
                             <a href="/admin/product/{{_id}}" class="btn-edit">

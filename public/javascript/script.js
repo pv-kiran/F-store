@@ -11,16 +11,54 @@ if(registerForm) {
     })
 }
 
+
+// validation for user name in user edit form
+const userUpdateForm = document.querySelector(".personal-info-form");
+if(userUpdateForm) {
+    userUpdateForm.addEventListener('submit' , function(e) {
+        console.log('Submission of change username');
+        e.preventDefault(); 
+        let isValid = validate();
+        if(isValid) {
+            sendUserNameUpdateReq();
+        }
+    })
+}
+
+// request for changing the user name
+
+async function sendUserNameUpdateReq(){
+    const userId = document.getElementById('btn-username-change').dataset.url;
+    console.log(userId);
+    const url = `http://localhost:4000/profile/username/${userId}`;
+    console.log(url);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: document.getElementById('name').value
+                    })
+                })
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+}
+
+
+// validation for user register and login
 function validate() {
-    // var name = document.querySelector('#name').value;
+    // let name = document.querySelector('#name').value;
     // var email = document.querySelector('#email').value;
     // var password = document.querySelector('#password').value;
-    var err = document.querySelector('.error');
-    var text ;
-    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    let err = document.querySelector('.error');
+    let addressErr = document.querySelector('.addr-error');
+    let text ;
+    let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
     if(document.querySelector('#name')) {
-        var name = document.querySelector('#name').value;
+        let name = document.querySelector('#name').value;
         
         if( name.length < 5 ) {
             text = "Please enter a valid name";
@@ -29,15 +67,15 @@ function validate() {
             return false;
         }
         else if (!name.match(/^[A-Za-z]*\s{1}[A-Za-z]*$/)) {
-        text = 'Write full name';
-        err.textContent = text;
-        err.style.height = '4rem';
-        return false;
+            text = 'Write full name';
+            err.textContent = text;
+            err.style.height = '4rem';
+            return false;
         }
     }
 
     if(document.querySelector('#email')) {
-        var email = document.querySelector('#email').value;
+        let email = document.querySelector('#email').value;
         if(email.match(mailformat) === null) {
             text = "Please enter a valid email";
             err.textContent = text ;
@@ -49,7 +87,7 @@ function validate() {
    
     
     if(document.querySelector('#password')) {
-        var password = document.querySelector('#password').value;
+        let password = document.querySelector('#password').value;
         if(password.length < 5) {
             text = "Please enter a password";
             err.textContent = text ;
@@ -61,7 +99,7 @@ function validate() {
 
 
     if(document.querySelector('#confirmPswd')) {
-        var confirmPswd = document.querySelector('#confirmPswd').value;
+        let confirmPswd = document.querySelector('#confirmPswd').value;
         // console.log(confirmPswd);
         // console.log(password);
         
@@ -80,9 +118,7 @@ function validate() {
 
     }
     if(document.querySelector('#otp')) {
-        var otp = document.querySelector('#otp').value;
-        // console.log(confirmPswd);
-        // console.log(password);
+        let otp = document.querySelector('#otp').value;
         
         if( otp === '' ) {
             text = "Please enter OTP";
@@ -102,6 +138,143 @@ function validate() {
     return true;
 }
 
+
+// Validation for address form and edit address form
+const addressForm = document.querySelector(".adress-form");
+if(addressForm) {
+    addressForm.addEventListener('submit' , function(e) {
+        console.log('Submission of change username');
+        e.preventDefault(); 
+        let isValid = addressvalidation();
+        if(isValid) {
+            document.querySelector(".adress-form").submit();
+        }
+    })
+}
+
+
+// updating the user address
+let upadateAddressForm = document.querySelector('.adress-update-form');
+if(upadateAddressForm) {
+    upadateAddressForm.addEventListener('submit' , function(e) {
+        e.preventDefault();
+        let isValid = addressvalidation();
+        if(isValid) {
+            sendAddressUpdateReq();
+        }
+    })
+}
+
+
+// Request for address change
+async function sendAddressUpdateReq(){
+    const userId = document.getElementById('btn-address-update').dataset.url;
+    console.log(userId);
+    const url = `http://localhost:4000/profile/address/${userId}`;
+    console.log(url);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        houseName: document.getElementById('houseName').value,
+                        phone: document.getElementById('phone').value,
+                        city: document.getElementById('city').value,
+                        postalCode: document.getElementById('postalCode').value,
+                        state: document.getElementById('state').value,
+                        coutry: document.getElementById('coutry').value
+                    })
+                })
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+}
+
+
+// Address validation
+function addressvalidation() {
+    let addressErr = document.querySelector('.addr-error');
+    let text ;
+
+    if(document.querySelector('#houseName')) {
+        let houseName = document.querySelector('#houseName').value;
+        
+        if( houseName === '' ) {
+            text = "Please enter house name";
+            addressErr.textContent = text ;
+            addressErr.style.height = '4rem';
+            return false;
+        }
+
+    }
+
+    if(document.querySelector('#phone')) {
+        let phone = document.querySelector('#phone').value;
+        
+        if( phone === '' ) {
+            text = "Please enter phone number";
+            addressErr.textContent = text ;
+            addressErr.style.height = '4rem';
+            return false;
+        }
+
+    }
+
+    if(document.querySelector('#city')) {
+        let city = document.querySelector('#city').value;
+        
+        if( city === '' ) {
+            text = "Please enter your city";
+            addressErr.textContent = text ;
+            addressErr.style.height = '4rem';
+            return false;
+        }
+
+    }
+
+    if(document.querySelector('#postalCode')) {
+        let postalCode = document.querySelector('#postalCode').value;
+        
+        if( postalCode === '' ) {
+            text = "Please enter your postal code";
+            addressErr.textContent = text ;
+            addressErr.style.height = '4rem';
+            return false;
+        }
+
+    }
+
+    if(document.querySelector('#state')) {
+        let state = document.querySelector('#state').value;
+        
+        if( state === '' ) {
+            text = "Please enter your state name";
+            addressErr.textContent = text ;
+            addressErr.style.height = '4rem';
+            return false;
+        }
+
+    }
+
+    if(document.querySelector('#coutry')) {
+        let coutry = document.querySelector('#coutry').value;
+        
+        if( coutry === '' ) {
+            text = "Please enter your postal code";
+            addressErr.textContent = text ;
+            addressErr.style.height = '4rem';
+            return false;
+        }
+
+    }
+
+    return true;
+
+}
+
+
+// OTP RESEND
 if(resendBtn) {
     resendBtn.addEventListener('click' , async () => {
         const userEmail = resendBtn.dataset.url;
@@ -160,47 +333,10 @@ if(imageContainer) {
 
 
 
-// updating the user address
 
-let upadateAddressForm = document.querySelector('.adress-update-form');
-if(upadateAddressForm) {
-    upadateAddressForm.addEventListener('submit' , function(e) {
-        e.preventDefault();
-        console.log('Success');
-        sendAddressUpdateReq();
-    })
-}
-
-
-
-async function sendAddressUpdateReq(){
-    const userId = document.getElementById('btn-address-update').dataset.url;
-    console.log(userId);
-    const url = `http://localhost:4000/profile/address/${userId}`;
-    console.log(url);
-    const res = await fetch(url, {
-                    method: 'PUT',
-                    credentials: "same-origin",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        houseName: document.getElementById('houseName').value,
-                        phone: document.getElementById('phone').value,
-                        city: document.getElementById('city').value,
-                        postalCode: document.getElementById('postalCode').value,
-                        state: document.getElementById('state').value,
-                        coutry: document.getElementById('coutry').value
-                    })
-                })
-    const redirectPath = await res.json();
-    window.location.href = redirectPath.redirect;
-}
 
 
 //removing the address
-
-// Blocking/Unblocking the user 
 let addressContainer = document.querySelector('.address-container');
 if(addressContainer) {
     console.log('clicked');
@@ -210,7 +346,7 @@ if(addressContainer) {
         }   
     })
 }
-
+// request for removing address
 async function removeAddress(e) {
     const userId = e.target.dataset.url;
     console.log(userId);

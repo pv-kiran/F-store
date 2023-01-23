@@ -6,7 +6,8 @@ const { getOrderDetails ,
         newShippingAddress , 
         createOrder , 
         getUserOrder, 
-        cancelOrder } = require('../../controllers/orderController')
+        cancelOrder, 
+        orderSuccess} = require('../../controllers/orderController')
 
 
 // Order details page
@@ -24,7 +25,7 @@ router.get('/myorder', getUserOrder ) ;
 //cancelling the order
 router.put('/cancel/:id' , cancelOrder); 
 
-
+router.get('/success' , orderSuccess);
 
 
 module.exports= router;

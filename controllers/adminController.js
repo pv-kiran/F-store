@@ -9,6 +9,7 @@ cloudinary.config({
 const User = require('../models/user');
 const Product = require('../models/product');
 const Category = require('../models/category');
+const Order = require('../models/order');
 
 
 const getAllUsers = async (req,res) => {
@@ -51,7 +52,8 @@ const getProductForm = async  (req,res) => {
 };
 
 const addProduct = async (req,res) => {
-    
+    console.log("hello");
+    console.log(req.files);
     const { productName , price , description , categories, material , productDimension ,manufacturedBy , marketedBy , stock , countryOfOrigin } = req.body ;
    //  console.log(req.files);
     const imgArr = [];
@@ -120,6 +122,7 @@ const getAllProducts = async (req,res) => {
 
 const updateProductStatus = async (req,res) => {
     const {id} = req.params ;
+    console.log(id);
     try {
         const product = await Product.findById({ _id: id});
         const isBlocked = product.isBlocked ;
@@ -143,6 +146,52 @@ const getProduct = async (req,res) => {
     }
    
 }
+
+const updateProduct = async (req, res) => {
+    const {id} = req.params;
+    req.body.price = parseInt(req.body.price);
+    req.body.stock = parseInt(req.body.stock);
+    // console.log(req.body);
+    // console.log(id);
+
+    try {
+        let product = await Product.find({_id: id});
+        let imgArr = [] ;
+        let result;
+        if(req.files) {
+            // destroy the existing images
+            for (let index = 0; index < product[0].images.length; index++) {
+            const res = await cloudinary.uploader.destroy(product[0].images[index].id);
+            }
+
+            // upload and save the images
+            for (let index = 0; index < req.files.imagefile.length; index++) {
+        
+                result = await cloudinary.uploader.upload(req.files.imagefile[index].tempFilePath , {
+                    folder: 'furnitures'
+                });
+                imgArr.push({
+                    id: result.public_id ,
+                    secured_url: result.secure_url
+                });
+
+            }
+            req.body.images = imgArr ;
+        }
+        product = await Product.findByIdAndUpdate(id , req.body , {
+            new: true ,
+            runValidators: true
+        }) ;
+
+        res.redirect('/admin/getproducts');
+
+    } catch(e) {
+       console.log(e);
+    }
+    
+}
+
+
 
 const getCategories = async (req,res) => {
     try {
@@ -211,7 +260,7 @@ const cancelOrders = async (req,res) => {
         })
         
         const cancellOrder = await Order.findOneAndUpdate({_id: id} , {isCancelled: true});
-        console.log(cancellOrder);
+        res.json({redirect: '/admin/orders'});
     } catch(e) {
         console.log(e);
     }
@@ -235,7 +284,7 @@ const deliverOrder = async (req,res) => {
        })
     
        const deliveredOrder = await Order.findOneAndUpdate({_id: id} , {isDelivered: true});
-       console.log(deliveredOrder);
+       res.json({redirect: '/admin/orders'});
      } catch(e) {
         console.log(e);
      }
@@ -257,5 +306,6 @@ module.exports = {
     updateCategory ,
     getOrders ,
     cancelOrders ,
-    deliverOrder
+    deliverOrder ,
+    updateProduct
 };

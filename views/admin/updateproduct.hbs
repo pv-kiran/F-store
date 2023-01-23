@@ -1,6 +1,6 @@
 
     <section class="product_form-container">
-        <form id="product_form" action="/admin/addproduct" method="post" enctype="multipart/form-data">
+        <form id="product_update_form" action= "/admin/product/{{product.id}}" method="post" enctype="multipart/form-data">
             <h2 class="form-heading dfull">EDIT PRODUCT</h2>
             <div class="input-container">
                 <label for="productName">Product Name</label>
@@ -55,7 +55,7 @@
             {{#if isExisting}}
                     <div class="errorMsg dfull">{{errMessage}}</div>
             {{/if}}
-            <input type="submit" value="ADD PRODUCT" class="btn-submit btn-product" id="btn-submit">
+            <input type="submit" value="UPDATE PRODUCT" class="btn-submit btn-product" id="btn-submit">
         </form>
     </section>
 

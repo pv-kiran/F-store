@@ -33,7 +33,7 @@
           <p>
             Evok is the new stop for online furniture shopping with modern furniture designs catering to customers different styles and needs.  
           </p>
-          <button class="btn-shop">SHOP NOW</button>
+          <a href="/product" class="btn-shop">SHOP NOW</a href="/product">
       </div>
     </section> 
     <section class="hero-img">
@@ -46,7 +46,14 @@
           <p>The coolest, hottest furniture pieces.</p>
        </div>
        <div class="best-products-list">
-        {{#each productList}}
+             {{#each productList}}
+                <div class="product-card">
+                   <img src="{{images.[0].secured_url}}" alt="best">
+                   <h2 class="product_name">{{productName}}</h2>
+                   <h3 class="price">{{price}}</h3>
+                </div>
+             {{/each}} 
+        {{!-- {{#each productList}}
           <div class="best-product">
             <div class="card">
                <img src="{{images.[0].secured_url}}" alt="best">
@@ -54,7 +61,7 @@
                <h3 class="product_name">{{productName}}</h3>
             </div>
           </div>
-        {{/each}}
+        {{/each}} --}}
        </div>
     </section>
     <section class="signup-letter">

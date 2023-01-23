@@ -19,11 +19,12 @@
                             <input type="text" name="email" id="email" value="{{user.email}}" readonly>
                         </div>
                         <div class="input-container">
-                            <label for="email">Email</label>
-                            <input type="text" name="name" id="email" value="{{user.name}}">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" value="{{user.name}}">
                         </div>
+                        <div class="error"></div>
                         <div class="input-container">
-                            <input type="submit" value="Change">
+                            <input type="submit" value="Change" data-url="{{user._id}}" id="btn-username-change">
                         </div>
                         </form>
                     </div>
@@ -31,7 +32,7 @@
             </section>
             <section class="profile-actions">
                 <div class="profile-actions-nav">
-                    <a href="#">Address Info</a>
+                    <a href="/profile/{{user.id}}">Address Info</a>
                     <a href="/order/myorder">Order Info</a>
                     <a href="#">Change Password</a>
                 </div>
@@ -42,31 +43,32 @@
                         <div class="row-one">
                             <div class="input-container">
                                 <label for="name">House Name</label>
-                                <input type="text" name="houseName" id="name">
+                                <input type="text" name="houseName" id="houseName">
                             </div>
                             <div class="input-container">
                                 <label for="email">Phone</label>
-                                <input type="text" name="phone" id="email">
+                                <input type="text" name="phone" id="phone">
                             </div>
                             <div class="input-container">
                                 <label for="email">City</label>
-                                <input type="text" name="city" id="email">
+                                <input type="text" name="city" id="city">
                             </div>
                         </div>
                         <div class="row-one">
                             <div class="input-container">
                                 <label for="name">Postal Code</label>
-                                <input type="text" name="postalCode">
+                                <input type="text" name="postalCode" id="postalCode">
                             </div>
                             <div class="input-container">
                                 <label for="email">State</label>
-                                <input type="text" name="state">
+                                <input type="text" name="state" id="state">
                             </div>
                             <div class="input-container">
                                 <label for="email">Country</label>
-                                <input type="text" name="coutry">
+                                <input type="text" name="coutry" id="coutry">
                             </div>
                         </div>
+                        <div class="addr-error"></div>
                         <div class="row-one">
                             <input type="submit" value="Save" class="btn-address">
                         </div>

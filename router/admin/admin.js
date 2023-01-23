@@ -2,10 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 
-
-
-
-const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder } = require('../../controllers/adminController');
+const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct } = require('../../controllers/adminController');
 
 const {isAdminLoggedIn} = require('../../middlewares/authmiddleware');
 const { cancelOrder } = require('../../controllers/orderController');
@@ -27,7 +24,6 @@ router.get('/addproduct' , isAdminLoggedIn , getProductForm );
 // to add the product
 router.post('/addproduct' , isAdminLoggedIn  , addProduct);
 
-
 // to view the product
 router.get('/getproducts' , isAdminLoggedIn , getAllProducts);
 
@@ -36,6 +32,9 @@ router.put('/productstatus/:id' , isAdminLoggedIn , updateProductStatus);
 
 // view a specific product
 router.get('/product/:id' , isAdminLoggedIn , getProduct);
+
+// to update the product
+router.post('/product/:id' ,  isAdminLoggedIn, updateProduct);
 
 // get category list
 router.get('/categories' ,isAdminLoggedIn, getCategories);

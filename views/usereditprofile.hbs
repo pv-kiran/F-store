@@ -14,25 +14,22 @@
                 <div class="profile-details-container">
                     <div class="personal-info">
                         <form  class="personal-info-form">
-                        <div class="input-container">
-                            <label for="name">Email</label>
-                            <input type="text" name="email" id="email" value="{{user.email}}" readonly>
-                        </div>
-                        <div class="input-container">
-                            <label for="email">Email</label>
-                            <input type="text" name="name" id="email" value="{{user.name}}">
-                        </div>
-                        <div class="input-container">
-                            <input type="submit" value="Change">
-                        </div>
+                            <div class="input-container">
+                                <label for="name">Email</label>
+                                <input type="text" name="email" id="email" value="{{user.email}}" readonly>
+                            </div>
+                            <div class="input-container">
+                                <label for="email">Name</label>
+                                <input type="text" name="name" id="name" value="{{user.name}}" readonly>
+                            </div>
                         </form>
                     </div>
                 </div>
             </section>
             <section class="profile-actions">
                 <div class="profile-actions-nav">
-                    <a href="#">Address Info</a>
-                    <a href="#">Order Info</a>
+                    <a href="/profile/{{user.id}}">Address Info</a>
+                    <a href="/order/myorder">Order Info</a>
                     <a href="#">Change Password</a>
                 </div>
             
@@ -67,6 +64,7 @@
                                 <input type="text" name="coutry" id="coutry" value="{{address.coutry}}">
                             </div>
                         </div>
+                        <div class="addr-error"></div>
                         <div class="row-one">
                             <input type="submit" value="Update" class="btn-address" 
                             id="btn-address-update" data-url="{{address._id}}">

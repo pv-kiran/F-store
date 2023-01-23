@@ -13,33 +13,29 @@ const getOrderDetails = async (req,res) => {
 
     try {
 
-        const user = await User.find({email: req.session.userid}).populate('cart.id');
-        // user[0].cart.forEach((item) => {
-        //     if(item.quantity >= item.id.stock) {
-        //         console.log(item.quantity) ;
-        //         console.log(item.id.stock);
-        //     }
-        // }) ;
-        const cartItems = user[0].cart.filter(item => item.id.isBlocked === false);
-        console.log(cartItems)
-        const totalQuantity = cartItems.reduce((total , item) => {
-            return total+item.quantity;
-        } , 0);
-        const totalPrice = cartItems.reduce((total , item) => {
-            return total+ (item.quantity * item.id.price) 
-        } , 0);
-        cartItems.forEach((item) => {
-            if(item.quantity >= item.id.stock) {
-                console.log(item.quantity);
-                console.log(item.id.stock)
-                item.isUpDisable = true
-            } 
-            else if(item.quantity === 1) {
-                item.isDownDisable = true;
-            }
-        })
-        console.log(cartItems);
-        res.render('orderdetails' , {user: user[0] ,cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId});
+           const user = await User.find({email: req.session.userid}).populate('cart.id');
+        
+            const cartItems = user[0].cart.filter(item => item.id.isBlocked === false);
+            console.log(cartItems)
+            const totalQuantity = cartItems.reduce((total , item) => {
+                return total+item.quantity;
+            } , 0);
+            const totalPrice = cartItems.reduce((total , item) => {
+                return total+ (item.quantity * item.id.price) 
+            } , 0);
+            cartItems.forEach((item) => {
+                if(item.quantity >= item.id.stock) {
+                    console.log(item.quantity);
+                    console.log(item.id.stock)
+                    item.isUpDisable = true
+                } 
+                else if(item.quantity === 1) {
+                    item.isDownDisable = true;
+                }
+            })
+            console.log(cartItems);
+            res.render('orderdetails' , {user: user[0] ,cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId});
+        
     } catch (e) {
         console.log(e);
     }
@@ -98,6 +94,8 @@ const createOrder = async (req,res) => {
         //saving the order
         await newOrder.save();
 
+        res.json({redirect: '/order/success'});
+
     } catch(e) {
         console.log(e);
     }
@@ -114,9 +112,12 @@ const getUserOrder = async  (req,res) => {
     }
     try {
         const orders = await Order.find({user: req.session._userId}).populate('orderItems.id');
-        console.log(orders);
-        console.log(orders[0].orderItems);
-        res.render('userorders' , {order: orders ,isLoggedIn: isLoggedIn , id: req.session._userId});
+        // console.log(orders);
+        if(orders.length === 0) {
+            res.render('emptyorder' , {isLoggedIn: isLoggedIn , id: req.session._userId});
+        } else {
+            res.render('userorders' , {order: orders ,isLoggedIn: isLoggedIn , id: req.session._userId});
+        }
     } catch(e) {
         console.log(e);
     }
@@ -141,7 +142,7 @@ const cancelOrder = async (req,res) => {
        })
     
        const cancelOrder = await Order.findOneAndUpdate({_id: id} , {isCancelled: true});
-       console.log(cancelOrder);
+       res.json({redirect: '/order/myorder'});
     } catch(e) {
         console.log(e);
     }
@@ -149,11 +150,15 @@ const cancelOrder = async (req,res) => {
 
 }
 
+const orderSuccess =  (req,res) => {
+    res.render('ordersuccess');
+}
 
 module.exports = {
     getOrderDetails,
     newShippingAddress ,
     createOrder ,
     getUserOrder , 
-    cancelOrder
+    cancelOrder ,
+    orderSuccess
 }

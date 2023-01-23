@@ -12,7 +12,7 @@ const getUserProfile = async (req,res) => {
     try {
         const user = await User.find({_id: id});
         console.log(user);
-        res.render('userprofile' , {user: user[0] , isLoggedIn: isLoggedIn}); 
+        res.render('userprofile' , {user: user[0] , isLoggedIn: isLoggedIn , id: req.session._userId}); 
     } catch(e) {
         console.log(e);
     }
@@ -48,7 +48,7 @@ const getAddressController = async (req,res) => {
         })
         const address = user[0].address[index];
         console.log(address);
-        res.render('usereditprofile' , {user: user[0] , address: address , isLoggedIn: isLoggedIn});
+        res.render('usereditprofile' , {user: user[0] , address: address , isLoggedIn: isLoggedIn , id: req.session._userId});
     } catch(e) {
         console.log(e);
     }

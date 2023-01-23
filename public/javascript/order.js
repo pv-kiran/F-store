@@ -5,6 +5,27 @@ if(codBtn){
     }) 
 }
 
+// changing the date format
+const dateContainer = document.querySelectorAll('.date');
+for (let index = 0; index < dateContainer.length; index++) {
+    const element = dateContainer[index];
+    let date = new Date(element.textContent.replace('IST', ''));
+    let day = date.getDate();
+    let month = date.getMonth()+1;
+    let year = date.getFullYear();
+    element.textContent = 'Ordered On' + " " + day+"-"+month+"-"+ year ;
+}
+
+// let date = new Date(dateContainer.replace('IST', ''));
+// let day = date.getDate();
+// let month = date.getMonth()+1;
+// let year = date.getFullYear();
+// document.querySelector('.date').textContent = year+"-"+month+"-"+day ;
+// console.log(year+"-"+month+"-"+day)
+
+
+
+
 
 async function createOrder() {
     const url = `http://localhost:4000/order/create`;

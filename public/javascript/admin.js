@@ -8,24 +8,50 @@ if(menuBtn) {
     })
 }
 
-console.log('Hello');
 
-
+// Validation for adding the product 
 let productForm = document.querySelector("#product_form");
 if(productForm) {
+    console.log('Hello');
     productForm.addEventListener('submit' , function(e) {
         e.preventDefault(); 
-        let isValid = validate();
+        let isValid = productValidate(true);
         if(isValid) {
+            console.log('Submission');
             document.querySelector("#product_form").submit();
         }
     })
 }
 
-function validate() {
-    var err = document.querySelector('.error');
-    var text ;
 
+// Validation for updating the product
+
+let productUpdateForm = document.querySelector("#product_update_form");
+console.log(productUpdateForm);
+if(productUpdateForm) {
+    console.log('Hello');
+    productUpdateForm.addEventListener('submit' , function(e) {
+        e.preventDefault(); 
+        let isValid = productValidate(false);
+        if(isValid) {
+            console.log('Submission');
+            document.querySelector("#product_update_form").submit();
+        }
+    })
+}
+
+
+
+
+
+
+
+
+
+function productValidate(isAddProduct) {
+    let err = document.querySelector('.error');
+    let text ;
+    console.log('Hello Validate');
     if(document.querySelector('#productName')) {
         var name = document.querySelector('#productName').value;
         if( name === '' ) {
@@ -34,21 +60,18 @@ function validate() {
             err.style.height = '4rem';
             return false;
         }
-        
     }
 
     if(document.querySelector('#price')) {
+        console.log('Price');
         var price = document.querySelector('#price').value;
-        if(price.length === '') {
+        if(price === '') {
             text = "Please add the price";
             err.textContent = text ;
             err.style.height = '4rem';
             return false;
         }
     }
-    
-
-
     if(document.querySelector('#material')) {
         var material = document.querySelector('#material').value;
         
@@ -120,17 +143,69 @@ function validate() {
             return false;
         }
     }
-    if(document.querySelector('#imagefile')) {
-        var imageFile = document.querySelector('#imagefile');
-        console.log(imageFile.files.length);
-        if( imageFile.files.length < 2) {
-            text = "Please upload product images";
-            err.textContent = text ;
-            err.style.height = '4rem';
-            return false;
+
+
+    if(isAddProduct) {
+        if(document.querySelector('#imagefile')) {
+
+            let imageFile = document.querySelector('#imagefile');
+            console.log(imageFile.files.length);
+            if( imageFile.files.length < 4) {
+                text = "Please upload product images";
+                err.textContent = text ;
+                err.style.height = '4rem';
+                return false;
+            }
+    
+            for (var i = 0; i < imageFile.files.length; i++) {
+                var f = imageFile.files[i];
+                if (!endsWith(f.name, 'jpg') && !endsWith(f.name,'png') && !endsWith(f.name,'webp') && !endsWith(f.name,'avif')) {
+                    // alert(f.name + " is not a valid file!");
+                    // console.log('wrong image type');
+                    text = "Please upload png , jpg or avif files only";
+                    err.textContent = text ;
+                    err.style.height = '4rem';
+                    return false;
+                } 
+            }
+        }
+    } else {
+        if(document.querySelector('#imagefile')) {
+
+            let imageFile = document.querySelector('#imagefile');
+            console.log(imageFile.files.length);
+            if( ( imageFile.files.length  > 0 ) && (imageFile.files.length  < 4)) {
+                text = "Please upload atleast four images";
+                err.textContent = text ;
+                err.style.height = '4rem';
+                return false;
+            }
+
+            else if(imageFile.files.length  === 4) {
+                for (var i = 0; i < imageFile.files.length; i++) {
+                    var f = imageFile.files[i];
+                    if (!endsWith(f.name, 'jpg') && !endsWith(f.name,'png') && !endsWith(f.name,'avif')) {
+                        // alert(f.name + " is not a valid file!");
+                        // console.log('wrong image type');
+                        text = "Please upload png , jpg or avif files only";
+                        err.textContent = text ;
+                        err.style.height = '4rem';
+                        return false;
+                    } 
+                }
+            }
+    
+            
         }
     }
+
     
+
+    function endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+
+
     return true;
 }
 
@@ -190,7 +265,7 @@ async function blockUser(e) {
 
 // Blocking/Unblocking the products
 let actionItems = document.querySelector('table');
-console.log(actionItems);
+
 if(actionItems) {
     actionItems.addEventListener('click' , (e) => {
 
@@ -226,7 +301,7 @@ async function blockProducts(e) {
 
 // changing the status of categories
 let editCategory = document.querySelector('table');
-console.log(editCategory);
+
 if(editCategory) {
     editCategory.addEventListener('click' , (e) => {
 
@@ -286,8 +361,8 @@ async function orderCancell(e) {
                     }
                 });
                 
-    // const redirectPath = await res.json();
-    // window.location.href = redirectPath.redirect;
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
     
 }
 
@@ -304,7 +379,7 @@ async function orderDeliver(e) {
                     }
                 });
                 
-    // const redirectPath = await res.json();
-    // window.location.href = redirectPath.redirect;
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
     
 }
