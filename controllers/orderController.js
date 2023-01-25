@@ -65,6 +65,18 @@ const createOrder = async (req,res) => {
         })
         let shippingAddres = user[0].address[index];
     
+        // let newOrder;
+        // if(paymentMethod === 'Cash on delivery') {
+        //     await Order.create({
+        //         shippingInfo: shippingAddres ,
+        //         user: req.session._userId ,
+        //         orderItems: user[0].cart ,
+        //         totalAmount: totalAmount ,
+        //         orderStatus: orderStatus ,
+        //         paymentMode: paymentMethod ,
+        //     })
+        // }
+
         // crating the order
         const newOrder = await Order.create({
             shippingInfo: shippingAddres ,
@@ -75,6 +87,7 @@ const createOrder = async (req,res) => {
             paymentMode: paymentMethod ,
         })
     
+
         // removing the cart items
         await user[0].cart.splice(0);
         console.log(user[0].cart);
@@ -91,7 +104,7 @@ const createOrder = async (req,res) => {
             await updateStock(item.id , item.quantity )
         })
     
-        //saving the order
+        // saving the order
         await newOrder.save();
 
         res.json({redirect: '/order/success'});

@@ -1643,24 +1643,35 @@ footer h1 {
 }
 .my-details-order {
    border: .4px rgb(77, 75, 75) solid;
-   width: 80%;
+   width: 100%;
    display: flex;
    justify-content: space-between;
    padding: 1rem 1.5rem;
    border-radius: .4rem;
    margin-bottom: 5rem;
+   /* border: 1px red solid; */
 }
+
+.my-details-order > div {
+   /* border: 1px red solid; */
+   width: 35%;
+}
+
+
 .order-products-image {
    display: flex;
    flex-direction: column;
+   align-items: center;
 }
 .order-products-image img {
-    width: 5rem;
-    height: 5rem;
+    width: 7rem;
+    height: 7rem;
     display: block;
     margin-bottom: 1rem;
     object-fit: cover;
 }
+
+
 
 .order-shipping-address h4 , 
 .order-products h4 , 
@@ -1668,8 +1679,17 @@ footer h1 {
 .order-total h4 {
    font-size: 1.4rem;
    font-weight: 200;
-   margin-bottom: .4rem;
+   margin-bottom: .8rem;
+   text-align: center;
 } 
+.order-shipping-address h4 {
+   text-align: left;
+}
+.order-products h4 {
+   text-align: left;
+   padding-left: 2rem;
+   
+}
 
 .order-image-container {
    display: flex;

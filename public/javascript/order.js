@@ -1,9 +1,12 @@
 let codBtn = document.querySelector('.btn-cod');
+
 if(codBtn){
     codBtn.addEventListener('click' , () => {
         createOrder();
     }) 
 }
+
+
 
 // changing the date format
 const dateContainer = document.querySelectorAll('.date');

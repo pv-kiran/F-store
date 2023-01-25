@@ -21,6 +21,7 @@
     "express-session": "^1.0.0",
     "handlebars": "^4.7.7",
     "mongoose": "^6.8.2",
-    "nodemailer": "^6.8.0"
+    "nodemailer": "^6.8.0",
+    "razorpay": "^2.8.4"
   }
 }

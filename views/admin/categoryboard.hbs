@@ -77,11 +77,12 @@
                             <td >
                                 {{#if isAvailable}}
                                 <a data-url="{{_id}}" class="btn-category-block">
-                                    <i class="fas fa-times-circle cross"></i>
+                                    <i class="fas fa-check-square tick"></i>
+                                    {{!-- <i class="fas fa-times-circle cross"></i> --}}
                                 </a>
                                 {{else}}
                                 <a data-url="{{_id}}" class="btn-category-block">
-                                    <i class="fas fa-check-square tick"></i>
+                                    <i class="fas fa-times-circle cross"></i>
                                 </a>
                                 {{/if}} 
                             </td>
