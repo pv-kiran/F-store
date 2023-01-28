@@ -1,6 +1,8 @@
 // Model
 const User = require('../models/user');
 
+
+
 // hashing module*
 const bcrypt = require('bcryptjs');
 
@@ -13,7 +15,7 @@ const transporter = nodemailer.createTransport({
     secure: false,
     auth: {
       user: 'mail4kpv@gmail.com',
-      pass: 'xcueeldvqoceyrua'
+      pass: 'uofaomcvaaouegym'
     } ,
     tls: {
         ciphers:'SSLv3'

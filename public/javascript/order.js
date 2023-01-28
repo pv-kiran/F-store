@@ -1,13 +1,3 @@
-let codBtn = document.querySelector('.btn-cod');
-
-if(codBtn){
-    codBtn.addEventListener('click' , () => {
-        createOrder();
-    }) 
-}
-
-
-
 // changing the date format
 const dateContainer = document.querySelectorAll('.date');
 for (let index = 0; index < dateContainer.length; index++) {
@@ -28,11 +18,35 @@ for (let index = 0; index < dateContainer.length; index++) {
 
 
 
+let codBtn = document.querySelector('.btn-cod');
+
+if(codBtn){
+    codBtn.addEventListener('click' , (e) => {
+        createOrder(e);
+    }) 
+}
 
 
-async function createOrder() {
+let btnRazor = document.querySelector('.btn-razor');
+if(btnRazor) {
+    btnRazor.addEventListener('click' , (e) => {
+        createOrder(e);
+    })
+}
+
+
+async function createOrder(e) {
+
     const url = `http://localhost:4000/order/create`;
-    console.log(url);
+    let methodOfPayment;
+    if(e.target.classList.contains('btn-cod')) {
+         methodOfPayment = 'Cash on delivery';
+    }
+    else if(e.target.classList.contains('btn-razor')) {
+         methodOfPayment = 'Razor Pay';
+    }
+
+    console.log(methodOfPayment);
     const res = await fetch(url, {
                     method: 'POST',
                     credentials: "same-origin",
@@ -41,12 +55,42 @@ async function createOrder() {
                     },
                     body: JSON.stringify({
                         totalAmount: document.querySelector('.order-price').textContent ,
-                        paymentMethod: 'Cash on delivery' ,
+                        paymentMethod: methodOfPayment ,
                         shippingInfo: document.querySelector('input[name="address"]:checked').value
                     })
                 })
     const redirectPath = await res.json();
-    window.location.href = redirectPath.redirect;
+    // console.log(redirectPath.myOrder);
+
+    if(redirectPath.myOrder) {
+        
+        console.log(redirectPath.myOrder)
+        var options = {
+            key: "rzp_test_I7TMRHjNEnfLbl", // Key ID
+            amount: redirectPath.myOrder.amount * 100, // Amount is in paise
+            currency: "INR",
+            order_id: redirectPath.myOrder.id, //This is a sample Order ID
+            handler: function() {
+                window.location.href = redirectPath.redirect;
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+        
+
+    } else {
+        console.log('Y');
+    }
+   
+
+
+
+
+
+
+
+
+    // window.location.href = redirectPath.redirect;
 }
 
 

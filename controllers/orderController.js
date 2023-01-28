@@ -2,6 +2,9 @@ const User = require('../models/user');
 const Order = require('../models/order');
 const Product = require('../models/product');
 
+const Razorpay = require('razorpay');
+
+
 const getOrderDetails = async (req,res) => {
 
     let isLoggedIn;
@@ -65,49 +68,91 @@ const createOrder = async (req,res) => {
         })
         let shippingAddres = user[0].address[index];
     
-        // let newOrder;
-        // if(paymentMethod === 'Cash on delivery') {
-        //     await Order.create({
-        //         shippingInfo: shippingAddres ,
-        //         user: req.session._userId ,
-        //         orderItems: user[0].cart ,
-        //         totalAmount: totalAmount ,
-        //         orderStatus: orderStatus ,
-        //         paymentMode: paymentMethod ,
-        //     })
-        // }
+        let newOrder;
 
-        // crating the order
-        const newOrder = await Order.create({
-            shippingInfo: shippingAddres ,
-            user: req.session._userId ,
-            orderItems: user[0].cart ,
-            totalAmount: totalAmount ,
-            orderStatus: orderStatus ,
-            paymentMode: paymentMethod ,
-        })
-    
+        // Cash on delivery
+        if(paymentMethod === 'Cash on delivery') {
 
-        // removing the cart items
-        await user[0].cart.splice(0);
-        console.log(user[0].cart);
-        await user[0].save({validateBeforeSave: false});
-        
-        // updating the product stock
-        const updateStock = async (productId , quantity) => {
-             const product = await Product.find({_id:productId});
-             product[0].stock = product[0].stock - quantity ;
-             product[0].save({validateBeforeSave: false});
+            // adding item to order db
+            newOrder = await Order.create({
+                            shippingInfo: shippingAddres ,
+                            user: req.session._userId ,
+                            orderItems: user[0].cart ,
+                            totalAmount: totalAmount ,
+                            orderStatus: orderStatus ,
+                            paymentMode: paymentMethod ,
+                       })
+
+            // removing the cart items
+            await user[0].cart.splice(0);
+            // console.log(user[0].cart);
+            await user[0].save({validateBeforeSave: false});
+
+            // updating the product stock
+            const updateStock = async (productId , quantity) => {
+                const product = await Product.find({_id:productId});
+                product[0].stock = product[0].stock - quantity ;
+                product[0].save({validateBeforeSave: false});
+            }
+
+            // updating the product stock
+            newOrder.orderItems.forEach(async (item) => {
+                await updateStock(item.id , item.quantity )
+            })
+
+            // saving the order
+            await newOrder.save();
+            res.json({redirect: '/order/success'});
+
         }
-    
-        newOrder.orderItems.forEach(async (item) => {
-            await updateStock(item.id , item.quantity )
-        })
-    
-        // saving the order
-        await newOrder.save();
 
-        res.json({redirect: '/order/success'});
+        else if(paymentMethod === 'Razor Pay') {
+            // integration with razorpay
+            
+
+               let instance = new Razorpay({
+                key_id: 'rzp_test_I7TMRHjNEnfLbl',
+                key_secret: 'iMwgAhmFKNbOOI3JMbKJtkSS'
+               });
+
+
+               const myOrder = await instance.orders.create({
+                    amount: totalAmount * 100,
+                    currency: "INR",
+                    receipt: "receipt#1"
+               })
+
+               const newOrder = await Order.create({
+                    shippingInfo: shippingAddres ,
+                    user: req.session._userId ,
+                    orderItems: user[0].cart ,
+                    totalAmount: totalAmount ,
+                    orderStatus: orderStatus ,
+                    paymentMode: paymentMethod ,
+                    orderId: myOrder.id
+               });
+
+               // removing the cart items
+               await user[0].cart.splice(0);
+               await user[0].save({validateBeforeSave: false});
+
+                // updating the product stock
+               const updateStock = async (productId , quantity) => {
+                  const product = await Product.find({_id:productId});
+                  product[0].stock = product[0].stock - quantity ;
+                  product[0].save({validateBeforeSave: false});
+               }
+    
+                newOrder.orderItems.forEach(async (item) => {
+                    await updateStock(item.id , item.quantity )
+                })
+    
+                // saving the order
+                await newOrder.save();
+
+                res.json({myOrder: myOrder , redirect: '/order/success'});
+
+        }
 
     } catch(e) {
         console.log(e);
@@ -124,7 +169,7 @@ const getUserOrder = async  (req,res) => {
         isLoggedIn = false;
     }
     try {
-        const orders = await Order.find({user: req.session._userId}).populate('orderItems.id');
+        const orders = await Order.find({user: req.session._userId}).sort({'createdAt': -1}).populate('orderItems.id');
         // console.log(orders);
         if(orders.length === 0) {
             res.render('emptyorder' , {isLoggedIn: isLoggedIn , id: req.session._userId});
@@ -175,3 +220,53 @@ module.exports = {
     cancelOrder ,
     orderSuccess
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// crating the order
+        // const newOrder = await Order.create({
+        //     shippingInfo: shippingAddres ,
+        //     user: req.session._userId ,
+        //     orderItems: user[0].cart ,
+        //     totalAmount: totalAmount ,
+        //     orderStatus: orderStatus ,
+        //     paymentMode: paymentMethod ,
+        // })
+    
+
+        // removing the cart items
+        // await user[0].cart.splice(0);
+        // console.log(user[0].cart);
+        // await user[0].save({validateBeforeSave: false});
+        
+        // updating the product stock
+        // const updateStock = async (productId , quantity) => {
+        //      const product = await Product.find({_id:productId});
+        //      product[0].stock = product[0].stock - quantity ;
+        //      product[0].save({validateBeforeSave: false});
+        // }
+    
+        // newOrder.orderItems.forEach(async (item) => {
+        //     await updateStock(item.id , item.quantity )
+        // })
+    
+        // // saving the order
+        // await newOrder.save();
+
+        // res.json({redirect: '/order/success'});

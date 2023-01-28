@@ -1,0 +1,108 @@
+   
+     {{>adminsidenav}}
+        <section class="dashboard-container">
+            <div class="dashboard-nav">
+                <div class="dashboard-left">
+                    <div>
+                        <i id="menu-btn" class="fas fa-bars"></i>
+                    </div>
+                    <form class="search" action="/admin/search" method="post">
+                        <input type="text" name="name" id="search" placeholder="search">
+                        <button class="btn-search" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    
+                    </form>
+                </div>
+                <div class="dashboard-right">
+                    
+                    <a href="/admin/logout">
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+                    </a>
+                    <img src="/images/admin.jpg" alt="admin">
+                </div>
+            </div>
+
+            <h3 class="dashboard-heading">
+                DASHBOARD
+            </h3>
+
+
+            <div class="box-container">
+                <div class="box">
+                    <i class="fas fa-users"></i>
+                    <div>
+                        <h3>{{user}}</h3>
+                        <span>Users</span>
+                    </div>
+                </div>
+                <div class="box">
+                    <i class="fab fa-product-hunt"></i>
+                    <div>
+                        <h3>{{product}}</h3>
+                        <span>Products</span>
+                    </div>
+                </div>
+                <div class="box">
+                    <i class="fas fa-people-carry"></i>
+                    <div>
+                        <h3>{{order}}</h3>
+                        <span>Order</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="dashboard chartboard">
+
+                <div id="chart-container">
+                    <canvas id="products"></canvas>
+                </div>
+
+                <div id="chart-container">
+                    <canvas id="dailyWiseSale"></canvas>
+                </div>
+
+                <div id="pie-chart-container">
+                    <canvas id="categories"></canvas>
+                </div>
+
+                
+
+
+                {{!-- <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            <td>Email</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each userList}}
+                        <tr>
+                            <td>{{name}}</td>
+                            <td>{{email}}</td>
+                            <td>
+                                {{#if isBlocked}}
+                                <a class="unblock" data-url="{{_id}}">UNBLOCK</a>
+                                {{else}}
+                                <a class="block" data-url="{{_id}}">BLOCK</a>
+                                {{/if}}   
+                            </td> 
+                        </tr>
+                        {{/each}} 
+                        
+                    </tbody>
+                    
+                </table> --}}
+            </div>
+
+        </section>
+     {{>popup}}
+
+
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <script src="/javascript/chart.js"></script>
