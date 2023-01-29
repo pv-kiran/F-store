@@ -7,25 +7,26 @@ const { getOrderDetails ,
         createOrder , 
         getUserOrder, 
         cancelOrder, 
-        orderSuccess} = require('../../controllers/orderController')
+        orderSuccess} = require('../../controllers/orderController');
+const { isLoggedIn } = require('../../middlewares/authmiddleware');
 
 
 // Order details page
-router.get('/' , getOrderDetails );
+router.get('/' ,isLoggedIn ,getOrderDetails );
 
 //adding new address from order details page
-router.post('/address/:id' , newShippingAddress );
+router.post('/address/:id' , isLoggedIn , newShippingAddress );
 
 // Placing the orders
-router.post('/create' , createOrder);
+router.post('/create' , isLoggedIn , createOrder);
 
 // get user specific order
-router.get('/myorder', getUserOrder ) ;
+router.get('/myorder', isLoggedIn,getUserOrder ) ;
 
 //cancelling the order
-router.put('/cancel/:id' , cancelOrder); 
+router.put('/cancel/:id'  , cancelOrder); 
 
-router.get('/success' , orderSuccess);
+router.get('/success' , isLoggedIn ,  orderSuccess);
 
 
 module.exports= router;

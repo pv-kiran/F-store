@@ -200,7 +200,13 @@ const cancelOrder = async (req,res) => {
        })
     
        const cancelOrder = await Order.findOneAndUpdate({_id: id} , {isCancelled: true});
-       res.json({redirect: '/order/myorder'});
+       // if admin 
+       if(req.session.adminId) {
+         res.json({redirect: '/admin/orders'});
+       } else {
+          // for normal user
+          res.json({redirect: '/order/myorder'});
+       }
     } catch(e) {
         console.log(e);
     }
