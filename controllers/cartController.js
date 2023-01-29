@@ -78,7 +78,7 @@ const addToCart = async (req,res) => {
         // if cart is empty
         if(user[0].cart.length === 0) {
             user[0].cart.push(item);
-            user[0].save();
+            await user[0].save();
         } else {
             
             // check for existing item in the cart
@@ -94,7 +94,7 @@ const addToCart = async (req,res) => {
                 user[0].cart[res].quantity = user[0].cart[res].quantity + 1;
             }
             
-            user[0].save();
+            await user[0].save();
            
         }
     } catch(e) {
@@ -138,7 +138,7 @@ const cartDelete = async (req,res) => {
         const index =  user[0].cart.findIndex((item) => { return item.id.valueOf() === `${id}` })
         console.log(index);
         user[0].cart.splice(index , 1);
-        user[0].save();
+        await user[0].save();
         res.json({redirect: '/cart'});
     }  catch(e) {
         console.log(e);

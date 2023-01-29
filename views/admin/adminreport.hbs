@@ -1,0 +1,19 @@
+<section style="width: 100%;">
+    <h1 class="report-head">Evoke Daily Sale Report</h1>
+    <table class="dailyreport">
+        <thead>
+            <tr>
+            <td>Date</td>
+            <td>Total Amount</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each dailyWiseSale}}
+            <tr>
+                <td>{{_id}}</td>
+                <td>{{totalAmount}}</td>
+            </tr>
+            {{/each}}                 
+        </tbody>
+    </table>
+</section>

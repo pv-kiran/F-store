@@ -1851,6 +1851,33 @@ footer h1 {
 }
 
 
+.btn-download , 
+.btn-download:hover {
+   display: block;
+   text-align: center;
+   font-size: 1.4rem;
+   margin-top: .8rem;
+   margin-bottom: 3rem;
+   background-color: rgb(154,208,245);
+   color: rgb(65, 64, 64);
+   padding: .7rem;
+   border-radius: .5rem;
+}
+
+.dailyreport {
+   width: 65%;
+   margin: auto;
+}
+
+.report-head {
+   text-align: center;
+   font-size: 2rem;
+   margin: 1.5rem 0;
+}
+
+
+
+
 @media (max-width: 820px) {
    .nav-menu {
       width: 30rem;
@@ -2087,7 +2114,14 @@ footer h1 {
    }
 
    #pie-chart-container {
-      width: 100%;
+      width: 80%;
+   }
+
+   .btn-download {
+      width: 50%;
+      margin: 2rem auto;
+      font-size: 1.2rem;
+      padding: .3rem;
    }
 }
 
