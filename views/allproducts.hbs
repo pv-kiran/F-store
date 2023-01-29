@@ -46,19 +46,22 @@
               <h2 class="primary_head">Let's Get Shopping</h2>
               <p class="tertiary_head">The coolest, hottest furniture pieces.</p>
               <div class="btn-container-product">
-                  <a href="#">All Products</a>
-                  <a href="#">Lights</a>
+                  <a href="/product">All Products</a>
+                  {{!-- <a href="#">Lights</a>
                   <a href="#">Chairs</a>
-                  <a href="#">Tables</a>
+                  <a href="#">Tables</a> --}}
+                  {{#each categories}}
+                     <a href="/product/category/{{categoryName}}">{{categoryName}}</a>
+                  {{/each}}
               </div>
            </div>
       </section>
       <section class="best-products-container">
-        <div class="best-products-heading">
+        {{!-- <div class="best-products-heading">
             <h4>A little bit of everything</h4>
             <h2>All of our products</h2>
             <p>Everything you need in one place</p>
-        </div>
+        </div> --}}
         <div class="best-products-list">
             
 

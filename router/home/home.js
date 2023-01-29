@@ -11,8 +11,34 @@ router.get('/' , async (req,res) => {
         isLoggedIn = false
     }
     try {
-        const product = await Product.find({ isBlocked: false , stock: {$gt: 0}}).limit(4);
-        res.render('home' , {productList : product , id: req.session._userId , isLoggedIn: isLoggedIn});
+        // const product = await Product.find({ isBlocked: false , stock: {$gt: 0}}).limit(4);
+
+
+        const productList = await Product.find({ isBlocked: false , stock: {$gt: 0}}).populate('categories');
+
+        const product = productList.slice(0,4);
+        
+
+        let sofaList = productList.filter((item) => {
+            if(item.categories.categoryName === 'Sofa') {
+                return item;
+            }
+        })
+
+        sofaList = sofaList.slice(0,4)
+
+        let tableList = productList.filter((item) => {
+            if(item.categories.categoryName === 'Table') {
+                return item;
+            }
+        })
+
+        tableList = tableList.slice(0,4);
+
+        console.log(tableList);
+
+
+        res.render('home' , {productList : product  , sofaList: sofaList, tableList: tableList , id: req.session._userId , isLoggedIn: isLoggedIn});
     } catch (e) {
         console.log(e);
     }

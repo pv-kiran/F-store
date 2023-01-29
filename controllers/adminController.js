@@ -112,7 +112,7 @@ const addProduct = async (req,res) => {
 const getAllProducts = async (req,res) => {
     try {
        const products = await Product.find({});
-       console.log(products[0].isBlocked);
+    //    console.log(products[0].isBlocked);
  
        res.render('admin/productboard', {products: products});
     } catch(e) {

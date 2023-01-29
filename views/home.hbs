@@ -64,6 +64,38 @@
         {{/each}} --}}
        </div>
     </section>
+    <section class="best-products-container">
+       <div class="best-products-heading">
+          <h4>Our Sofa's</h4>
+          <h2>Shop Sofa</h2>
+          <p>A perfect sofa for everyone</p>
+       </div>
+       <div class="best-products-list">
+             {{#each sofaList}}
+                <div class="product-card">
+                   <img src="{{images.[0].secured_url}}" alt="best">
+                   <h2 class="product_name">{{productName}}</h2>
+                   <h3 class="price">{{price}}</h3>
+                </div>
+             {{/each}} 
+       </div>
+    </section>
+    <section class="best-products-container">
+       <div class="best-products-heading">
+          <h4>Our Table</h4>
+          <h2>Shop Table</h2>
+          <p>A perfect Table for everyone</p>
+       </div>
+       <div class="best-products-list">
+             {{#each tableList}}
+                <div class="product-card">
+                   <img src="{{images.[0].secured_url}}" alt="best">
+                   <h2 class="product_name">{{productName}}</h2>
+                   <h3 class="price">{{price}}</h3>
+                </div>
+             {{/each}} 
+       </div>
+    </section>
     <section class="signup-letter">
        <h3>
         Sign Up To Our NewsLetter. Receive Exclusive Offers.
@@ -76,7 +108,6 @@
               By clicking Sign Up you're confirming that you agree with our Terms and Conditions.
              </p>
          </form>
-         
        </div>
     </section>
     <footer> 

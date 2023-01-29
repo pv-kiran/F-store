@@ -940,9 +940,15 @@ li {
 }
 
 .signup-letter h3 {
-   font-size: 3rem;
+   font-size: 2.5rem;
    flex-basis: 50%;
    font-weight: 400;
+}
+
+.signup-letter div {
+   flex-basis: 30%;
+   padding: 1rem 0;
+   margin-top: 2rem;
 }
 
 
@@ -950,10 +956,15 @@ li {
    margin-top: -2.3rem;
    padding: .5rem .8rem;
    font-size: 1.5rem;
- }
+}
+
+.signup-letter form input[type='text'] {
+   width: 70%;
+}
 
 .btn-subscribe {
-   height: 3.4rem;
+   padding: .65rem;
+   font-size: 1.2rem;
 }
 
 footer h1 {
@@ -994,6 +1005,7 @@ footer h1 {
    padding: 1.5rem 2rem;
    background-color: rgb(224,237,244);
    font-size: 1.8rem;
+   border-radius: .2rem;
 }
 
 .details .product-details a {
@@ -1069,12 +1081,14 @@ footer h1 {
 
 .product-img img {
    width: 100%;
-   display: block;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 .product-img .mainImg {
    height: 28rem;
    border-radius: 1rem;
-   /* object-fit: contain; */
+   object-fit: contain;
 }
 .product-sub-img {
    display: flex;
@@ -1087,7 +1101,7 @@ footer h1 {
   width: 28%;
   height: 10rem;
   border-radius: 1rem;
-  /* object-fit: contain; */
+  object-fit: contain;
 }
 
 /* Cart page styling */
@@ -1941,7 +1955,7 @@ footer h1 {
       display: block;
    }
    .nav-container.active {
-      height: 30.5vh;
+      height: 33.5vh;
    }
    .nav-list.active {
       opacity: 1;
@@ -1983,6 +1997,14 @@ footer h1 {
       margin-bottom: 3.5rem;
       font-weight: 200;
    }
+
+   .signup-letter div {
+      width: 100%;
+   }
+
+
+
+
 
    .best-products-heading .primary_head {
       font-size: 3.5rem;
@@ -2144,9 +2166,12 @@ footer h1 {
        font-size: 3rem;
     }
 
+    .signup-letter div {
+      flex-basis: 100%;
+    } 
     .btn-submit , .signup-letter form input[type='text'] {
       margin-top: -10rem;
-      width: 90%;
+      width: 100%;
     }
     .signup-letter form p {
       margin-top: .5rem;
