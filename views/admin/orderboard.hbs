@@ -26,16 +26,15 @@
 
          
 
-         <div class="dashboard">
+         <div class="dashboard orderboard">
             <table width="100%">
                 <thead>
                     <tr>
                         <td>Cutomer</td>
                         <td>Product</td>
                         <td>Image</td>
+                        <td>Amount</td>
                         <td>Status</td>
-                        <td>Payment</td>
-                        <td>Total Price</td>
                         <td>Action</td>
                     </tr>
                 </thead>
@@ -53,6 +52,9 @@
                               <img src="{{id.images.[0].secured_url}}" alt="IMAGE">
                             {{/each}}
                         </td>
+
+                        <td>{{totalAmount}}</td>
+
                         <td>
                           {{#if isDelivered}}
                             Deleivered
@@ -60,12 +62,10 @@
                             {{#if isCancelled}}
                                Cancelled
                             {{else}}
-                               Processing
+                               {{trackingInfo}}
                             {{/if}}
                           {{/if}}
                         </td>
-                        <td>{{paymentMode}}</td>
-                        <td>{{totalAmount}}</td>
                         <td>
                             <div class="order-action">
                                 {{#if isDelivered}}
@@ -74,6 +74,13 @@
                                    {{#if isCancelled}}
                                       <a class="danger">Cancelled</a>
                                     {{else}}
+                                    <select name="tracking_info" id="tracking_info" class="tracking_info" data-url="{{id}}">
+                                        <option value="">Select</option>
+                                        <option value="Placed">Placed</option>
+                                        <option value="Confirmed">Confirmed</option>
+                                        <option value="Shipped">Shipped</option>
+                                        <option value="Arriving today">Arriving today</option>
+                                    </select>
                                         <a data-url="{{id}}" class="order-delivered-btn">
                                             Deliver
                                         </a>

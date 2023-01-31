@@ -139,12 +139,10 @@ const loginController = async (req,res) => {
         if(user.length === 1) {
 
             const isValidPassword = await bcrypt.compare(password , user[0].password);
-            console.log(isValidPassword);
 
             if(isValidPassword) {
                 if(user[0].isVerified) {
                     if(!user[0].isBlocked) {
-                        console.log(user[0]);
                         if(user[0].role === 'admin') {
                             session = req.session;
                             session.adminEmail = req.body.email;

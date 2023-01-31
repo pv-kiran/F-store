@@ -278,7 +278,6 @@ const getProductWiseReportpage = async (req,res) => {
 const getAllUsers = async (req,res) => {
     try {
        const user = await User.find({});
-       console.log(user);
        res.render('admin/userboard' , {userList: user});
     } catch(e) {
        console.log(e);
@@ -494,13 +493,27 @@ const updateCategory = async (req,res) => {
 const getOrders = async  (req,res) => {
     try {
         const orders = await Order.find({}).populate('orderItems.id').populate('user');
-        console.log(orders);
-        console.log(orders[0].orderItems);
         res.render('admin/orderboard' , {orders: orders});
     } catch(e) {
         console.log(e);
     }
     
+}
+
+const orderTracking = async (req,res) => {
+  const trackingIfo = req.body.tracking_info;
+  const {id} = req.params ;
+  console.log(id);
+  try {
+      const order = await Order.find({_id:id});
+      // console.log(order[0]);
+      order[0].trackingInfo = trackingIfo;
+      await order[0].save();
+      res.json({redirect: '/admin/orders'});
+  } catch(e) {
+      console.log(e);
+  }
+  
 }
 
 const cancelOrders = async (req,res) => {
@@ -570,6 +583,7 @@ module.exports = {
     getOrders ,
     cancelOrders ,
     deliverOrder ,
+    orderTracking ,
     updateProduct ,
     getChartData ,
     dailySalesReportDownload ,

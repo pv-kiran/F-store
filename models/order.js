@@ -56,6 +56,10 @@ const orderSchema = new mongoose.Schema({
         type: String ,
         required: true
     } ,
+    trackingInfo: {
+      type: String,
+      default: 'Placed'
+    } ,
     isDelivered: {
       type: Boolean ,
       default: false
@@ -71,7 +75,6 @@ const orderSchema = new mongoose.Schema({
     deliveredAt: {
         type: Date
     }
-    
 })
 
 

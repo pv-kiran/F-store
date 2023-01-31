@@ -109,7 +109,7 @@ const createOrder = async (req,res) => {
         else if(paymentMethod === 'Razor Pay') {
             // integration with razorpay
             
-
+               // this should go in env
                let instance = new Razorpay({
                 key_id: 'rzp_test_I7TMRHjNEnfLbl',
                 key_secret: 'iMwgAhmFKNbOOI3JMbKJtkSS'
@@ -127,7 +127,6 @@ const createOrder = async (req,res) => {
                     user: req.session._userId ,
                     orderItems: user[0].cart ,
                     totalAmount: totalAmount ,
-                    orderStatus: orderStatus ,
                     paymentMode: paymentMethod ,
                     orderId: myOrder.id
                });
@@ -170,7 +169,7 @@ const getUserOrder = async  (req,res) => {
     }
     try {
         const orders = await Order.find({user: req.session._userId}).sort({'createdAt': -1}).populate('orderItems.id');
-        // console.log(orders);
+        console.log(orders);
         if(orders.length === 0) {
             res.render('emptyorder' , {isLoggedIn: isLoggedIn , id: req.session._userId});
         } else {

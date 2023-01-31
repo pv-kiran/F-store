@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 
-const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage } = require('../../controllers/adminController');
+const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage , orderTracking } = require('../../controllers/adminController');
 
 const {isAdminLoggedIn} = require('../../middlewares/authmiddleware');
 const { cancelOrder } = require('../../controllers/orderController');
@@ -17,16 +17,16 @@ router.get('/dashboard' , isAdminLoggedIn  , getDashBoard)
 router.get('/chart' , isAdminLoggedIn , getChartData)
 
 // route for daily report download
-router.get('/dailysales/report' , isAdminLoggedIn , dailySalesReportDownload)
+router.get('/dailysales/report'  , dailySalesReportDownload)
 
 // route for daily report cretaion / design
-router.get('/dailywise/report' , isAdminLoggedIn , getDailySalesReportPage)
+router.get('/dailywise/report'  , getDailySalesReportPage)
 
 // route for downloading product wise sales report
-router.get('/prodcutsales/report' , isAdminLoggedIn , productWiseReportDownload)
+router.get('/prodcutsales/report'  , productWiseReportDownload)
 
 // route for daily report cretaion / design
-router.get('/productwise/report' , isAdminLoggedIn , getProductWiseReportpage)
+router.get('/productwise/report' , getProductWiseReportpage)
 
 
 // Route for admin dashboard : User management
@@ -73,6 +73,10 @@ router.get('/orders' ,  isAdminLoggedIn , getOrders);
 
 // cancell order
 router.put('/order/cancel/:id' , isAdminLoggedIn , cancelOrder);
+
+// updating tracking info
+router.put('/order/tracking/:id' , isAdminLoggedIn , orderTracking);
+
 
 // deliver order
 router.put('/order/deliver/:id' , isAdminLoggedIn , deliverOrder);

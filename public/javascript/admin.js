@@ -27,7 +27,6 @@ if(productForm) {
 // Validation for updating the product
 
 let productUpdateForm = document.querySelector("#product_update_form");
-console.log(productUpdateForm);
 if(productUpdateForm) {
     console.log('Hello');
     productUpdateForm.addEventListener('submit' , function(e) {
@@ -345,8 +344,41 @@ if(orderItems) {
         else if(e.target.classList.contains('order-delivered-btn')) {
                 orderDeliver(e);
         }    
+        else if(e.target.classList.contains('tracking_info')) {
+            e.target.addEventListener('change' , (e) => {
+                console.log('Hello');
+               updateTrackingInfo(e);
+            })
+        }
     })
 }
+
+async function updateTrackingInfo(e) {
+    const orderId = e.target.dataset.url;
+    console.log(orderId);
+    console.log('called');
+    const url = `http://localhost:4000/admin/order/tracking/${orderId}` ;
+    // console.log(url);
+    // console.log(document.getElementById('tracking_info').value);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    } ,
+                    body: JSON.stringify({
+                        tracking_info: e.target.value
+                    })
+                });
+                
+
+    
+    const redirectPath = await res.json();
+    console.log(redirectPath);
+    window.location.href = redirectPath.redirect;
+    
+}
+
 
 async function orderCancell(e) {
     const orderId = e.target.dataset.url;
