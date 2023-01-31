@@ -1,0 +1,91 @@
+    
+    {{>adminsidenav}}
+        <section class="dashboard-container">
+            <div class="dashboard-nav">
+                <div class="dashboard-left">
+                    <div>
+                        <i id="menu-btn" class="fas fa-bars"></i>
+                    </div>
+                    <div class="search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" name="search" id="search" placeholder="search">
+                    </div>
+                </div>
+                <div class="dashboard-right">
+                    <a href="/admin/logout">
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+                    </a>
+                    <img src="/images/admin.jpg" alt="admin">
+                </div>
+            </div>
+
+
+            <h3 class="dashboard-heading">
+                Coupon Board
+            </h3>
+            
+
+            <div class="dashboard">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Code</td>
+                            <td>Expiry</td>
+                            <td>Discount</td>
+                            <td>Purchase Amount</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each coupon}}
+                        <tr>
+                            <td>{{couponCode}}</td>
+                            <td class="date">{{expiryDate}}</td>
+                            <td>{{discountPercentage}}%</td>
+                            <td>{{minDiscountAmount}}</td>
+                            <td class="coupon-action">
+                                {{#if isAvailable}}
+                                <a data-url="{{_id}}" class="coupon-block">
+                                    <i class="fas fa-check-square tick"></i>
+                                </a>
+                                {{else}}
+                                <a data-url="{{_id}}" class="coupon-block">
+                                    <i class="fas fa-times-circle cross"></i>
+                                </a>
+                            {{/if}} 
+                        </td>
+                        </tr>
+                        {{/each}} 
+                        
+                    </tbody>
+                </table>
+            </div>
+
+            <form class="coupon_form" action="/admin/addcoupon" method="post">
+               <div class="input-container">
+                 <label for="couponCode">Coupon Code</label>
+                 <input type="text" name="couponCode">
+               </div>
+               <div class="input-container">
+                 <label for="couponCode">Expiry Date</label>
+                 <input type="date" name="expiryDate">
+               </div>
+               <div class="input-container">
+                 <label for="couponCode">Discount Rate</label>
+                 <input type="number" name="discountPercentage">
+               </div>
+               <div class="input-container">
+                 <label for="minDiscountAmount">Minimum Parchase Amount</label>
+                 <input type="number" name="minDiscountAmount">
+               </div>
+               <div class="input-container">
+                 <button type="submit" class="btn-coupon">Save</button>   
+               </div>
+            </form>
+
+        </section>
+    {{>popup}}
+
+    <script src="/javascript/admin.js"></script>

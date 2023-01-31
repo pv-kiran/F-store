@@ -346,7 +346,6 @@ if(orderItems) {
         }    
         else if(e.target.classList.contains('tracking_info')) {
             e.target.addEventListener('change' , (e) => {
-                console.log('Hello');
                updateTrackingInfo(e);
             })
         }
@@ -411,6 +410,54 @@ async function orderDeliver(e) {
                     }
                 });
                 
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+    
+}
+
+
+// changing the date format
+
+
+// changing the date format
+const dateContainer = document.querySelectorAll('.date');
+if(dateContainer) {
+    for (let index = 0; index < dateContainer.length; index++) {
+        const element = dateContainer[index];
+        let date = new Date(element.textContent.replace('IST', ''));
+        let day = date.getDate();
+        let month = date.getMonth()+1;
+        let year = date.getFullYear();
+        element.textContent = day+"-"+month+"-"+ year ;
+    }
+}
+
+
+// coupon delete
+let couponItems = document.querySelector('table');
+if(couponItems) {
+    couponItems.addEventListener('click' , (e) => {
+        if(e.target.classList.contains('coupon-block')) {
+                couponActivate(e);
+        }
+    })
+}
+
+async function couponActivate(e) {
+    const couponId = e.target.dataset.url;
+    console.log(couponId);
+    console.log('called');
+    const url = `http://localhost:4000/admin/updatecoupon/${couponId}`;
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
+                
+
+    
     const redirectPath = await res.json();
     window.location.href = redirectPath.redirect;
     

@@ -284,6 +284,7 @@ tbody tr a {
 }
 
 tbody tr .btn-block , 
+tbody tr .coupon-block , 
 tbody tr .btn-edit , 
 tbody tr .btn-category-block  {
    padding: .5rem;
@@ -1881,9 +1882,37 @@ footer h1 {
    color: #3b3e41;
    width: 10rem;
 }
+
 #tracking_info:focus {
    outline: none;
 }
+
+.coupon_form {
+   width: 50%;
+   margin: auto;
+}
+
+.coupon_form .input-container {
+   margin: 1.5rem;
+}
+
+.coupon_form .input-container button {
+   
+   background-color: #0c1d06;
+   color: white;
+   display: block;
+ }
+
+.coupon_form .input-container input ,
+.coupon_form .input-container .btn-coupon {
+  padding: .7rem;
+  font-size: 1.2rem;
+  border-radius: .3rem;
+  outline: none;
+  border: 1px black solid;
+}
+
+
 
 
 

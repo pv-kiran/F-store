@@ -7,6 +7,7 @@ const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAll
 
 const {isAdminLoggedIn} = require('../../middlewares/authmiddleware');
 const { cancelOrder } = require('../../controllers/orderController');
+const Coupon = require('../../models/coupon');
 
 
 
@@ -81,11 +82,59 @@ router.put('/order/tracking/:id' , isAdminLoggedIn , orderTracking);
 // deliver order
 router.put('/order/deliver/:id' , isAdminLoggedIn , deliverOrder);
 
+
+router.get('/coupon' , async (req,res) => {
+    try {
+        const coupon = await Coupon.find({});
+        res.render('admin/couponboard' , {coupon: coupon});
+    } catch(e) {
+        console.log(e);
+    }
+    
+})
+
+router.post('/addcoupon' , async (req,res) => {
+    let {couponCode , expiryDate , minDiscountAmount  , discountPercentage} = req.body ;
+    try {
+        const coupon = await Coupon.create({
+            couponCode: couponCode ,
+            expiryDate: new Date(expiryDate) ,
+            minDiscountAmount: parseInt(minDiscountAmount) ,
+            discountPercentage: parseInt(discountPercentage)
+        });
+        console.log(coupon);
+        await coupon.save();
+    } catch(e) {
+        console.log(e);
+    }
+    
+})
+
+router.put('/updatecoupon/:id' , async (req,res) => {
+    const {id} = req.params ;
+    try {
+        const coupon = await Coupon.findById({ _id: id});
+        const isAvailable = coupon.isAvailable ;
+        coupon.isAvailable = !isAvailable;
+        await coupon.save();
+        res.json({redirect: '/admin/coupon'});
+    } catch(e) {
+        console.log(e);
+    }
+})
+
+
+
+
+
+
 router.get('/logout' , (req,res) => {
     req.session.adminEmail = null;
     req.session.adminId = null;
     res.redirect('/user/signin');
 })
+
+
 
 
 module.exports = router;
