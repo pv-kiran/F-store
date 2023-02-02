@@ -8,7 +8,6 @@ if(menuBtn) {
     })
 }
 
-
 // Validation for adding the product 
 let productForm = document.querySelector("#product_form");
 if(productForm) {
@@ -25,7 +24,6 @@ if(productForm) {
 
 
 // Validation for updating the product
-
 let productUpdateForm = document.querySelector("#product_update_form");
 if(productUpdateForm) {
     console.log('Hello');
@@ -39,14 +37,7 @@ if(productUpdateForm) {
     })
 }
 
-
-
-
-
-
-
-
-
+// validation for product
 function productValidate(isAddProduct) {
     let err = document.querySelector('.error');
     let text ;
@@ -209,15 +200,6 @@ function productValidate(isAddProduct) {
 }
 
 
-
-
-
-
-
-
-
-
-
 // Blocking/Unblocking the user 
 let editItems = document.querySelector('table');
 const popUp = document.querySelector('#popup');
@@ -331,7 +313,6 @@ async function changeCategoryStatus(e) {
     window.location.href = redirectPath.redirect;
     
 }
-
 
 
 // Cancelling the orders

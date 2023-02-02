@@ -7,10 +7,13 @@ const { getOrderDetails ,
         createOrder , 
         getUserOrder, 
         cancelOrder, 
-        orderSuccess} = require('../../controllers/orderController');
+        orderSuccess ,
+        applyCoupon } = require('../../controllers/orderController');
 
         
 const { isLoggedIn } = require('../../middlewares/authmiddleware');
+
+
 
 
 // Order details page
@@ -19,6 +22,10 @@ router.get('/' ,isLoggedIn ,getOrderDetails );
 //adding new address from order details page
 router.post('/address/:id' , isLoggedIn , newShippingAddress );
 
+
+// applying coupon before crating order
+router.post('/coupon' , isLoggedIn , applyCoupon)
+
 // Placing the orders
 router.post('/create' , isLoggedIn , createOrder);
 
@@ -26,7 +33,7 @@ router.post('/create' , isLoggedIn , createOrder);
 router.get('/myorder', isLoggedIn,getUserOrder ) ;
 
 //cancelling the order
-router.put('/cancel/:id'  , cancelOrder); 
+router.put('/cancel/:id' , isLoggedIn  , cancelOrder); 
 
 router.get('/success' , isLoggedIn ,  orderSuccess);
 

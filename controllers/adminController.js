@@ -12,6 +12,7 @@ const User = require('../models/user');
 const Product = require('../models/product');
 const Category = require('../models/category');
 const Order = require('../models/order');
+const Coupon = require('../models/coupon');
 
 const getDashBoard = async (req,res) => {
     try {
@@ -564,8 +565,47 @@ const deliverOrder = async (req,res) => {
     
 }
 
+const getCouponDashboard = async (req,res) => {
+  try {
+      const coupon = await Coupon.find({});
+      res.render('admin/couponboard' , {coupon: coupon});
+  } catch(e) {
+      console.log(e);
+  }
+  
+}
 
 
+const addCoupon = async (req,res) => {
+  let {couponCode , expiryDate , minDiscountAmount  , discountPercentage} = req.body ;
+  try {
+      const coupon = await Coupon.create({
+          couponCode: couponCode ,
+          expiryDate: new Date(expiryDate) ,
+          minDiscountAmount: parseInt(minDiscountAmount) ,
+          discountPercentage: parseInt(discountPercentage)
+      });
+      console.log(coupon);
+      await coupon.save();
+      res.redirect('/admin/coupon');
+  } catch(e) {
+      console.log(e);
+  }
+  
+}
+
+const updateCoupon = async (req,res) => {
+  const {id} = req.params ;
+  try {
+      const coupon = await Coupon.findById({ _id: id});
+      const isAvailable = coupon.isAvailable ;
+      coupon.isAvailable = !isAvailable;
+      await coupon.save();
+      res.json({redirect: '/admin/coupon'});
+  } catch(e) {
+      console.log(e);
+  }
+}
 
 module.exports = {
     getDashBoard,
@@ -589,5 +629,8 @@ module.exports = {
     dailySalesReportDownload ,
     getDailySalesReportPage,
     productWiseReportDownload ,
-    getProductWiseReportpage
+    getProductWiseReportpage , 
+    getCouponDashboard ,
+    addCoupon ,
+    updateCoupon
 };

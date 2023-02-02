@@ -3,11 +3,13 @@ const router = express.Router();
 
 
 
-const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage , orderTracking } = require('../../controllers/adminController');
+
+
+const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage , orderTracking , getCouponDashboard , addCoupon , updateCoupon } = require('../../controllers/adminController');
 
 const {isAdminLoggedIn} = require('../../middlewares/authmiddleware');
 const { cancelOrder } = require('../../controllers/orderController');
-const Coupon = require('../../models/coupon');
+
 
 
 
@@ -83,48 +85,11 @@ router.put('/order/tracking/:id' , isAdminLoggedIn , orderTracking);
 router.put('/order/deliver/:id' , isAdminLoggedIn , deliverOrder);
 
 
-router.get('/coupon' , async (req,res) => {
-    try {
-        const coupon = await Coupon.find({});
-        res.render('admin/couponboard' , {coupon: coupon});
-    } catch(e) {
-        console.log(e);
-    }
-    
-})
+router.get('/coupon' , isAdminLoggedIn ,getCouponDashboard )
 
-router.post('/addcoupon' , async (req,res) => {
-    let {couponCode , expiryDate , minDiscountAmount  , discountPercentage} = req.body ;
-    try {
-        const coupon = await Coupon.create({
-            couponCode: couponCode ,
-            expiryDate: new Date(expiryDate) ,
-            minDiscountAmount: parseInt(minDiscountAmount) ,
-            discountPercentage: parseInt(discountPercentage)
-        });
-        console.log(coupon);
-        await coupon.save();
-    } catch(e) {
-        console.log(e);
-    }
-    
-})
+router.post('/addcoupon' , isAdminLoggedIn , addCoupon )
 
-router.put('/updatecoupon/:id' , async (req,res) => {
-    const {id} = req.params ;
-    try {
-        const coupon = await Coupon.findById({ _id: id});
-        const isAvailable = coupon.isAvailable ;
-        coupon.isAvailable = !isAvailable;
-        await coupon.save();
-        res.json({redirect: '/admin/coupon'});
-    } catch(e) {
-        console.log(e);
-    }
-})
-
-
-
+router.put('/updatecoupon/:id' , isAdminLoggedIn , updateCoupon )
 
 
 

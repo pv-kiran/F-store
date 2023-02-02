@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const Order = require('../models/order');
 const Product = require('../models/product');
+const Coupon = require('../models/coupon');
 
 const Razorpay = require('razorpay');
 
@@ -17,6 +18,8 @@ const getOrderDetails = async (req,res) => {
     try {
 
            const user = await User.find({email: req.session.userid}).populate('cart.id');
+
+            let isCouponExist = false ;
         
             const cartItems = user[0].cart.filter(item => item.id.isBlocked === false);
             console.log(cartItems)
@@ -26,24 +29,88 @@ const getOrderDetails = async (req,res) => {
             const totalPrice = cartItems.reduce((total , item) => {
                 return total+ (item.quantity * item.id.price) 
             } , 0);
-            cartItems.forEach((item) => {
-                if(item.quantity >= item.id.stock) {
-                    console.log(item.quantity);
-                    console.log(item.id.stock)
-                    item.isUpDisable = true
-                } 
-                else if(item.quantity === 1) {
-                    item.isDownDisable = true;
-                }
-            })
-            console.log(cartItems);
-            res.render('orderdetails' , {user: user[0] ,cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId});
+
+            
+            let coupon =  await Coupon.find({isAvailable: true , expiryDate: { $gt: Date.now()}});
+            if(coupon.length > 0) {
+                isCouponExist = true;
+            }
+
+            res.render('orderdetails' , {user: user[0] ,cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId , isCouponExist: isCouponExist});
         
     } catch (e) {
         console.log(e);
     }
     
 }
+
+const applyCoupon = async (req,res) => {
+
+    let isLoggedIn;
+    if(req.session.userid) {
+    isLoggedIn = true
+    } else {
+    isLoggedIn = false
+    }
+
+    try {
+
+            const user = await User.find({email: req.session.userid}).populate('cart.id');
+
+    
+            const cartItems = user[0].cart.filter(item => item.id.isBlocked === false);
+            const totalQuantity = cartItems.reduce((total , item) => {
+            return total+item.quantity;
+            } , 0);
+
+            let totalPrice = cartItems.reduce((total , item) => {
+            return total+ (item.quantity * item.id.price) 
+            } , 0);
+
+            const coupon = await Coupon.find({couponCode: req.body.coupon});
+            // console.log(coupon[0].discountPercentage);
+
+            console.log(coupon[0].users);
+            let isCouponUsed = coupon[0].users.some((item) => {
+                    return item.id.valueOf() === `${req.session._userId}`
+            });
+
+            let isCouponExist = false ;
+
+            if(isCouponUsed) {
+                    res.render('orderdetails' , {user: user[0] ,cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId , isCouponExist: isCouponExist , isCouponUsed: isCouponUsed ,
+                            couponMsg: 'Oops ..!! Coupon already used' });
+            }  else {
+                 let isCouponUsed = true;
+                 if(totalPrice <= coupon[0].minDiscountAmount) {
+                    res.render('orderdetails' , {user: user[0] ,cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId , isCouponExist: isCouponExist , isCouponUsed: isCouponUsed ,
+                            couponMsg: 'Coupon is only applicable if purchase amount exeeds 3500' });
+                 }
+                 else {
+
+
+                         let coupenUser = {
+                            id: req.session._userId
+                         }
+                         coupon[0].users.push(coupenUser);
+                         await coupon[0].save();
+                         totalPrice = totalPrice - (totalPrice * coupon[0].discountPercentage) / 100;
+                         console.log(totalPrice);
+                    
+                    //      let isCouponExist = false ;
+    
+                         res.render('orderdetails' , {user: user[0] ,cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId , isCouponExist: isCouponExist });
+
+                 }
+
+            }
+
+    } catch (e) {
+            console.log(e);
+    }
+
+}
+
 
 const newShippingAddress = async (req,res) => {
     const {id} = req.params;
@@ -223,7 +290,8 @@ module.exports = {
     createOrder ,
     getUserOrder , 
     cancelOrder ,
-    orderSuccess
+    orderSuccess ,
+    applyCoupon
 }
 
 

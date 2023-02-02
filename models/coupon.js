@@ -20,7 +20,15 @@ const couponSchema = new mongoose.Schema({
     isAvailable: {
         type: Boolean ,
         default: true
-    }
+    } ,
+    users: [
+        {
+            id: {
+                type: mongoose.SchemaTypes.ObjectId ,
+                ref: 'user'
+            }
+        }
+    ]
 })
 
 module.exports = mongoose.model('coupon' , couponSchema);
