@@ -5,9 +5,17 @@ const categorySchema = new mongoose.Schema({
         type: String ,
         required: true
     } ,
+    offer: {
+        type: Number
+    } ,
+    isOfferAvailable: {
+        type: Boolean ,
+        default: false
+    },
     isAvailable: {
         type: Boolean 
     }
+
 })
 
 module.exports = mongoose.model('category' , categorySchema);

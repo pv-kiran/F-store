@@ -607,6 +607,96 @@ const updateCoupon = async (req,res) => {
   }
 }
 
+const addProductOffer = async (req,res) => {
+  const {id} = req.params ;
+  const {offer} = req.body ;
+  try {
+     const product = await Product.find({_id: id});
+     product[0].offer = parseInt(offer) ;
+     product[0].isOfferAvailable = true;
+     product[0].price = product[0].actualPrice - ( product[0].actualPrice * parseInt(offer) ) / 100 ;
+     await product[0].save();
+     res.redirect('/admin/getproducts')
+  } catch(e) {
+     console.log(e);
+  }
+}
+
+const removeProductOffer = async (req,res) => {
+  const {id} = req.params ;
+  try {
+     const product = await Product.find({_id: id});
+     product[0].offer = 0;
+     product[0].isOfferAvailable = false;
+     product[0].price = product[0].actualPrice;
+     await product[0].save();
+     res.json({redirect:'/admin/getproducts'})
+  } catch(e) {
+     console.log(e);
+  }
+}
+
+const addCategoryOffer = async (req,res) => {
+  const {id} = req.params ;
+  const {offer} = req.body ;
+
+  console.log('This is post');
+
+  try {
+
+      const category = await Category.find({_id:id});
+      category[0].offer = parseInt(offer);
+      category[0].isOfferAvailable = true;
+
+
+      const products = await Product.find({categories: id});
+      
+      products.forEach(async (product) => {
+          product.offer = parseInt(offer) ;
+          product.isOfferAvailable = true;
+          product.price = product.actualPrice - ( product.actualPrice * parseInt(offer) ) / 100 ;
+          await product.save();
+      })
+
+
+      await category[0].save();
+
+      res.redirect('/admin/categories');
+
+  }  catch(e) {
+      console.log(e);
+  } 
+}
+
+const removeCategoryOffer = async (req,res) => {
+
+  console.log('Heloo');
+  const {id} = req.params ;
+  console.log(id);
+  try {
+      const category = await Category.find({_id:id});
+      console.log(category);
+      category[0].offer = 0;
+      category[0].isOfferAvailable = false;
+      const products = await Product.find({categories: id});
+      console.log(products);
+      products.forEach(async (product) => {
+          product.offer = 0 ;
+          product.isOfferAvailable = false;
+          product.price = product.actualPrice;
+          await product.save();
+      })
+
+      console.log(products);
+
+      await category[0].save();
+
+      res.json({redirect: '/admin/categories'});
+  }  catch(e) {
+      console.log(e);
+  }
+} 
+
 module.exports = {
     getDashBoard,
     getAllUsers ,
@@ -632,5 +722,9 @@ module.exports = {
     getProductWiseReportpage , 
     getCouponDashboard ,
     addCoupon ,
-    updateCoupon
+    updateCoupon ,
+    addProductOffer ,
+    removeProductOffer ,
+    addCategoryOffer ,
+    removeCategoryOffer
 };

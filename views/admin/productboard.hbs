@@ -65,6 +65,8 @@
                         <td>STOCK</td>
                         <td>PRICE</td>
                         <td>Image</td>
+                        <td>Offer</td>
+                        <td>Add / Clear Offer</td>
                         <td>Status</td>
                         <td>Action</td>
                     </tr>
@@ -76,6 +78,22 @@
                         <td>{{stock}}</td>
                         <td>{{price}}</td>
                         <td><img src="{{images.[0].secured_url}}" alt="IMAGE"></td>
+                        <td>
+                            {{#if isOfferAvailable}}
+                               {{offer}}%
+                            {{else}}
+                               Nil
+                            {{/if}}
+                        </td>
+                        <td class="offer-container">
+                          <form action="/admin/offer/{{_id}}" method="post" class="offer-form">
+                             <div class="input-container">
+                                <input type="number" name="offer" id="offer" placeholder="offer in %" required>
+                                <button type="submit">Apply</button>
+                                <a class="btn-clear" data-url="{{_id}}">Clear</a>
+                             </div>
+                          </form>
+                        </td>
                         {{#if isBlocked}}
                           <td>Unavailable</td>
                         {{else}}
@@ -97,67 +115,11 @@
                             </a>
                             {{/if}} 
                         </td>
-                        {{!-- <td>{{}}</td> --}}
-                        {{!-- <td>
-                             {{#if isBlocked}}
-                            <a class="unblock" data-url="{{_id}}">UNBLOCK</a>
-                            {{else}}
-                            <a class="block" data-url="{{_id}}">BLOCK</a>
-                            {{/if}}   
-                        </td>  --}}
-                    </tr>
+                       
                     {{/each}} 
                     
                 </tbody>
-                {{!-- <tbody>
-                    <tr>
-                        <td>PUMA</td>
-                        <td>200</td>
-                        <td>20</td>
-                        <td>
-                            <img src="/images/admin.webp" alt="ADMIN">
-                        </td>
-                        <td>VIEW</td>
-                    </tr>
-                    <tr>
-                        <td>PUMA</td>
-                        <td>200</td>
-                        <td>20</td>
-                        <td>
-                            <img src="/images/admin.webp" alt="ADMIN">
-                        </td>
-                        <td>VIEW</td>
-                    </tr>
-                    <tr>
-                        <td>PUMA</td>
-                        <td>200</td>
-                        <td>20</td>
-                        <td>
-                            <img src="/images/admin.webp" alt="ADMIN">
-                        </td>
-                        <td>VIEW</td>
-                    </tr>
-                    <tr>
-                        <td>PUMA</td>
-                        <td>200</td>
-                        <td>20</td>
-                        <td>
-                            <img src="/images/admin.webp" alt="ADMIN">
-                        </td>
-                        <td>VIEW</td>
-                    </tr>
-                    <tr>
-                        <td>PUMA</td>
-                        <td>200</td>
-                        <td>20</td>
-                        <td>
-                            <img src="/images/admin.webp" alt="ADMIN">
-                        </td>
-                        <td>VIEW</td>
-                    </tr>
-                    
-                    
-                </tbody> --}}
+                
             </table>
          </div>
 

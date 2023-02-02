@@ -443,3 +443,66 @@ async function couponActivate(e) {
     window.location.href = redirectPath.redirect;
     
 }
+
+
+// orffer clearance product
+let offerItems = document.querySelector('table');
+if(offerItems) {
+    offerItems.addEventListener('click' , (e) => {
+        if(e.target.classList.contains('btn-clear')) {
+                offerClear(e);
+        }
+    })
+}
+
+// product offer clear
+async function offerClear(e) {
+    const productId = e.target.dataset.url;
+    console.log(productId);
+    console.log('called');
+    const url = `http://localhost:4000/admin/offer/${productId}`;
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
+                
+
+    
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+}
+
+
+let categoryOffer = document.querySelector('table');
+if(categoryOffer) {
+    categoryOffer.addEventListener('click' , (e) => {
+        if(e.target.classList.contains('btn-category-clear')) {
+                categoryOfferClear(e);
+        }
+    })
+}
+
+
+// category offer clear
+async function categoryOfferClear(e) {
+    const categoryId = e.target.dataset.url;
+    console.log(categoryId);
+    const url = `http://localhost:4000/admin/categoryoffer/${categoryId}`;
+    console.log(url);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
+                
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+}
+
+
+

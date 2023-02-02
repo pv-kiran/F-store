@@ -29,31 +29,6 @@
                 <input type="text" name="category" id="category">
                 <button type="submit">Save</button>   
             </form>
-
-
-            {{!-- <div class="box-container">
-                <div class="box">
-                    <i class="fas fa-users"></i>
-                    <div>
-                        <h3>8234</h3>
-                        <span>Users</span>
-                    </div>
-                </div>
-                <div class="box">
-                    <i class="fab fa-product-hunt"></i>
-                    <div>
-                        <h3>824</h3>
-                        <span>Products</span>
-                    </div>
-                </div>
-                <div class="box">
-                    <i class="fas fa-people-carry"></i>
-                    <div>
-                        <h3>8234</h3>
-                        <span>Order</span>
-                    </div>
-                </div>
-            </div> --}}
         
         
             <div class="dashboard">
@@ -61,6 +36,8 @@
                     <thead>
                         <tr>
                             <td>Category</td>
+                            <td>Offer</td>
+                            <td>Add / Clear offer</td>
                             <td>Status</td>
                             <td>Action</td>
                         </tr>
@@ -69,6 +46,22 @@
                         {{#each categoryList}}
                         <tr>
                             <td>{{categoryName}}</td>
+                            <td>
+                                {{#if isOfferAvailable}}
+                                {{offer}}%
+                                {{else}}
+                                Nil
+                                {{/if}}
+                            </td>
+                            <td class="offer-container">
+                                <form action="/admin/category/offer/{{_id}}" method="post" class="offer-form">
+                                    <div class="input-container">
+                                        <input type="number" name="offer" id="offer" placeholder="offer in %" required>
+                                        <button type="submit">Apply</button>
+                                        <a data-url="{{_id}}" class="btn-category-clear" >Clear</a>
+                                    </div>
+                                </form>
+                            </td>
                             {{#if isAvailable}}
                             <td>Availabe</td>
                             {{else}}

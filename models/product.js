@@ -11,6 +11,10 @@ const productSchema =new mongoose.Schema({
         type: Number ,
         required: true
     } ,
+    actualPrice: {
+        type: Number ,
+        required: true
+    }  ,
     description: {
         type: String, 
         required: true
@@ -51,6 +55,13 @@ const productSchema =new mongoose.Schema({
         type: Number ,
         required: true
     } ,
+    offer: {
+        type: Number
+    } ,
+    isOfferAvailable: {
+        type: Boolean ,
+        default: false
+    },
     countryOfOrigin : {
         type: String ,
         required: true
@@ -58,7 +69,7 @@ const productSchema =new mongoose.Schema({
     isBlocked : {
         type: Boolean ,
         default: false
-    }
+    } 
 })
 
 

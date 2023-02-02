@@ -1940,6 +1940,45 @@ footer h1 {
    font-size: 1.3rem;
 }
 
+.offer-container {
+ width: 35rem;
+}
+
+.offer-form .input-container {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+   width: 95%;
+}
+
+.offer-form .input-container input {
+   width: 65%;
+   margin-right: 1.5rem;
+   padding-left: .3rem;
+}
+
+.offer-form .input-container input:focus {
+   outline: none;
+}
+.offer-form .input-container button {
+   width: 35%;
+   border: none;
+   padding: 0 .5rem;
+   background-color: rgb(57, 94, 57);
+   color: rgb(234, 231, 231);
+   border-radius: .3rem;
+   font-size: 1.2rem;
+   margin-right: .5rem;
+}
+
+.offer-form .input-container .btn-clear , .offer-form .input-container .btn-category-clear {
+   background-color: rgb(107, 51, 51);
+   border-radius: .2rem;
+   color: white;
+}
+.offer-form .input-container .btn-category-clear:hover {
+   color: white;
+}
 
 
 

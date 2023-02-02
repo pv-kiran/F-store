@@ -3,9 +3,7 @@ const router = express.Router();
 
 
 
-
-
-const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage , orderTracking , getCouponDashboard , addCoupon , updateCoupon } = require('../../controllers/adminController');
+const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage , orderTracking , getCouponDashboard , addCoupon , updateCoupon , addProductOffer , removeProductOffer , addCategoryOffer , removeCategoryOffer } = require('../../controllers/adminController');
 
 const {isAdminLoggedIn} = require('../../middlewares/authmiddleware');
 const { cancelOrder } = require('../../controllers/orderController');
@@ -85,12 +83,31 @@ router.put('/order/tracking/:id' , isAdminLoggedIn , orderTracking);
 router.put('/order/deliver/:id' , isAdminLoggedIn , deliverOrder);
 
 
+// to fetch coupon dashboard 
 router.get('/coupon' , isAdminLoggedIn ,getCouponDashboard )
 
+
+// to add coupon
 router.post('/addcoupon' , isAdminLoggedIn , addCoupon )
 
+// to block coupon
 router.put('/updatecoupon/:id' , isAdminLoggedIn , updateCoupon )
 
+
+// add product offer
+router.post('/offer/:id' , isAdminLoggedIn , addProductOffer)
+
+
+// remove product offer
+router.put('/offer/:id' , isAdminLoggedIn , removeProductOffer );
+
+
+// add category offer
+router.post('/category/offer/:id' , isAdminLoggedIn , addCategoryOffer)
+
+
+// remove category offer
+router.put('/categoryoffer/:id' , isAdminLoggedIn , removeCategoryOffer)
 
 
 router.get('/logout' , (req,res) => {
@@ -98,7 +115,6 @@ router.get('/logout' , (req,res) => {
     req.session.adminId = null;
     res.redirect('/user/signin');
 })
-
 
 
 
