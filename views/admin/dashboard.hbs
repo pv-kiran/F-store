@@ -59,12 +59,14 @@
 
                 <div id="chart-container">
                     <canvas id="products"></canvas>
-                    <a href="/admin/prodcutsales/report" class="btn-download">Generate Report</a>
+                    <a href="/admin/prodcutsales/report" class="btn-download">Generate PDF Report</a>
+                    <a href="/admin/productwise/xslx/report" class="btn-download">Generate Excell Report</a>
                 </div>
 
                 <div id="chart-container">
                     <canvas id="dailyWiseSale"></canvas>
-                    <a href="/admin/dailysales/report" class="btn-download">Generate Report</a>
+                    <a href="/admin/dailysales/report" class="btn-download">Generate PDF Report</a>
+                    <a href="/admin/dailywise/xslx/report" class="btn-download">Generate Excell Report</a>
                 </div>
 
                 <div id="pie-chart-container">
@@ -72,35 +74,6 @@
                     <canvas id="categories"></canvas>
                 </div>
 
-                
-
-
-                {{!-- <table width="100%">
-                    <thead>
-                        <tr>
-                            <td>Name</td>
-                            <td>Email</td>
-                            <td>Action</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each userList}}
-                        <tr>
-                            <td>{{name}}</td>
-                            <td>{{email}}</td>
-                            <td>
-                                {{#if isBlocked}}
-                                <a class="unblock" data-url="{{_id}}">UNBLOCK</a>
-                                {{else}}
-                                <a class="block" data-url="{{_id}}">BLOCK</a>
-                                {{/if}}   
-                            </td> 
-                        </tr>
-                        {{/each}} 
-                        
-                    </tbody>
-                    
-                </table> --}}
             </div>
 
         </section>

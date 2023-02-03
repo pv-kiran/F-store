@@ -3,7 +3,9 @@ const router = express.Router();
 
 
 
-const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage , orderTracking , getCouponDashboard , addCoupon , updateCoupon , addProductOffer , removeProductOffer , addCategoryOffer , removeCategoryOffer } = require('../../controllers/adminController');
+
+
+const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage , orderTracking , getCouponDashboard , addCoupon , updateCoupon , addProductOffer , removeProductOffer , addCategoryOffer , removeCategoryOffer , dialyWiseXlsxReport , productWiseXlsxReport } = require('../../controllers/adminController');
 
 const {isAdminLoggedIn} = require('../../middlewares/authmiddleware');
 const { cancelOrder } = require('../../controllers/orderController');
@@ -28,6 +30,15 @@ router.get('/prodcutsales/report'  , productWiseReportDownload)
 
 // route for daily report cretaion / design
 router.get('/productwise/report' , getProductWiseReportpage)
+
+
+
+// downloading excell sheet - dailywise report
+router.get('/dailywise/xslx/report' , isAdminLoggedIn , dialyWiseXlsxReport)
+
+// downloading excell sheet - Product wise report
+router.get('/productwise/xslx/report' , productWiseXlsxReport )
+
 
 
 // Route for admin dashboard : User management

@@ -1,5 +1,46 @@
  {{>nav}}
  <section class="order-page-container">
+    <section class="order-page-right">
+            <div class="order-details-container">
+                {{#each cartItems}}
+                <div class="order-details">
+                    <img src="{{id.images.[0].secured_url}}" alt="product-img">
+                    <div class="my-order">
+                        <h1>{{id.productName}}</h1>
+                        <h3>{{id.price}}</h3>
+                    </div>
+                    <h1>{{quantity}}</h1>
+                </div>
+                {{/each}}
+            </div>
+            <div class="order-summary">
+                <div class="orders">
+                    <h1>Order Summary</h1>
+                    <div class="total-order-items">
+                    <h3>Total Items</h3>
+                    <h3>{{totalQuantity}}</h3>
+                    </div>
+                    <div class="total-order-items">
+                        <h3>Total Amount</h3>
+                        <h3 class="order-price">{{totalPrice}}</h3>
+                    </div>
+                    {{#if isCouponExist}}
+                    <form action="/order/coupon" method="post" class="coupon-container">
+                      <div class="input-container">
+                         <input type="text" name="coupon" placeholder="Enter coupon code" id="coupon">
+                         <input type="submit" value="Apply">
+                      </div>
+                    </form>
+                    {{/if}}
+                    {{#if isCouponUsed}}
+                     <p style="font-size: 1.2rem;">{{couponMsg}}</p>
+                    {{/if}}
+                    <a class="btn-payment btn-cod">Cash On Delivery</a>
+                    <a class="btn-payment btn-razor">Pay Now</a>
+
+                </div>
+            </div>
+    </section>
     <section class="order-page-left">
            
         <section class="adress-details-card-container">
@@ -16,8 +57,8 @@
                 </div>
                 {{/each}}
         </section>
+        <button class="btn-address-show">Add Address</button>
         <section class="adress-form-container" id="adress-form">
-                <h1 class="address-heading">Add New Address</h1>
                 <form action="/order/address/{{user.id}}" method="POST" class="adress-form">
                         <div class="row-one">
                             <div class="input-container">
@@ -53,55 +94,6 @@
                 </form>
         </section>
             
-    </section>
-    <section class="order-page-right">
-            <div class="order-details-container">
-                {{#each cartItems}}
-                <div class="order-details">
-                    <img src="{{id.images.[0].secured_url}}" alt="product-img">
-                    <div class="my-order">
-                        <h1>{{id.productName}}</h1>
-                        <h3>{{id.price}}</h3>
-                    </div>
-                    <h1>{{quantity}}</h1>
-                </div>
-                {{/each}}
-                {{!-- <div class="order-details">
-                    <img src="./admin.webp" alt="product-img">
-                    <div class="my-order">
-                        <h1>Product Name</h1>
-                        <h3>3000</h3>
-                    </div>
-                    <h1>3</h1>
-                </div> --}}
-            </div>
-            <div class="order-summary">
-                <div class="orders">
-                    <h1>Order Summary</h1>
-                    <div class="total-order-items">
-                    <h3>Total Items</h3>
-                    <h3>{{totalQuantity}}</h3>
-                    </div>
-                    <div class="total-order-items">
-                        <h3>Total Amount</h3>
-                        <h3 class="order-price">{{totalPrice}}</h3>
-                    </div>
-                    {{#if isCouponExist}}
-                    <form action="/order/coupon" method="post" class="coupon-container">
-                      <div class="input-container">
-                         <input type="text" name="coupon" placeholder="Enter coupon code" id="coupon">
-                         <input type="submit" value="Apply">
-                      </div>
-                    </form>
-                    {{/if}}
-                    {{#if isCouponUsed}}
-                     <p style="font-size: 1.2rem;">{{couponMsg}}</p>
-                    {{/if}}
-                    <a class="btn-payment btn-cod">Cash On Delivery</a>
-                    <a class="btn-payment btn-razor">Pay Now</a>
-
-                </div>
-            </div>
     </section>
 </section>
 

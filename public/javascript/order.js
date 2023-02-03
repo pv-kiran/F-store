@@ -17,7 +17,7 @@ for (let index = 0; index < dateContainer.length; index++) {
 // console.log(year+"-"+month+"-"+day)
 
 
-
+// creating an order for cash on delivery
 let codBtn = document.querySelector('.btn-cod');
 
 if(codBtn){
@@ -26,15 +26,13 @@ if(codBtn){
     }) 
 }
 
-
+//  creating an order for 
 let btnRazor = document.querySelector('.btn-razor');
 if(btnRazor) {
     btnRazor.addEventListener('click' , (e) => {
         createOrder(e);
     })
 }
-
-
 async function createOrder(e) {
 
     const url = `http://localhost:4000/order/create`;
@@ -95,6 +93,7 @@ async function createOrder(e) {
 
 
 
+// removing / cancelling order
 let orderContainer = document.querySelector('.userorder-container');
 if(orderContainer) {
     orderContainer.addEventListener('click' , (e) => {
@@ -103,8 +102,6 @@ if(orderContainer) {
         }
     })
 }
-
-
 async function removeOrder(e) {
     const orderId = e.target.dataset.url;
     console.log(orderId);
@@ -121,3 +118,18 @@ async function removeOrder(e) {
     window.location.href = redirectPath.redirect;
     
 }
+
+
+// automaticaly selecting an address
+let addressRadio = document.getElementById('address');
+addressRadio.checked = true;
+
+
+// hiding / displaying the add address form
+ let addressForm = document.getElementById('adress-form');
+ addressForm.style.display = 'none';
+
+ let addressShowbtn = document.querySelector('.btn-address-show');
+ addressShowbtn.addEventListener('click' , (e) => {
+    addressForm.style.display = 'block';
+ })

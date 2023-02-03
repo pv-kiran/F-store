@@ -1429,11 +1429,15 @@ footer h1 {
 }
 
 .adress-form-container {
-   padding: 1.5rem 1rem;
-   margin-top: 7rem;
+   padding: .9rem 1rem;
    border: .3px rgb(160, 168, 172) solid;
    border-radius: .3rem;
 }
+
+#address-profile {
+   margin-top: 7.3rem;
+}
+
 .address-heading {
    font-size: 2.5rem;
    font-weight: 100;
@@ -1489,7 +1493,7 @@ footer h1 {
 .adress-details-card-container {
   /* width: 53%; */
   display: flex;
-  margin-bottom: 5rem;
+  margin-bottom: 2.5rem;
   /* padding: 1rem; */
 }
 .adress-details-card {
@@ -1522,7 +1526,7 @@ footer h1 {
 }
 
 #adress-form {
-  margin-top: 0;
+  margin-top: 1rem;
   margin-bottom: 4rem;
   width: 100%;
 }
@@ -1538,6 +1542,14 @@ footer h1 {
   justify-content: space-between;
 }
 
+.btn-address-show {
+   border: 0;
+   padding: .7rem 1.5rem;
+   background-color: #0c1808;
+   color: white;
+   font-size: 1.1rem;
+   border-radius: .3rem;
+}
 
 .order-page-right {
   width: 100%;

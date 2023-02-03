@@ -1,5 +1,7 @@
 const cloudinary = require('cloudinary').v2;
 const puppeteer = require('puppeteer');
+const XLSX = require('xlsx');
+
 
 
 cloudinary.config({
@@ -188,7 +190,7 @@ const getDailySalesReportPage = async (req,res) => {
             } 
           ]
         )
-        console.log(dailyWiseSale);
+        // console.log(dailyWiseSale);
         res.render('admin/adminreport' , {dailyWiseSale: dailyWiseSale});
   
     } catch(e) {
@@ -196,6 +198,7 @@ const getDailySalesReportPage = async (req,res) => {
     }
     
 }
+
 
 const productWiseReportDownload = async (req,res) => {
 
@@ -237,34 +240,34 @@ const getProductWiseReportpage = async (req,res) => {
     try {
   
          const productWiseSale = await Order.aggregate(
-        [
-          {
-            '$lookup': {
-              'from': 'products', 
-              'localField': 'orderItems.id', 
-              'foreignField': '_id', 
-              'as': 'test'
-            }
-          },
-          {
-            '$unwind': {
-              'path': '$test'
-            }
-          }, 
-          {
-            '$group': {
-              '_id': '$test.productName', 
-              'totalAmount': {
-                '$sum': '$totalAmount'
+            [
+              {
+                '$lookup': {
+                  'from': 'products', 
+                  'localField': 'orderItems.id', 
+                  'foreignField': '_id', 
+                  'as': 'test'
+                }
+              },
+              {
+                '$unwind': {
+                  'path': '$test'
+                }
+              }, 
+              {
+                '$group': {
+                  '_id': '$test.productName', 
+                  'totalAmount': {
+                    '$sum': '$totalAmount'
+                  }
+                }
+              } ,
+              {
+                '$sort': {
+                    'totalAmount': -1
+                }
               }
-            }
-          } ,
-          {
-            '$sort': {
-                'totalAmount': -1
-            }
-          }
-        ]
+            ]
          )
   
         //  console.log(productWiseSale);
@@ -274,6 +277,91 @@ const getProductWiseReportpage = async (req,res) => {
     } catch(e) {
         console.log(e);
     }
+}
+
+const dialyWiseXlsxReport = async (req,res) => {
+  try {
+
+      const dailyWiseSale = await Order.aggregate(
+        [
+          {
+            '$project': {
+              'totalAmount': 1, 
+              'orderItems': {
+                '$dateToString': {
+                  'format': '%Y-%m-%d', 
+                  'date': '$createdAt'
+                }
+              }
+            }
+          },
+          {
+            '$group': {
+              '_id': '$orderItems', 
+              'totalAmount': {
+                '$sum': '$totalAmount'
+              }
+            }
+          } 
+        ]
+      ) ;
+
+      const workSheet = XLSX.utils.json_to_sheet(dailyWiseSale);
+      const workBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workBook, workSheet, 'Daily wise sheet');
+      XLSX.writeFile(workBook, 'sampledaily.xlsx');
+
+      res.download('sampledaily.xlsx')
+
+  } catch(e) {
+      console.log(e);
+  }
+}
+
+const productWiseXlsxReport = async (req,res) => {
+  try {
+
+      const productWiseSale = await Order.aggregate(
+          [
+            {
+              '$lookup': {
+                'from': 'products', 
+                'localField': 'orderItems.id', 
+                'foreignField': '_id', 
+                'as': 'test'
+              }
+            },
+            {
+              '$unwind': {
+                'path': '$test'
+              }
+            }, 
+            {
+              '$group': {
+                '_id': '$test.productName', 
+                'totalAmount': {
+                  '$sum': '$totalAmount'
+                }
+              }
+            } ,
+            {
+              '$sort': {
+                  'totalAmount': -1
+              }
+            }
+          ]
+       )
+
+      const workSheet = XLSX.utils.json_to_sheet(productWiseSale);
+      const workBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workBook, workSheet, 'Product wise sheet');
+      XLSX.writeFile(workBook, 'sampleproduct.xlsx');
+
+      res.download('sampleproduct.xlsx')
+
+  } catch(e) {
+      console.log(e);
+  }
 }
 
 const getAllUsers = async (req,res) => {
@@ -720,6 +808,8 @@ module.exports = {
     getDailySalesReportPage,
     productWiseReportDownload ,
     getProductWiseReportpage , 
+    dialyWiseXlsxReport,
+    productWiseXlsxReport,
     getCouponDashboard ,
     addCoupon ,
     updateCoupon ,
