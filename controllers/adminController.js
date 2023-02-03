@@ -20,7 +20,7 @@ const getDashBoard = async (req,res) => {
     try {
       const user = await User.find({});
       const product = await Product.find({});
-      const order = await Order.find({});
+      const order = await Order.find({isCancelled: false});
     //   console.log(`${user.length} ${product.length} ${order.length}`);
     
       res.render('admin/dashboard' , {user: user.length , product: product.length , order: order.length});
@@ -31,17 +31,20 @@ const getDashBoard = async (req,res) => {
 
 const getChartData = async (req,res) => {
 
-
-    // console.log('I am ready to provide the chart');
-
-    // const order = await Order.aggregate([ { $unwind : "$orderItems" } ])
-
-    // console.log(order[0]);
-
     try {
 
         const productWiseSale = await Order.aggregate(
             [
+              {
+                '$match': {
+                  'isCancelled': false
+                }
+              } ,
+              {
+                '$sort': {
+                  'createdAt': -1
+                }
+              } ,
               {
                 '$lookup': {
                   'from': 'products', 
@@ -49,11 +52,13 @@ const getChartData = async (req,res) => {
                   'foreignField': '_id', 
                   'as': 'test'
                 }
-              }, {
+              }, 
+              {
                 '$unwind': {
                   'path': '$test'
                 }
-              }, {
+              }, 
+              {
                 '$group': {
                   '_id': '$test.productName', 
                   'totalAmount': {
@@ -170,6 +175,16 @@ const getDailySalesReportPage = async (req,res) => {
         const dailyWiseSale = await Order.aggregate(
           [
             {
+              '$match': {
+                'isCancelled': false
+              }
+            } ,
+            {
+              '$sort': {
+                'createdAt': -1
+              }
+            } ,
+            {
               '$project': {
                 'totalAmount': 1, 
                 'orderItems': {
@@ -198,7 +213,6 @@ const getDailySalesReportPage = async (req,res) => {
     }
     
 }
-
 
 const productWiseReportDownload = async (req,res) => {
 
@@ -241,6 +255,16 @@ const getProductWiseReportpage = async (req,res) => {
   
          const productWiseSale = await Order.aggregate(
             [
+              {
+                '$match': {
+                  'isCancelled': false
+                }
+              } ,
+              {
+                '$sort': {
+                  'createdAt': -1
+                }
+              } ,
               {
                 '$lookup': {
                   'from': 'products', 
@@ -285,6 +309,16 @@ const dialyWiseXlsxReport = async (req,res) => {
       const dailyWiseSale = await Order.aggregate(
         [
           {
+            '$match': {
+              'isCancelled': false
+            }
+          } ,
+          {
+            '$sort': {
+              'createdAt': -1
+            }
+          } ,
+          {
             '$project': {
               'totalAmount': 1, 
               'orderItems': {
@@ -323,6 +357,16 @@ const productWiseXlsxReport = async (req,res) => {
 
       const productWiseSale = await Order.aggregate(
           [
+            {
+              '$match': {
+                'isCancelled': false
+              }
+            } ,
+            {
+              '$sort': {
+                'createdAt': -1
+              }
+            } ,
             {
               '$lookup': {
                 'from': 'products', 

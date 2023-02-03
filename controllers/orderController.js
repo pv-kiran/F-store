@@ -111,7 +111,6 @@ const applyCoupon = async (req,res) => {
 
 }
 
-
 const newShippingAddress = async (req,res) => {
     const {id} = req.params;
     try {
@@ -265,14 +264,8 @@ const cancelOrder = async (req,res) => {
            await updateStock(item.id , item.quantity )
        })
     
-       const cancelOrder = await Order.findOneAndUpdate({_id: id} , {isCancelled: true});
-       // if admin 
-       if(req.session.adminId) {
-         res.json({redirect: '/admin/orders'});
-       } else {
-          // for normal user
-          res.json({redirect: '/order/myorder'});
-       }
+       await Order.findOneAndUpdate({_id: id} , {isCancelled: true})
+       res.json({redirect: '/order/myorder'});
     } catch(e) {
         console.log(e);
     }
@@ -311,35 +304,3 @@ module.exports = {
 
 
 
-
-// crating the order
-        // const newOrder = await Order.create({
-        //     shippingInfo: shippingAddres ,
-        //     user: req.session._userId ,
-        //     orderItems: user[0].cart ,
-        //     totalAmount: totalAmount ,
-        //     orderStatus: orderStatus ,
-        //     paymentMode: paymentMethod ,
-        // })
-    
-
-        // removing the cart items
-        // await user[0].cart.splice(0);
-        // console.log(user[0].cart);
-        // await user[0].save({validateBeforeSave: false});
-        
-        // updating the product stock
-        // const updateStock = async (productId , quantity) => {
-        //      const product = await Product.find({_id:productId});
-        //      product[0].stock = product[0].stock - quantity ;
-        //      product[0].save({validateBeforeSave: false});
-        // }
-    
-        // newOrder.orderItems.forEach(async (item) => {
-        //     await updateStock(item.id , item.quantity )
-        // })
-    
-        // // saving the order
-        // await newOrder.save();
-
-        // res.json({redirect: '/order/success'});
