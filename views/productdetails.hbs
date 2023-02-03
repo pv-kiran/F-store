@@ -33,6 +33,10 @@
                 </div>
                 <div class="product-details">
                     <h1>{{product.productName}}</h1>
+                    {{#if product.isOfferAvailable}}
+                     <p class="offer-percentage">Up to {{product.offer}}% off ..!!</p>
+                     <p class="actual-Price"> ₹{{product.actualPrice}}</p>
+                    {{/if}}
                     <h2>₹ {{product.price}}</h2>
                     <h3>{{product.description}}</h3>
                     <h3>{{product.productDimension}}</h3>

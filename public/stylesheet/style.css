@@ -1980,7 +1980,21 @@ footer h1 {
    color: white;
 }
 
+.product-card .actual-Price , .product-card  .offer-percentage {
+   padding-left: 0;
+}
 
+.actual-Price , .offer-percentage  {
+   
+   font-size: 1.3rem;
+   font-weight: 100;
+   color: rgb(177, 176, 176);
+   padding-left: .8rem;
+}
+.actual-Price {
+   margin-top: -1rem ;
+   text-decoration: line-through;
+}
 
 @media (max-width: 820px) {
    .nav-menu {

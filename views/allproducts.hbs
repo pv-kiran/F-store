@@ -69,7 +69,11 @@
                 <div class="product-card">
                    <img src="{{images.[0].secured_url}}" alt="best">
                    <h2 class="product_name">{{productName}}</h2>
-                   <h3 class="price">{{price}}</h3>
+                   {{#if isOfferAvailable}}
+                     <p class="offer-percentage">Up to {{offer}}% off ..!!</p>
+                     <p class="actual-Price"> ₹{{actualPrice}}</p>
+                   {{/if}}
+                   <h3 class="price">₹{{price}}</h3>
                    <a href="/cart/{{_id}}" class="btn-add-cart">
                       Add to Cart
                    </a>
@@ -78,24 +82,6 @@
                    </a>  
                 </div>
               {{/each}}
-              
-
-
-
-              {{!-- <div class="best-product">
-                  <div class="card">
-                      <img src="{{images.[0].secured_url}}" alt="best">
-                      <p class="price">{{price}}</p>
-                      <h3 class="product_name">{{productName}}</h3>
-                      <a href="/cart/{{_id}}" class="btn-add-cart">
-                         <i class="fas fa-cart-plus"></i>
-                      </a>
-                      <a href="/product/{{_id}}" class="btn-view-product">
-                         <i class="fas fa-eye"></i>
-                      </a>  
-                  </div>
-              </div> --}}
-            
         </div>
       </section>
       <footer> 

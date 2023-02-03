@@ -6,15 +6,17 @@ const Product = require('../../models/product');
 router.get('/' , async (req,res) => {
     let isLoggedIn;
     if(req.session.userid) {
-      isLoggedIn = true
+      isLoggedIn = true;
     } else {
-        isLoggedIn = false
+        isLoggedIn = false;
     }
     try {
         // const product = await Product.find({ isBlocked: false , stock: {$gt: 0}}).limit(4);
 
 
         const productList = await Product.find({ isBlocked: false , stock: {$gt: 0}}).populate('categories');
+
+        console.log(productList);
 
         const product = productList.slice(0,4);
         
