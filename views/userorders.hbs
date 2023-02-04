@@ -39,9 +39,37 @@
                 <h4>{{totalAmount}}</h4>
             </div>
             {{#if isDelivered}}
-                <div  class="order-cancel">
-                    <a class="success">Success</a>
-                </div>
+
+                {{#if refundStatus}}
+
+                    <div  class="order-cancel">
+                            <a class="success return-offer" data-url="{{_id}}">
+                                Refunded
+                            </a>
+                    </div>
+
+                {{else}}
+
+                   {{#if isReturn}}
+
+                        <div  class="order-cancel">
+                            <a class="success return-offer" data-url="{{_id}}">Returning</a>
+                        </div>
+
+                   {{else}}
+                        <div  class="order-cancel">
+                            <a class="success return-offer" data-url="{{_id}}">Return</a>
+                        </div>
+                   {{/if}}
+
+
+                {{/if}}
+
+                    
+
+                    
+
+                
             {{else}} 
                 <div class="order-cancel">
                     {{!-- <a data-url="{{id}}" class="order-cancel-btn">Cancel</a> --}}
@@ -61,4 +89,5 @@
         </div>
     {{/each}}
 </section>
+
 <script src="/javascript/order.js"></script>

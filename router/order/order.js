@@ -16,6 +16,7 @@ const { getOrderDetails ,
 
         
 const { isLoggedIn } = require('../../middlewares/authmiddleware');
+const Order = require('../../models/order');
 
 
 
@@ -36,8 +37,24 @@ router.post('/create' , isLoggedIn , createOrder);
 // get user specific order
 router.get('/myorder', isLoggedIn,getUserOrder ) ;
 
+
+
 //cancelling the order
 router.put('/cancel/:id' , isLoggedIn  , cancelOrder);
+
+// returning the order
+router.put('/return/:id' , async (req,res) => {
+        try {
+           const {id} = req.params ;
+           const order = await Order.find({_id: id});
+           order[0].isReturn = true ;
+           await order[0].save();
+           res.json({redirect: '/order/myorder'});
+        } catch(e) {
+           console.log(e);
+        }
+      
+})
 
 // deleting the order
 router.delete('/cancel/:id' , isLoggedIn  , removeOrder); 

@@ -1,0 +1,94 @@
+{{>adminsidenav}}
+     
+     <section class="dashboard-container">
+         <div class="dashboard-nav">
+            <div class="dashboard-left">
+                <div>
+                    <i id="menu-btn" class="fas fa-bars"></i>
+                </div>
+                <form class="search" action="/admin/search" method="post">
+                    <input type="text" name="name" id="search" placeholder="search">
+                    <button class="btn-search" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            <div class="dashboard-right">
+                <a href="/admin/logout">
+                    <span class="material-symbols-outlined">
+                        logout
+                    </span>
+                </a>
+                <img src="/images/admin.jpg" alt="admin">
+            </div>
+         </div>
+
+         <h3 class="dashboard-heading">
+             RETURN REQUEST DASHBOARD
+         </h3>
+
+         
+
+         <div class="dashboard orderboard">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td>Cutomer</td>
+                        <td>Product</td>
+                        <td>Amount</td>
+                        <td>payment Id</td>
+                        <td>Order Id</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each orders}}
+                    <tr>
+                        <td>{{user.name}}</td>
+                        <td>
+                            {{#each orderItems}}
+                             <p>{{id.productName}}</p>
+                            {{/each}}
+                        </td>
+                        {{!-- <td class="order-image-container">
+                            {{#each orderItems}}
+                              <img src="{{id.images.[0].secured_url}}" alt="IMAGE">
+                            {{/each}}
+                        </td> --}}
+
+                        <td>{{totalAmount}}</td>
+
+                        <td>{{paymentId}}</td>
+
+                        <td>{{orderId}}</td>
+
+
+                        {{!-- <td>
+                          {{#if isDelivered}}
+                            Deleivered
+                          {{else}}
+                            {{#if isCancelled}}
+                               Cancelled
+                            {{else}}
+                               {{trackingInfo}}
+                            {{/if}}
+                          {{/if}}
+                        </td> --}}
+                        <td>
+                            <div class="order-action">
+                                {{#if refundStatus}}
+                                    <a class="success" data-url="{{id}}">Accepted</a>
+                                {{else}}
+                                    <a class="success btn-refund" data-url="{{id}}">Accept</a>
+                                {{/if}}
+                            </div>
+                        </td>
+                       
+                    </tr>
+                    {{/each}} 
+                </tbody>
+            </table>
+         </div>
+
+     </section>
+     {{>popup}}
+
+<script src="/javascript/admin.js"></script>

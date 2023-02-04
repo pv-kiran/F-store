@@ -398,9 +398,6 @@ async function orderDeliver(e) {
 
 
 // changing the date format
-
-
-// changing the date format
 const dateContainer = document.querySelectorAll('.date');
 if(dateContainer) {
     for (let index = 0; index < dateContainer.length; index++) {
@@ -475,7 +472,7 @@ async function offerClear(e) {
     window.location.href = redirectPath.redirect;
 }
 
-
+// category offer clear
 let categoryOffer = document.querySelector('table');
 if(categoryOffer) {
     categoryOffer.addEventListener('click' , (e) => {
@@ -504,5 +501,34 @@ async function categoryOfferClear(e) {
     window.location.href = redirectPath.redirect;
 }
 
+
+
+// refunding - RAZORPAY
+let refundContainer = document.querySelector('table');
+if(refundContainer) {
+    refundContainer.addEventListener('click' , (e) => {
+        if(e.target.classList.contains('btn-refund')) {
+                refundPayment(e);
+        }
+    })
+}
+
+
+async function refundPayment(e) {
+    const orderId = e.target.dataset.url;
+    console.log(orderId);
+    const url = `http://localhost:4000/admin/refund/${orderId}`;
+    console.log(url);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
+                
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+}
 
 

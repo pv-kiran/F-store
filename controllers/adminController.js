@@ -624,7 +624,7 @@ const updateCategory = async (req,res) => {
 
 const getOrders = async  (req,res) => {
     try {
-        const orders = await Order.find({}).populate('orderItems.id').populate('user');
+        const orders = await Order.find({}).populate('orderItems.id').populate('user').sort({'createdAt': -1});
         res.render('admin/orderboard' , {orders: orders});
     } catch(e) {
         console.log(e);

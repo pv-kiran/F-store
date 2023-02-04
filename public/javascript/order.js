@@ -9,6 +9,27 @@ for (let index = 0; index < dateContainer.length; index++) {
     element.textContent = 'Ordered On' + " " + day+"-"+month+"-"+ year ;
 }
 
+// automaticaly selecting an address
+let addressRadio = document.getElementById('address');
+if(addressRadio) {
+  addressRadio.checked = true;
+}
+
+
+// hiding / displaying the add address form
+ let shippingAddressForm = document.getElementById('adress-form');
+ if(shippingAddressForm) {
+    shippingAddressForm.style.display = 'none';
+ }
+
+ let addressShowbtn = document.querySelector('.btn-address-show');
+ if(addressShowbtn) {
+    addressShowbtn.addEventListener('click' , (e) => {
+        shippingAddressForm.style.display = 'block';
+     })
+ }
+ 
+
 
 // creating an order for cash on delivery
 let codBtn = document.querySelector('.btn-cod');
@@ -104,8 +125,6 @@ async function orderSuccess(orderId , paymentId) {
     
 }
 
-
-
 // removing / cancelling order
 let orderContainer = document.querySelector('.userorder-container');
 if(orderContainer) {
@@ -150,19 +169,30 @@ async function cancelOrder(orderId) {
     
 }
 
+// initiating return option
+let returnContainer = document.querySelector('.userorder-container');
+if(returnContainer) {
+    returnContainer.addEventListener('click' , (e) => {
+        if(e.target.classList.contains('return-offer')) {
+            returnOrder(e);
+        }
+    })
+}
 
+async function returnOrder(e) {
+    const orderId = e.target.dataset.url;
+    console.log(orderId);
+    const url = `http://localhost:4000/order/return/${orderId}`;
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
 
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+    
+}
 
-// automaticaly selecting an address
-let addressRadio = document.getElementById('address');
-addressRadio.checked = true;
-
-
-// hiding / displaying the add address form
- let shippingAddressForm = document.getElementById('adress-form');
- shippingAddressForm.style.display = 'none';
-
- let addressShowbtn = document.querySelector('.btn-address-show');
- addressShowbtn.addEventListener('click' , (e) => {
-    shippingAddressForm.style.display = 'block';
- })

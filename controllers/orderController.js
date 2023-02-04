@@ -308,7 +308,6 @@ const removeOrder = async (req,res) => {
     }
 }
 
-
 const orderSuccess =  (req,res) => {
     res.render('ordersuccess');
 }

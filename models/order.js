@@ -67,6 +67,12 @@ const orderSchema = new mongoose.Schema({
       type: Boolean ,
       default: false
     } ,
+    refundStatus: {
+      type: Boolean
+    } ,
+    isReturn: {
+      type: Boolean
+    } ,
     isCancelled: {
        type: Boolean ,
        default: false
@@ -89,28 +95,6 @@ module.exports = mongoose.model('order' , orderSchema )
 
 
 
+ 
 
 
-
-
-// [
-//   {
-//     '$lookup': {
-//       'from': 'products', 
-//       'localField': 'orderItems.id', 
-//       'foreignField': '_id', 
-//       'as': 'test'
-//     }
-//   }, {
-//     '$unwind': {
-//       'path': '$test'
-//     }
-//   }, {
-//     '$lookup': {
-//       'from': 'categories', 
-//       'localField': 'test.categories', 
-//       'foreignField': '_id', 
-//       'as': 'result'
-//     }
-//   }
-// ]
