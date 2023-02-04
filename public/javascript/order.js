@@ -9,13 +9,6 @@ for (let index = 0; index < dateContainer.length; index++) {
     element.textContent = 'Ordered On' + " " + day+"-"+month+"-"+ year ;
 }
 
-// let date = new Date(dateContainer.replace('IST', ''));
-// let day = date.getDate();
-// let month = date.getMonth()+1;
-// let year = date.getFullYear();
-// document.querySelector('.date').textContent = year+"-"+month+"-"+day ;
-// console.log(year+"-"+month+"-"+day)
-
 
 // creating an order for cash on delivery
 let codBtn = document.querySelector('.btn-cod');
@@ -33,6 +26,8 @@ if(btnRazor) {
         createOrder(e);
     })
 }
+
+
 async function createOrder(e) {
 
     const url = `http://localhost:4000/order/create`;
@@ -67,9 +62,15 @@ async function createOrder(e) {
             key: "rzp_test_I7TMRHjNEnfLbl", // Key ID
             amount: redirectPath.myOrder.amount * 100, // Amount is in paise
             currency: "INR",
-            order_id: redirectPath.myOrder.id, //This is a sample Order ID
-            handler: function() {
-                window.location.href = redirectPath.redirect;
+            order_id: redirectPath.myOrder.id,
+            modal: {
+                ondismiss: function(){
+                    cancelOrder(redirectPath.myOrder.id);
+                }
+            }, 
+            handler: function(response) {
+                orderSuccess(response.razorpay_order_id ,response.razorpay_payment_id); 
+                // window.location.href = redirectPath.redirect;
             }
         };
         var rzp1 = new Razorpay(options);
@@ -79,16 +80,28 @@ async function createOrder(e) {
     } else {
         window.location.href = redirectPath.redirect;
     }
-   
+}
 
 
+// payment succcess
+async function orderSuccess(orderId , paymentId) {
+    const url = `http://localhost:4000/order/success/${orderId}`;
+    console.log(orderId);
+    console.log(paymentId);
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    } ,
+                    body: JSON.stringify({
+                        paymentId : paymentId
+                    })
+                });
 
-
-
-
-
-
-    // window.location.href = redirectPath.redirect;
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+    
 }
 
 
@@ -120,16 +133,36 @@ async function removeOrder(e) {
 }
 
 
+// remove / cancel order
+async function cancelOrder(orderId) {
+    console.log(orderId);
+    const url = `http://localhost:4000/order/cancel/${orderId}`;
+    const res = await fetch(url, {
+                    method: 'DELETE',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
+
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+    
+}
+
+
+
+
 // automaticaly selecting an address
 let addressRadio = document.getElementById('address');
 addressRadio.checked = true;
 
 
 // hiding / displaying the add address form
- let addressForm = document.getElementById('adress-form');
- addressForm.style.display = 'none';
+ let shippingAddressForm = document.getElementById('adress-form');
+ shippingAddressForm.style.display = 'none';
 
  let addressShowbtn = document.querySelector('.btn-address-show');
  addressShowbtn.addEventListener('click' , (e) => {
-    addressForm.style.display = 'block';
+    shippingAddressForm.style.display = 'block';
  })

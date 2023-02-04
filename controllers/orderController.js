@@ -188,6 +188,9 @@ const createOrder = async (req,res) => {
                     receipt: "receipt#1"
                })
 
+               console.log(myOrder);
+
+
                const newOrder = await Order.create({
                     shippingInfo: shippingAddres ,
                     user: req.session._userId ,
@@ -197,25 +200,13 @@ const createOrder = async (req,res) => {
                     orderId: myOrder.id
                });
 
-               // removing the cart items
-               await user[0].cart.splice(0);
-               await user[0].save({validateBeforeSave: false});
-
-                // updating the product stock
-               const updateStock = async (productId , quantity) => {
-                  const product = await Product.find({_id:productId});
-                  product[0].stock = product[0].stock - quantity ;
-                  product[0].save({validateBeforeSave: false});
-               }
-    
-                newOrder.orderItems.forEach(async (item) => {
-                    await updateStock(item.id , item.quantity )
-                })
+            
     
                 // saving the order
                 await newOrder.save();
+                res.json({myOrder: myOrder});
 
-                res.json({myOrder: myOrder , redirect: '/order/success'});
+                // res.json({myOrder: myOrder , redirect: '/order/success'});
 
         }
 
@@ -247,6 +238,38 @@ const getUserOrder = async  (req,res) => {
     
 }
 
+const razorPaySuccess = async (req,res) => {
+    const {id} = req.params ;
+    const {paymentId} = req.body ;
+
+    try {
+
+        const user = await User.find({_id: req.session._userId});
+        const order = await Order.find({orderId: id});
+        order[0].paymentId = paymentId ;
+    
+        const updateStock = async (productId , quantity) => {
+            const product = await Product.find({_id:productId});
+            product[0].stock = product[0].stock + quantity ;
+            product[0].save({validateBeforeSave: false});
+        }
+    
+       order[0].orderItems.forEach(async (item) => {
+           await updateStock(item.id , item.quantity )
+       })
+    
+       // removing the cart items
+       await user[0].cart.splice(0);
+       await user[0].save({validateBeforeSave: false});
+       await order[0].save({validateBeforeSave:false});
+       res.json({redirect: '/order/success'});
+
+    }  catch(e) {
+        console.log(e);
+    }
+
+}
+
 const cancelOrder = async (req,res) => {
     const id = req.params.id;
 
@@ -273,6 +296,19 @@ const cancelOrder = async (req,res) => {
 
 }
 
+const removeOrder = async (req,res) => {
+    const id = req.params.id;
+    console.log(id);
+    try {
+    await Order.findOneAndDelete({orderId:id});
+    res.json({redirect: '/order'});
+
+    } catch(e) {
+        console.log(e);
+    }
+}
+
+
 const orderSuccess =  (req,res) => {
     res.render('ordersuccess');
 }
@@ -283,8 +319,10 @@ module.exports = {
     createOrder ,
     getUserOrder , 
     cancelOrder ,
+    removeOrder ,
     orderSuccess ,
-    applyCoupon
+    applyCoupon ,
+    razorPaySuccess
 }
 
 
@@ -304,3 +342,31 @@ module.exports = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+// create order logic
+
+   // removing the cart items
+            //    await user[0].cart.splice(0);
+            //    await user[0].save({validateBeforeSave: false});
+
+                // updating the product stock
+            //    const updateStock = async (productId , quantity) => {
+            //       const product = await Product.find({_id:productId});
+            //       product[0].stock = product[0].stock - quantity ;
+            //       product[0].save({validateBeforeSave: false});
+            //    }
+    
+            //     newOrder.orderItems.forEach(async (item) => {
+            //         await updateStock(item.id , item.quantity )
+            //     })

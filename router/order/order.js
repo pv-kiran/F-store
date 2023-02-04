@@ -2,13 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 
+
+
 const { getOrderDetails , 
         newShippingAddress , 
         createOrder , 
         getUserOrder, 
+        razorPaySuccess,
         cancelOrder, 
         orderSuccess ,
-        applyCoupon } = require('../../controllers/orderController');
+        removeOrder ,
+        applyCoupon ,} = require('../../controllers/orderController');
 
         
 const { isLoggedIn } = require('../../middlewares/authmiddleware');
@@ -33,7 +37,12 @@ router.post('/create' , isLoggedIn , createOrder);
 router.get('/myorder', isLoggedIn,getUserOrder ) ;
 
 //cancelling the order
-router.put('/cancel/:id' , isLoggedIn  , cancelOrder); 
+router.put('/cancel/:id' , isLoggedIn  , cancelOrder);
+
+// deleting the order
+router.delete('/cancel/:id' , isLoggedIn  , removeOrder); 
+
+router.put('/success/:id' , isLoggedIn , razorPaySuccess );
 
 router.get('/success' , isLoggedIn ,  orderSuccess);
 
