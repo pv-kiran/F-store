@@ -828,6 +828,42 @@ const removeCategoryOffer = async (req,res) => {
   }
 } 
 
+const refundDashboard =  async (req,res) => {
+  try {
+      const orders = await Order.find({isReturn: true}).populate('orderItems.id').populate('user').sort({'createdAt': -1});
+      console.log(orders)
+      res.render('admin/refund' , {orders: orders});
+  } catch(e) {
+      console.log(e);
+  }
+}
+
+const refundInitiation = async (req,res) => {
+
+  const {id} = req.params ;
+  console.log('Hello');
+  try {
+      const order = await Order.find({_id: id});
+
+      let instance = new Razorpay({ key_id: 'rzp_test_I7TMRHjNEnfLbl', key_secret: 'iMwgAhmFKNbOOI3JMbKJtkSS' })
+
+      instance.payments.refund(order[0].paymentId , {
+          amount: order[0].totalAmount * 100,
+          speed: "normal",
+      })
+
+      order[0].refundStatus = true;
+      await order[0].save();
+      res.json({redirect: '/admin/refund'});
+
+  } catch(e) {
+      console.log(e);
+  }
+
+}
+
+
+
 module.exports = {
     getDashBoard,
     getAllUsers ,
@@ -859,5 +895,7 @@ module.exports = {
     addProductOffer ,
     removeProductOffer ,
     addCategoryOffer ,
-    removeCategoryOffer
+    removeCategoryOffer ,
+    refundDashboard ,
+    refundInitiation
 };

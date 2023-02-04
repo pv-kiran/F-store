@@ -312,6 +312,19 @@ const orderSuccess =  (req,res) => {
     res.render('ordersuccess');
 }
 
+const returnOrder = async (req,res) => {
+    try {
+       const {id} = req.params ;
+       const order = await Order.find({_id: id});
+       order[0].isReturn = true ;
+       await order[0].save();
+       res.json({redirect: '/order/myorder'});
+    } catch(e) {
+       console.log(e);
+    }
+  
+}
+
 module.exports = {
     getOrderDetails,
     newShippingAddress ,
@@ -321,7 +334,8 @@ module.exports = {
     removeOrder ,
     orderSuccess ,
     applyCoupon ,
-    razorPaySuccess
+    razorPaySuccess ,
+    returnOrder
 }
 
 

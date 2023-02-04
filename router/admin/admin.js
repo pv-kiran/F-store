@@ -6,7 +6,7 @@ const Razorpay = require('razorpay');
 
 
 
-const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage, cancelOrders , orderTracking , getCouponDashboard , addCoupon , updateCoupon , addProductOffer , removeProductOffer , addCategoryOffer , removeCategoryOffer , dialyWiseXlsxReport , productWiseXlsxReport } = require('../../controllers/adminController');
+const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage, cancelOrders , orderTracking , getCouponDashboard , addCoupon , updateCoupon , addProductOffer , removeProductOffer , addCategoryOffer , removeCategoryOffer , dialyWiseXlsxReport , productWiseXlsxReport , refundDashboard , refundInitiation } = require('../../controllers/adminController');
 
 const {isAdminLoggedIn} = require('../../middlewares/authmiddleware');
 // const { cancelOrder } = require('../../controllers/orderController');
@@ -95,41 +95,11 @@ router.put('/order/tracking/:id' , isAdminLoggedIn , orderTracking);
 router.put('/order/deliver/:id' , isAdminLoggedIn , deliverOrder);
 
 // fetch refund dashboard
-router.get('/refund' , async (req,res) => {
-    try {
-        const orders = await Order.find({isReturn: true}).populate('orderItems.id').populate('user').sort({'createdAt': -1});
-        console.log(orders)
-        res.render('admin/refund' , {orders: orders});
-    } catch(e) {
-        console.log(e);
-    }
-})
+router.get('/refund' , isAdminLoggedIn , refundDashboard)
 
 
-// initiating the payment
-router.put('/refund/:id' , async (req,res) => {
-
-    const {id} = req.params ;
-    console.log('Hello');
-    try {
-        const order = await Order.find({_id: id});
-
-        let instance = new Razorpay({ key_id: 'rzp_test_I7TMRHjNEnfLbl', key_secret: 'iMwgAhmFKNbOOI3JMbKJtkSS' })
-
-        instance.payments.refund(order[0].paymentId , {
-            amount: order[0].totalAmount * 100,
-            speed: "normal",
-        })
-
-        order[0].refundStatus = true;
-        await order[0].save();
-        res.json({redirect: '/admin/refund'});
-
-    } catch(e) {
-        console.log(e);
-    }
-
-})
+// initiating the refund payment
+router.put('/refund/:id' ,isAdminLoggedIn , refundInitiation )
 
 
 // to fetch coupon dashboard 
