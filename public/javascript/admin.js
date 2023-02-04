@@ -37,6 +37,7 @@ if(productUpdateForm) {
     })
 }
 
+
 // validation for product
 function productValidate(isAddProduct) {
     let err = document.querySelector('.error');
@@ -198,6 +199,108 @@ function productValidate(isAddProduct) {
 
     return true;
 }
+
+
+
+
+// coupon form validation
+let couponForm = document.querySelector(".coupon_form");
+if(couponForm) {
+    console.log('Hello');
+    couponForm.addEventListener('submit' , function(e) {
+        e.preventDefault(); 
+        let isValid = couponValidate();
+        if(isValid) {
+            console.log('Submission');
+            document.querySelector(".coupon_form").submit();
+        }
+    })
+}
+
+//validate coupon
+function couponValidate() {
+    let err = document.querySelector('.error');
+    let text ;
+    console.log('Hello Validate');
+    if(document.querySelector('#couponCode')) {
+        let code = document.querySelector('#couponCode').value;
+        if( code === '' ) {
+            text = "Please enter a coupon code";
+            err.textContent = text ;
+            err.style.height = '4rem';
+            return false;
+        }
+        else if( code.length < 5 ) {
+            text = "Minimum length is 5";
+            err.textContent = text ;
+            err.style.height = '4rem';
+            return false;
+        }
+    }
+
+    if(document.querySelector('#expiryDate')) {
+        let code = document.querySelector('#expiryDate').value;
+        if( code === '' ) {
+            text = "Please enter a expiry date";
+            err.textContent = text ;
+            err.style.height = '4rem';
+            return false;
+        }
+    }
+    if(document.querySelector('#discountPercentage')) {
+        let code = document.querySelector('#discountPercentage').value;
+        if( code === '' ) {
+            text = "Please enter  discount in %";
+            err.textContent = text ;
+            err.style.height = '4rem';
+            return false;
+        }
+    }
+    if(document.querySelector('#minDiscountAmount')) {
+        let code = document.querySelector('#minDiscountAmount').value;
+        if( code === '' ) {
+            text = "Please enter minimum purchase amount";
+            err.textContent = text ;
+            err.style.height = '4rem';
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Blocking/Unblocking the user 

@@ -2008,6 +2008,11 @@ footer h1 {
    text-decoration: line-through;
 }
 
+.coupon_form .error {
+   width: 90%;
+   margin: auto;
+}
+
 @media (max-width: 820px) {
    .nav-menu {
       width: 30rem;

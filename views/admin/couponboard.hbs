@@ -66,20 +66,21 @@
             <form class="coupon_form" action="/admin/addcoupon" method="post">
                <div class="input-container">
                  <label for="couponCode">Coupon Code</label>
-                 <input type="text" name="couponCode">
+                 <input type="text" name="couponCode" id="couponCode">
                </div>
                <div class="input-container">
                  <label for="couponCode">Expiry Date</label>
-                 <input type="date" name="expiryDate">
+                 <input type="date" id="expiryDate" name="expiryDate">
                </div>
                <div class="input-container">
                  <label for="couponCode">Discount Rate</label>
-                 <input type="number" name="discountPercentage">
+                 <input type="number" name="discountPercentage" id="discountPercentage">
                </div>
                <div class="input-container">
                  <label for="minDiscountAmount">Minimum Parchase Amount</label>
-                 <input type="number" name="minDiscountAmount">
+                 <input type="number" name="minDiscountAmount" id="minDiscountAmount">
                </div>
+               <div class="error"></div>
                <div class="input-container">
                  <button type="submit" class="btn-coupon">Save</button>   
                </div>

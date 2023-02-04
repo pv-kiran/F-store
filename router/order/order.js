@@ -49,8 +49,11 @@ router.put('/return/:id' , isLoggedIn , returnOrder )
 // deleting the order
 router.delete('/cancel/:id' , isLoggedIn  , removeOrder); 
 
+// razorpay success
 router.put('/success/:id' , isLoggedIn , razorPaySuccess );
 
+
+// order success
 router.get('/success' , isLoggedIn ,  orderSuccess);
 
 
