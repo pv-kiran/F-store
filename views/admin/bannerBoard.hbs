@@ -1,0 +1,77 @@
+{{>adminsidenav}}
+        <section class="dashboard-container">
+            <div class="dashboard-nav">
+                <div class="dashboard-left">
+                    <div>
+                        <i id="menu-btn" class="fas fa-bars"></i>
+                    </div>
+                    <div class="search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" name="search" id="search" placeholder="search">
+                    </div>
+                </div>
+                <div class="dashboard-right">
+                    <a href="/admin/logout">
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+                    </a>
+                    <img src="/images/admin.jpg" alt="admin">
+                </div>
+            </div>
+
+
+            <h3 class="dashboard-heading">
+                Banner Management
+            </h3>
+            <form class ="category_form" action="/admin/banner" enctype="multipart/form-data" method="post">
+                <div class="input-container">
+                    <input type="file" name="banner" id="banner">
+                </div>
+                <button type="submit">Save</button>   
+            </form>
+        
+        
+            <div class="dashboard">
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <td>Banner Link</td>
+                            <td>Image</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {{#each banner}}
+                            <tr>
+                              <td>{{id}}</td>
+                              <td> <img src="{{secured_url}}" alt="IMAGE"> </td>
+                              <td>
+                                    {{#if isActive}}
+                                    Active
+                                    {{else}}
+                                    Not Active
+                                    {{/if}}
+                              </td>
+                              <td>
+                                 {{#if isActive}}
+                                    <a data-url="{{_id}}" class="btn-banner-toggle">
+                                        <i class="fas fa-check-square tick"></i>
+                                        {{!-- <i class="fas fa-times-circle cross"></i> --}}
+                                    </a>
+                                 {{else}}
+                                    <a data-url="{{_id}}" class="btn-banner-toggle">
+                                        <i class="fas fa-times-circle cross"></i>
+                                    </a>
+                                 {{/if}}
+                              </td>
+                            </tr>
+                       {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+    {{>popup}} 
+    <script src="/javascript/admin.js"></script>

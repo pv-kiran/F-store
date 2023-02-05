@@ -1,3 +1,4 @@
+
 // NAvigation toggler
 const menuBtn = document.querySelector('#menu-btn');
 const navBar = document.querySelector('.nav-menu') 
@@ -200,9 +201,6 @@ function productValidate(isAddProduct) {
     return true;
 }
 
-
-
-
 // coupon form validation
 let couponForm = document.querySelector(".coupon_form");
 if(couponForm) {
@@ -268,8 +266,6 @@ function couponValidate() {
 
     return true;
 }
-
-
 
 // Blocking/Unblocking the user 
 let editItems = document.querySelector('table');
@@ -353,7 +349,6 @@ async function blockProducts(e) {
 
 // changing the status of categories
 let editCategory = document.querySelector('table');
-
 if(editCategory) {
     editCategory.addEventListener('click' , (e) => {
 
@@ -384,7 +379,6 @@ async function changeCategoryStatus(e) {
     window.location.href = redirectPath.redirect;
     
 }
-
 
 // Cancelling the orders
 let orderItems = document.querySelector('table');
@@ -592,8 +586,6 @@ async function categoryOfferClear(e) {
     window.location.href = redirectPath.redirect;
 }
 
-
-
 // refunding - RAZORPAY
 let refundContainer = document.querySelector('table');
 if(refundContainer) {
@@ -607,7 +599,6 @@ if(refundContainer) {
         }
     })
 }
-
 
 async function refundPayment(e) {
     const orderId = e.target.dataset.url;
@@ -624,6 +615,40 @@ async function refundPayment(e) {
                 
     const redirectPath = await res.json();
     window.location.href = redirectPath.redirect;
+}
+
+// banner activation
+let bannerContainer = document.querySelector('table');
+if(couponItems) {
+    couponItems.addEventListener('click' , (e) => {
+        if(e.target.classList.contains('btn-banner-toggle')) {
+                popUp.classList.add('open_popup');
+                hideAlert.addEventListener('click' , () => {
+                    popUp.classList.remove('open_popup');
+                    bannerActivate(e);    
+                })
+        }
+    })
+}
+
+async function bannerActivate(e) {
+    const bannerId = e.target.dataset.url;
+    console.log(bannerId);
+    console.log('called');
+    const url = `http://localhost:4000/admin/banner/${bannerId}`;
+    const res = await fetch(url, {
+                    method: 'PUT',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    }
+                });
+                
+
+    
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+    
 }
 
 

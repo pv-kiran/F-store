@@ -2,6 +2,7 @@ const cloudinary = require('cloudinary').v2;
 const puppeteer = require('puppeteer');
 const XLSX = require('xlsx');
 
+const Razorpay = require('razorpay');
 
 cloudinary.config({
    cloud_name : "dk81bsiz2" ,
@@ -14,6 +15,7 @@ const Product = require('../models/product');
 const Category = require('../models/category');
 const Order = require('../models/order');
 const Coupon = require('../models/coupon');
+const Banner = require('../models/banner');
 
 const getDashBoard = async (req,res) => {
     try {
@@ -862,6 +864,51 @@ const refundInitiation = async (req,res) => {
 
 }
 
+const getBannerDashboard = async (req,res) => {
+  try {
+      const banner = await Banner.find({});
+      if(banner.length > 0) {
+          res.render('admin/bannerBoard' , {banner: banner});
+      } else {
+          console.log(banner)
+          res.render('admin/bannerBoard');
+      }
+
+  } catch(e) {
+      console.log(e);
+  }
+ 
+}
+
+const addBanner = async (req,res) => {
+    
+  let file = req.files.banner ;
+  try {
+      const result = await cloudinary.uploader.upload(file.tempFilePath , {
+          folder: 'banners'
+      })
+      const newBanner = await Banner.create({
+          id:result.public_id  ,
+          secured_url: result.secure_url
+      })
+      await newBanner.save();
+      res.redirect('/admin/banner')
+  } catch(e) {
+      console.log(e);
+  }
+}
+
+const activateBanner = async (req,res) => {
+  const {id} = req.params;
+  try {
+      const banner = await Banner.find({_id: id});
+      banner[0].isActive = !banner[0].isActive ;
+      await banner[0].save({validateBeforeSave : false});
+      res.json({redirect: '/admin/banner'});
+  } catch(e) {
+      console.log(e);
+  }
+}
 
 
 module.exports = {
@@ -897,5 +944,8 @@ module.exports = {
     addCategoryOffer ,
     removeCategoryOffer ,
     refundDashboard ,
-    refundInitiation
+    refundInitiation ,
+    addBanner ,
+    getBannerDashboard ,
+    activateBanner
 };

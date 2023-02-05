@@ -88,9 +88,6 @@
  }
 
 
- 
-
-
  .dashboard-container {
     width: calc(100% - 30rem );
     margin-left: 30rem;
@@ -286,7 +283,8 @@ tbody tr a {
 tbody tr .btn-block , 
 tbody tr .coupon-block , 
 tbody tr .btn-edit , 
-tbody tr .btn-category-block  {
+tbody tr .btn-category-block ,
+tbody tr .btn-banner-toggle {
    padding: .5rem;
    text-align: left;
    display: block;
@@ -880,54 +878,7 @@ li {
 
 
 
-/* .best-product {
-   position: relative;
-   width: 23%;
-   margin-bottom: 2rem;
-    height: 30rem; 
-    border: 1px red solid; 
- }  */
- /* .best-product img {
-   width: 100%;
-   height: 100%;
- } */
 
- /* .card {
-   position: static;
-   z-index:-4; 
- } */
- /* .btn-add-cart , .btn-view-product {
-   position: absolute;
-   display: inline-block;
-   font-size: 2.3rem;
-   color: #273656;
- } */
- /* .btn-add-cart {
-   bottom: 2rem;
-   right: 5.5rem;
- } */
- /* .btn-view-product {
-   bottom: 2rem;
-   right: 1.5rem;
- } */
-
- /* .card img {
-   height: 20rem;
- }  */
-
-
-
- /* .price {
-   font-size: 1.7rem;
-   color: #8a8e93;
-   padding: .2rem .5rem;
-  } */
-  /* .product_name {
-    font-size: 2rem;
-    color: #23282e;
-    font-weight: 100;
-    padding: .2rem .5rem;
-  } */
 
 /* Signup letter styling */
 .signup-letter {
@@ -1050,6 +1001,7 @@ footer h1 {
 
 .product-img {
    width: 45%;
+   /* border: 1px red solid; */
    /* display: flex; */
 }
 .product-details {
@@ -1085,11 +1037,13 @@ footer h1 {
    display: flex;
    justify-content: center;
    align-items: center;
+   /* border: 1px red solid; */
 }
 .product-img .mainImg {
    height: 28rem;
    border-radius: 1rem;
    object-fit: contain;
+   /* border: 1px red solid; */
 }
 .product-sub-img {
    display: flex;
@@ -2016,6 +1970,13 @@ footer h1 {
    margin: auto;
 }
 
+.category_form .input-container {
+   border: 1px rgb(81, 79, 79) solid;
+   width: 75%;
+   padding: .75rem .5rem;
+   border-radius: .4rem;
+}
+
 @media (max-width: 820px) {
    .nav-menu {
       width: 30rem;
@@ -2084,7 +2045,7 @@ footer h1 {
   .input-container {
    flex-basis: 95%;
   } 
-  tbody tr .btn-block  , tbody tr .btn-category-block {
+  tbody tr .btn-block  , tbody tr .btn-category-block , tbody tr .btn-banner-toggle {
       padding: .5rem;
       text-align: left;
       display: block;
@@ -2479,6 +2440,5 @@ footer h1 {
       width: 90%;
       margin: auto;
    }
-   
 }
 
