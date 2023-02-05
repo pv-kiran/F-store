@@ -11,7 +11,6 @@ if(registerForm) {
     })
 }
 
-
 // validation for user name in user edit form
 const userUpdateForm = document.querySelector(".personal-info-form");
 if(userUpdateForm) {
@@ -233,7 +232,8 @@ function addressvalidation() {
     let addressErr = document.querySelector('.addr-error');
     let text ;
 
-    // let phoneNumberformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    let phoneNumberformat = /^[6-9]{1}[0-9]{9}$/;
+    let postalCodeFormat = /^[1-9][0-9]{5}$/ ;
 
     if(document.querySelector('#houseName')) {
         let houseName = document.querySelector('#houseName').value;
@@ -257,6 +257,14 @@ function addressvalidation() {
             return false;
         }
 
+        else if(phone.match(phoneNumberformat) === null) {
+            console.log(phoneNumberformat);
+            text = "Please enter a valid phone number";
+            addressErr.textContent = text ;
+            addressErr.style.height = '4rem';
+            return false;
+        }
+        
         // phone number validation is required
 
     }
@@ -278,6 +286,12 @@ function addressvalidation() {
         
         if( postalCode === '' ) {
             text = "Please enter your postal code";
+            addressErr.textContent = text ;
+            addressErr.style.height = '4rem';
+            return false;
+        }
+        else if(postalCode.match(postalCodeFormat) === null) {
+            text = "Please enter valid postal code";
             addressErr.textContent = text ;
             addressErr.style.height = '4rem';
             return false;
@@ -373,9 +387,6 @@ if(imageContainer) {
 
 
 
-
-
-
 //removing the address
 let addressContainer = document.querySelector('.address-container');
 if(addressContainer) {
@@ -406,66 +417,3 @@ async function removeAddress(e) {
     
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// navigation toggler
-// const menuBtn = document.querySelector('#menu-btn');
-// const navBar = document.querySelector('.nav-menu') 
-// if(menuBtn) {
-//     menuBtn.addEventListener('click' , () => {
-//         console.log(2);
-//         navBar.classList.toggle('active');
-//     })
-// }

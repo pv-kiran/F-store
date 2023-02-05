@@ -271,38 +271,6 @@ function couponValidate() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Blocking/Unblocking the user 
 let editItems = document.querySelector('table');
 const popUp = document.querySelector('#popup');
@@ -423,19 +391,33 @@ let orderItems = document.querySelector('table');
 if(orderItems) {
     orderItems.addEventListener('click' , (e) => {
         if(e.target.classList.contains('order-cancel-btn')) {
-                orderCancell(e);
+                popUp.classList.add('open_popup');
+                hideAlert.addEventListener('click' , () => {
+                    popUp.classList.remove('open_popup');
+                    orderCancell(e);
+                })
         }
         else if(e.target.classList.contains('order-delivered-btn')) {
-                orderDeliver(e);
+                popUp.classList.add('open_popup');
+                hideAlert.addEventListener('click' , () => {
+                    popUp.classList.remove('open_popup');
+                    orderDeliver(e);
+                })
         }    
         else if(e.target.classList.contains('tracking_info')) {
             e.target.addEventListener('change' , (e) => {
-               updateTrackingInfo(e);
+                popUp.classList.add('open_popup');
+                hideAlert.addEventListener('click' , () => {
+                    popUp.classList.remove('open_popup');
+                    updateTrackingInfo(e);    
+                })
             })
         }
     })
 }
 
+
+// updating the tracking info
 async function updateTrackingInfo(e) {
     const orderId = e.target.dataset.url;
     console.log(orderId);
@@ -462,7 +444,7 @@ async function updateTrackingInfo(e) {
     
 }
 
-
+//cancelling order
 async function orderCancell(e) {
     const orderId = e.target.dataset.url;
     console.log(orderId);
@@ -481,6 +463,8 @@ async function orderCancell(e) {
     
 }
 
+
+// deleivering  order
 async function orderDeliver(e) {
     const orderId = e.target.dataset.url;
     console.log(orderId);
@@ -519,7 +503,11 @@ let couponItems = document.querySelector('table');
 if(couponItems) {
     couponItems.addEventListener('click' , (e) => {
         if(e.target.classList.contains('coupon-block')) {
-                couponActivate(e);
+                popUp.classList.add('open_popup');
+                hideAlert.addEventListener('click' , () => {
+                    popUp.classList.remove('open_popup');
+                    couponActivate(e);    
+                })
         }
     })
 }
@@ -611,7 +599,11 @@ let refundContainer = document.querySelector('table');
 if(refundContainer) {
     refundContainer.addEventListener('click' , (e) => {
         if(e.target.classList.contains('btn-refund')) {
-                refundPayment(e);
+                popUp.classList.add('open_popup');
+                hideAlert.addEventListener('click' , () => {
+                    popUp.classList.remove('open_popup');
+                    refundPayment(e);   
+                })
         }
     })
 }

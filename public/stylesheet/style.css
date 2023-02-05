@@ -1290,6 +1290,10 @@ footer h1 {
  
 /* USER Profile page styling */
 
+
+
+
+
 .profile-page-container {
    margin-top: 16vh;
    width: 100%;
@@ -1723,7 +1727,6 @@ footer h1 {
 .order-products h4 {
    text-align: left;
    padding-left: 2rem;
-   
 }
 
 .order-image-container {
@@ -2258,6 +2261,95 @@ footer h1 {
       font-size: 1.2rem;
       padding: .3rem;
    }
+
+   .profile-page-container {
+      margin-top: 5rem;
+   }
+
+   .profile-page {
+      flex-direction: column;
+   }
+
+   .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+   }
+
+   #address-profile {
+   }
+   .row-one {
+      flex-wrap: wrap;
+      justify-content: center;
+   }
+   .address-container {
+      flex-direction: column;
+   } 
+   .address-list {
+      width: 100%;
+      margin-bottom: .5rem;
+   }
+   .adress-form .input-container {
+      margin-bottom: .8rem;
+   } 
+   .order-page-container {
+      flex-wrap: wrap;
+      margin-top: 8rem;
+   }
+
+   .order-page-left {
+     width: 100%;
+   } 
+
+   .adress-details-card-container {
+     flex-direction: column;
+     width: 80%;
+     margin: auto;
+   }
+   .adress-details-card {
+     margin-bottom: 1rem;
+     width: 100%;
+     justify-content: flex-start;
+   }
+   .btn-address-show {
+      width: 10rem;
+      margin-top: 1rem;
+      margin-left: 3.3rem;
+   }
+   .my-order {
+      flex-grow: 1;
+      margin-left: -1rem;
+   }
+
+
+   .my-details-order {
+      flex-direction: column;
+      padding-left: 3rem;
+   }
+
+   .my-details-order > div {
+      width: 100%;
+   }
+   
+   .order-products-image {
+      flex-direction: row;
+      justify-content: flex-start;
+   }
+
+   .order-products-image img {
+      margin-right: .5rem;
+   }
+   .order-products h4 {
+      padding-left: 0;
+   }
+   .order-payment-mode h4 , .order-total h4 {
+      text-align: left;
+   }
+
+
+
+   
 }
 
 
@@ -2359,5 +2451,34 @@ footer h1 {
     .order-success-page div h1 {
       font-size: 1.7rem;
     }
+    .profile-page {
+      flex-direction: column;
+   }
+
+   .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+   }
+
+   #address-profile {
+
+   }
+   .row-one {
+      flex-wrap: wrap;
+      justify-content: center;
+   }
+   .profile-actions-nav {
+      border: 1px rgb(98, 98, 98) solid;
+      border-radius: .2rem;
+      height: 25rem;
+      flex-direction: column;
+   }
+   .profile-actions-nav a {
+      width: 90%;
+      margin: auto;
+   }
+   
 }
 

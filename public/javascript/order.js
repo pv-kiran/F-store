@@ -33,7 +33,6 @@ if(addressRadio) {
 
 // creating an order for cash on delivery
 let codBtn = document.querySelector('.btn-cod');
-
 if(codBtn){
     codBtn.addEventListener('click' , (e) => {
         createOrder(e);

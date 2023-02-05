@@ -13,7 +13,7 @@ const {isLoggedIn} = require('../../middlewares/authmiddleware');
 
 
 // to fetch the user details
-router.get('/:id' , getUserProfile);
+router.get('/:id' , isLoggedIn , getUserProfile);
 
 
 // add a new address
