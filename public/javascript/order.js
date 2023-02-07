@@ -50,7 +50,7 @@ if(btnRazor) {
 
 async function createOrder(e) {
 
-    const url = `http://localhost:4000/order/create`;
+    const url = `/order/create`;
     let methodOfPayment;
     if(e.target.classList.contains('btn-cod')) {
          methodOfPayment = 'Cash on delivery';
@@ -105,7 +105,7 @@ async function createOrder(e) {
 
 // payment succcess
 async function orderSuccess(orderId , paymentId) {
-    const url = `http://localhost:4000/order/success/${orderId}`;
+    const url = `/order/success/${orderId}`;
     console.log(orderId);
     console.log(paymentId);
     const res = await fetch(url, {
@@ -136,7 +136,7 @@ if(orderContainer) {
 async function removeOrder(e) {
     const orderId = e.target.dataset.url;
     console.log(orderId);
-    const url = `http://localhost:4000/order/cancel/${orderId}`;
+    const url = `/order/cancel/${orderId}`;
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -154,7 +154,7 @@ async function removeOrder(e) {
 // remove / cancel order
 async function cancelOrder(orderId) {
     console.log(orderId);
-    const url = `http://localhost:4000/order/cancel/${orderId}`;
+    const url = `/order/cancel/${orderId}`;
     const res = await fetch(url, {
                     method: 'DELETE',
                     credentials: "same-origin",
@@ -181,7 +181,7 @@ if(returnContainer) {
 async function returnOrder(e) {
     const orderId = e.target.dataset.url;
     console.log(orderId);
-    const url = `http://localhost:4000/order/return/${orderId}`;
+    const url = `/order/return/${orderId}`;
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",

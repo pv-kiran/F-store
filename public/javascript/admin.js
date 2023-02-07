@@ -292,9 +292,7 @@ if(editItems) {
 
 async function blockUser(e) {
     const userId = e.target.dataset.url;
-    console.log(userId);
-    const url = `http://localhost:4000/admin/user/${userId}` ;
-    console.log(url);
+    const url = `/admin/user/${userId}` ;
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -330,7 +328,7 @@ if(actionItems) {
 async function blockProducts(e) {
     const userId = e.target.dataset.url;
     console.log(userId);
-    const url = `http://localhost:4000/admin/productstatus/${userId}` ;
+    const url = `/admin/productstatus/${userId}` ;
     console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
@@ -365,7 +363,7 @@ if(editCategory) {
 async function changeCategoryStatus(e) {
     const userId = e.target.dataset.url;
     console.log(userId);
-    const url = `http://localhost:4000/admin/categorystatus/${userId}` ;
+    const url = `/admin/categorystatus/${userId}` ;
     console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
@@ -416,7 +414,7 @@ async function updateTrackingInfo(e) {
     const orderId = e.target.dataset.url;
     console.log(orderId);
     console.log('called');
-    const url = `http://localhost:4000/admin/order/tracking/${orderId}` ;
+    const url = `/admin/order/tracking/${orderId}` ;
     // console.log(url);
     // console.log(document.getElementById('tracking_info').value);
     const res = await fetch(url, {
@@ -433,7 +431,6 @@ async function updateTrackingInfo(e) {
 
     
     const redirectPath = await res.json();
-    console.log(redirectPath);
     window.location.href = redirectPath.redirect;
     
 }
@@ -441,8 +438,7 @@ async function updateTrackingInfo(e) {
 //cancelling order
 async function orderCancell(e) {
     const orderId = e.target.dataset.url;
-    console.log(orderId);
-    const url = `http://localhost:4000/admin/order/cancel/${orderId}` ;
+    const url = `/admin/order/cancel/${orderId}` ;
     console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
@@ -461,8 +457,7 @@ async function orderCancell(e) {
 // deleivering  order
 async function orderDeliver(e) {
     const orderId = e.target.dataset.url;
-    console.log(orderId);
-    const url = `http://localhost:4000/admin/order/deliver/${orderId}` ;
+    const url = `/admin/order/deliver/${orderId}` ;
     console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
@@ -510,7 +505,7 @@ async function couponActivate(e) {
     const couponId = e.target.dataset.url;
     console.log(couponId);
     console.log('called');
-    const url = `http://localhost:4000/admin/updatecoupon/${couponId}`;
+    const url = `/admin/updatecoupon/${couponId}`;
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -542,7 +537,7 @@ async function offerClear(e) {
     const productId = e.target.dataset.url;
     console.log(productId);
     console.log('called');
-    const url = `http://localhost:4000/admin/offer/${productId}`;
+    const url = `/admin/offer/${productId}`;
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -572,7 +567,7 @@ if(categoryOffer) {
 async function categoryOfferClear(e) {
     const categoryId = e.target.dataset.url;
     console.log(categoryId);
-    const url = `http://localhost:4000/admin/categoryoffer/${categoryId}`;
+    const url = `/admin/categoryoffer/${categoryId}`;
     console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
@@ -603,7 +598,7 @@ if(refundContainer) {
 async function refundPayment(e) {
     const orderId = e.target.dataset.url;
     console.log(orderId);
-    const url = `http://localhost:4000/admin/refund/${orderId}`;
+    const url = `/admin/refund/${orderId}`;
     console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
@@ -635,7 +630,7 @@ async function bannerActivate(e) {
     const bannerId = e.target.dataset.url;
     console.log(bannerId);
     console.log('called');
-    const url = `http://localhost:4000/admin/banner/${bannerId}`;
+    const url = `/admin/banner/${bannerId}`;
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",

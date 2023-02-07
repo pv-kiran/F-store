@@ -28,9 +28,7 @@ if(userUpdateForm) {
 
 async function sendUserNameUpdateReq(){
     const userId = document.getElementById('btn-username-change').dataset.url;
-    console.log(userId);
-    const url = `http://localhost:4000/profile/username/${userId}`;
-    console.log(url);
+    const url = `/profile/username/${userId}`;
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -63,7 +61,7 @@ if(passwordForm) {
 async function sendChangePasswordRequest(){
     // const userId = document.getElementById('btn-username-change').dataset.url;
     // console.log(userId);
-    const url = `http://localhost:4000/profile/user/password`;
+    const url = `/profile/user/password`;
     console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
@@ -205,7 +203,7 @@ if(upadateAddressForm) {
 async function sendAddressUpdateReq(){
     const userId = document.getElementById('btn-address-update').dataset.url;
     console.log(userId);
-    const url = `http://localhost:4000/profile/address/${userId}`;
+    const url = `/profile/address/${userId}`;
     console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
@@ -333,7 +331,7 @@ if(resendBtn) {
     resendBtn.addEventListener('click' , async () => {
         const userEmail = resendBtn.dataset.url;
         console.log(userEmail);
-        const url = `http://localhost:4000/user/newotp` ;
+        const url = `/user/newotp` ;
         console.log(url);
         const res = await fetch(url, {
                         method: 'PUT',
@@ -402,7 +400,7 @@ if(addressContainer) {
 async function removeAddress(e) {
     const userId = e.target.dataset.url;
     console.log(userId);
-    const url = `http://localhost:4000/profile/address/${userId}`;
+    const url = `/profile/address/${userId}`;
     console.log(url);
     const res = await fetch(url, {
                     method: 'DELETE',
