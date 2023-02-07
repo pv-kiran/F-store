@@ -22,7 +22,6 @@ const getDashBoard = async (req,res) => {
       const user = await User.find({});
       const product = await Product.find({});
       const order = await Order.find({isCancelled: false});
-    //   console.log(`${user.length} ${product.length} ${order.length}`);
     
       res.render('admin/dashboard' , {user: user.length , product: product.length , order: order.length});
     } catch(e) {
@@ -145,7 +144,10 @@ const dailySalesReportDownload = async (req,res) => {
           const page = await browser.newPage();
   
           // this needs to change {Hosting}
-          const website_url = 'http://localhost:4000/admin/dailywise/report';
+          // const website_url = 'http://localhost:4000/admin/dailywise/report';
+          
+          const website_url = `${req.protocol}://${req.get("host")}/admin/dailywise/report`;
+
   
           await page.goto(website_url, { waitUntil: 'networkidle0' });
   
@@ -226,7 +228,9 @@ const productWiseReportDownload = async (req,res) => {
           const page = await browser.newPage();
   
           // this needs to change {Hosting}
-          const website_url = 'http://localhost:4000/admin/productwise/report';
+          // const website_url = 'http://localhost:4000/admin/productwise/report';
+          const website_url = `${req.protocol}://${req.get("host")}/admin/productwise/report`;
+
   
           await page.goto(website_url, { waitUntil: 'networkidle0' });
   
@@ -443,13 +447,10 @@ const searchUser = async (req,res) => {
 
 const getProductForm = async  (req,res) => {
     const categories = await Category.find({isAvailable: true});
-    console.log(categories);
     res.render('admin/addproduct' , {categoryList: categories});
 };
 
 const addProduct = async (req,res) => {
-    console.log("hello");
-    console.log(req.files);
     const { productName , price , description , categories, material , productDimension ,manufacturedBy , marketedBy , stock , countryOfOrigin } = req.body ;
    //  console.log(req.files);
     const imgArr = [];
@@ -464,7 +465,7 @@ const addProduct = async (req,res) => {
          } else {
    
             if(req.files) {
-               console.log(req.files);
+              //  console.log(req.files);
    
                // uploading the product images to the cloudinary
                for (let index = 0; index < req.files.imagefile.length; index++) {
@@ -479,7 +480,7 @@ const addProduct = async (req,res) => {
       
                }
    
-               console.log(imgArr);
+              //  console.log(imgArr);
             }
       
             const newProduct = await Product.create({
@@ -518,7 +519,7 @@ const getAllProducts = async (req,res) => {
 
 const updateProductStatus = async (req,res) => {
     const {id} = req.params ;
-    console.log(id);
+    // console.log(id);
     try {
         const product = await Product.findById({ _id: id});
         const isBlocked = product.isBlocked ;
@@ -591,7 +592,7 @@ const updateProduct = async (req, res) => {
 const getCategories = async (req,res) => {
     try {
        const categoryList = await Category.find({});
-       console.log(categoryList);
+      //  console.log(categoryList);
        res.render('admin/categoryboard' , {categoryList: categoryList});
     } catch(e) {
        console.log(e);
@@ -626,7 +627,7 @@ const addCategory = async (req,res) => {
 
 const updateCategory = async (req,res) => {
     const {id} = req.params ;
-     console.log(id);
+    //  console.log(id);
      try {
          const category = await Category.findById({ _id: id});
          const isAvailable = category.isAvailable ;
@@ -651,7 +652,7 @@ const getOrders = async  (req,res) => {
 const orderTracking = async (req,res) => {
   const trackingIfo = req.body.tracking_info;
   const {id} = req.params ;
-  console.log(id);
+  // console.log(id);
   try {
       const order = await Order.find({_id:id});
       // console.log(order[0]);
@@ -668,7 +669,7 @@ const cancelOrders = async (req,res) => {
     const id = req.params.id;
     try {
         const order = await Order.find({id: id});
-        console.log(order[0].orderItems);
+        // console.log(order[0].orderItems);
     
         const updateStock = async (productId , quantity) => {
             const product = await Product.find({_id:productId});
@@ -692,7 +693,7 @@ const deliverOrder = async (req,res) => {
      const id = req.params.id;
      try {
         const order = await Order.find({id: id});
-        console.log(order[0].orderItems);
+        // console.log(order[0].orderItems);
     
         const updateStock = async (productId , quantity) => {
             const product = await Product.find({_id:productId});
@@ -732,7 +733,7 @@ const addCoupon = async (req,res) => {
           minDiscountAmount: parseInt(minDiscountAmount) ,
           discountPercentage: parseInt(discountPercentage)
       });
-      console.log(coupon);
+      // console.log(coupon);
       await coupon.save();
       res.redirect('/admin/coupon');
   } catch(e) {
@@ -787,7 +788,7 @@ const addCategoryOffer = async (req,res) => {
   const {id} = req.params ;
   const {offer} = req.body ;
 
-  console.log('This is post');
+  // console.log('This is post');
 
   try {
 
@@ -817,16 +818,16 @@ const addCategoryOffer = async (req,res) => {
 
 const removeCategoryOffer = async (req,res) => {
 
-  console.log('Heloo');
+  // console.log('Heloo');
   const {id} = req.params ;
-  console.log(id);
+  // console.log(id);
   try {
       const category = await Category.find({_id:id});
-      console.log(category);
+      // console.log(category);
       category[0].offer = 0;
       category[0].isOfferAvailable = false;
       const products = await Product.find({categories: id});
-      console.log(products);
+      // console.log(products);
       products.forEach(async (product) => {
           product.offer = 0 ;
           product.isOfferAvailable = false;
@@ -834,7 +835,7 @@ const removeCategoryOffer = async (req,res) => {
           await product.save();
       })
 
-      console.log(products);
+      // console.log(products);
 
       await category[0].save();
 
@@ -847,7 +848,7 @@ const removeCategoryOffer = async (req,res) => {
 const refundDashboard =  async (req,res) => {
   try {
       const orders = await Order.find({isReturn: true}).populate('orderItems.id').populate('user').sort({'createdAt': -1});
-      console.log(orders)
+      // console.log(orders)
       res.render('admin/refund' , {orders: orders});
   } catch(e) {
       console.log(e);
@@ -883,7 +884,7 @@ const getBannerDashboard = async (req,res) => {
       if(banner.length > 0) {
           res.render('admin/bannerBoard' , {banner: banner});
       } else {
-          console.log(banner)
+          // console.log(banner)
           res.render('admin/bannerBoard');
       }
 

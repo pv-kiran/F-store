@@ -15,7 +15,6 @@ if(registerForm) {
 const userUpdateForm = document.querySelector(".personal-info-form");
 if(userUpdateForm) {
     userUpdateForm.addEventListener('submit' , function(e) {
-        console.log('Submission of change username');
         e.preventDefault(); 
         let isValid = validate();
         if(isValid) {
@@ -48,7 +47,6 @@ async function sendUserNameUpdateReq(){
 const passwordForm = document.querySelector(".password-change-form");
 if(passwordForm) {
     passwordForm.addEventListener('submit' , function(e) {
-        console.log('Submission of change username');
         e.preventDefault(); 
         let isValid = validate();
         if(isValid) {
@@ -62,7 +60,6 @@ async function sendChangePasswordRequest(){
     // const userId = document.getElementById('btn-username-change').dataset.url;
     // console.log(userId);
     const url = `/profile/user/password`;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -133,8 +130,7 @@ function validate() {
     if(document.querySelector('#confirmPswd')) {
         let confirmPswd = document.querySelector('#confirmPswd').value;
         let password = document.querySelector('#password').value;
-        console.log(confirmPswd);
-        console.log(password);
+       
         
         if( confirmPswd === '' ) {
             text = "Please cofirm the password";
@@ -176,7 +172,6 @@ function validate() {
 const addressForm = document.querySelector(".adress-form");
 if(addressForm) {
     addressForm.addEventListener('submit' , function(e) {
-        console.log('Submission of change username');
         e.preventDefault(); 
         let isValid = addressvalidation();
         if(isValid) {
@@ -202,9 +197,7 @@ if(upadateAddressForm) {
 // Request for address change
 async function sendAddressUpdateReq(){
     const userId = document.getElementById('btn-address-update').dataset.url;
-    console.log(userId);
     const url = `/profile/address/${userId}`;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -256,7 +249,6 @@ function addressvalidation() {
         }
 
         else if(phone.match(phoneNumberformat) === null) {
-            console.log(phoneNumberformat);
             text = "Please enter a valid phone number";
             addressErr.textContent = text ;
             addressErr.style.height = '4rem';
@@ -330,9 +322,7 @@ function addressvalidation() {
 if(resendBtn) {
     resendBtn.addEventListener('click' , async () => {
         const userEmail = resendBtn.dataset.url;
-        console.log(userEmail);
         const url = `/user/newotp` ;
-        console.log(url);
         const res = await fetch(url, {
                         method: 'PUT',
                         credentials: "same-origin",
@@ -388,7 +378,6 @@ if(imageContainer) {
 //removing the address
 let addressContainer = document.querySelector('.address-container');
 if(addressContainer) {
-    console.log('clicked');
     addressContainer.addEventListener('click' , (e) => {
         if(e.target.classList.contains('address-remove')) {
              removeAddress(e);
@@ -399,9 +388,7 @@ if(addressContainer) {
 // request for removing address
 async function removeAddress(e) {
     const userId = e.target.dataset.url;
-    console.log(userId);
     const url = `/profile/address/${userId}`;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'DELETE',
                     credentials: "same-origin",

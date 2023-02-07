@@ -1,12 +1,8 @@
-console.log(1);
-
 let cartCard = document.querySelector('.cart-items-container');
-console.log(cartCard)
 if(cartCard) {
     
     cartCard.addEventListener('click' , (e) => {
-        console.log('clicking')
-        console.log(e.target);
+        
         if(e.target.classList.contains('delete-btn')) {
             removeFromCart(e);
         }
@@ -19,11 +15,9 @@ if(cartCard) {
     })
 }
 
-
 async function removeFromCart(e) {
     const productId = e.target.dataset.url;
     const url = `/cart/${productId}` ;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'DELETE',
                     credentials: "same-origin",
@@ -38,9 +32,7 @@ async function removeFromCart(e) {
 
 async function incQuantity(e) {
     const productId = e.target.dataset.url;
-    console.log(productId);
     const url = `/cart/inc/${productId}` ;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -55,9 +47,7 @@ async function incQuantity(e) {
 
 async function decQuantity(e) {
     const productId = e.target.dataset.url;
-    console.log(productId);
     const url = `/cart/dec/${productId}` ;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",

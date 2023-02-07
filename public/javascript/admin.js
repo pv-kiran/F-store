@@ -1,10 +1,9 @@
 
-// NAvigation toggler
+// Navigation toggler
 const menuBtn = document.querySelector('#menu-btn');
 const navBar = document.querySelector('.nav-menu') 
 if(menuBtn) {
     menuBtn.addEventListener('click' , () => {
-        console.log(2);
         navBar.classList.toggle('active');
     })
 }
@@ -12,27 +11,22 @@ if(menuBtn) {
 // Validation for adding the product 
 let productForm = document.querySelector("#product_form");
 if(productForm) {
-    console.log('Hello');
     productForm.addEventListener('submit' , function(e) {
         e.preventDefault(); 
         let isValid = productValidate(true);
         if(isValid) {
-            console.log('Submission');
             document.querySelector("#product_form").submit();
         }
     })
 }
 
-
 // Validation for updating the product
 let productUpdateForm = document.querySelector("#product_update_form");
 if(productUpdateForm) {
-    console.log('Hello');
     productUpdateForm.addEventListener('submit' , function(e) {
         e.preventDefault(); 
         let isValid = productValidate(false);
         if(isValid) {
-            console.log('Submission');
             document.querySelector("#product_update_form").submit();
         }
     })
@@ -43,7 +37,6 @@ if(productUpdateForm) {
 function productValidate(isAddProduct) {
     let err = document.querySelector('.error');
     let text ;
-    console.log('Hello Validate');
     if(document.querySelector('#productName')) {
         var name = document.querySelector('#productName').value;
         if( name === '' ) {
@@ -55,7 +48,6 @@ function productValidate(isAddProduct) {
     }
 
     if(document.querySelector('#price')) {
-        console.log('Price');
         var price = document.querySelector('#price').value;
         if(price === '') {
             text = "Please add the price";
@@ -141,7 +133,6 @@ function productValidate(isAddProduct) {
         if(document.querySelector('#imagefile')) {
 
             let imageFile = document.querySelector('#imagefile');
-            console.log(imageFile.files.length);
             if( imageFile.files.length < 4) {
                 text = "Please upload product images";
                 err.textContent = text ;
@@ -165,7 +156,6 @@ function productValidate(isAddProduct) {
         if(document.querySelector('#imagefile')) {
 
             let imageFile = document.querySelector('#imagefile');
-            console.log(imageFile.files.length);
             if( ( imageFile.files.length  > 0 ) && (imageFile.files.length  < 4)) {
                 text = "Please upload atleast four images";
                 err.textContent = text ;
@@ -204,12 +194,10 @@ function productValidate(isAddProduct) {
 // coupon form validation
 let couponForm = document.querySelector(".coupon_form");
 if(couponForm) {
-    console.log('Hello');
     couponForm.addEventListener('submit' , function(e) {
         e.preventDefault(); 
         let isValid = couponValidate();
         if(isValid) {
-            console.log('Submission');
             document.querySelector(".coupon_form").submit();
         }
     })
@@ -219,7 +207,6 @@ if(couponForm) {
 function couponValidate() {
     let err = document.querySelector('.error');
     let text ;
-    console.log('Hello Validate');
     if(document.querySelector('#couponCode')) {
         let code = document.querySelector('#couponCode').value;
         if( code === '' ) {
@@ -327,9 +314,7 @@ if(actionItems) {
 
 async function blockProducts(e) {
     const userId = e.target.dataset.url;
-    console.log(userId);
     const url = `/admin/productstatus/${userId}` ;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -362,9 +347,7 @@ if(editCategory) {
 
 async function changeCategoryStatus(e) {
     const userId = e.target.dataset.url;
-    console.log(userId);
     const url = `/admin/categorystatus/${userId}` ;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -412,8 +395,6 @@ if(orderItems) {
 // updating the tracking info
 async function updateTrackingInfo(e) {
     const orderId = e.target.dataset.url;
-    console.log(orderId);
-    console.log('called');
     const url = `/admin/order/tracking/${orderId}` ;
     // console.log(url);
     // console.log(document.getElementById('tracking_info').value);
@@ -439,7 +420,6 @@ async function updateTrackingInfo(e) {
 async function orderCancell(e) {
     const orderId = e.target.dataset.url;
     const url = `/admin/order/cancel/${orderId}` ;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -458,7 +438,6 @@ async function orderCancell(e) {
 async function orderDeliver(e) {
     const orderId = e.target.dataset.url;
     const url = `/admin/order/deliver/${orderId}` ;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -503,8 +482,6 @@ if(couponItems) {
 
 async function couponActivate(e) {
     const couponId = e.target.dataset.url;
-    console.log(couponId);
-    console.log('called');
     const url = `/admin/updatecoupon/${couponId}`;
     const res = await fetch(url, {
                     method: 'PUT',
@@ -535,8 +512,6 @@ if(offerItems) {
 // product offer clear
 async function offerClear(e) {
     const productId = e.target.dataset.url;
-    console.log(productId);
-    console.log('called');
     const url = `/admin/offer/${productId}`;
     const res = await fetch(url, {
                     method: 'PUT',
@@ -566,9 +541,7 @@ if(categoryOffer) {
 // category offer clear
 async function categoryOfferClear(e) {
     const categoryId = e.target.dataset.url;
-    console.log(categoryId);
     const url = `/admin/categoryoffer/${categoryId}`;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -597,9 +570,7 @@ if(refundContainer) {
 
 async function refundPayment(e) {
     const orderId = e.target.dataset.url;
-    console.log(orderId);
     const url = `/admin/refund/${orderId}`;
-    console.log(url);
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -628,8 +599,6 @@ if(couponItems) {
 
 async function bannerActivate(e) {
     const bannerId = e.target.dataset.url;
-    console.log(bannerId);
-    console.log('called');
     const url = `/admin/banner/${bannerId}`;
     const res = await fetch(url, {
                     method: 'PUT',

@@ -25,7 +25,6 @@ const transporter = nodemailer.createTransport({
 
 const signUpController = (req,res) => {
     session=req.session;
-    console.log(session);
     if(session.userid){
         res.redirect('/');
     } else {
@@ -36,11 +35,9 @@ const signUpController = (req,res) => {
 
 const registerController = async (req,res) => {
     const {name , email ,password} = req.body ;
-    console.log(email);
     try {
 
         const user = await User.find({email: email});
-        console.log(user);
         if(user.length >= 1){
             const isRegitered = true ;
             const errMessage = 'Email is already in use , please register with another email'
@@ -48,7 +45,6 @@ const registerController = async (req,res) => {
         }
 
         const encPassword = await bcrypt.hash(password , 10);
-        // console.log(encPassword);
 
         const otp = 1000 + Math.floor(Math.random() * 9000);
         const otpExpiry = Date.now() + 2*60*1000;
@@ -71,7 +67,6 @@ const registerController = async (req,res) => {
         };
 
         await transporter.sendMail(mailOptions);
-        console.log(newUser);
         res.render('verifyotp',{email: newUser.email});
 
     } catch(e) {
@@ -84,7 +79,6 @@ const registerController = async (req,res) => {
 
 const signInController = (req,res) => {
     session=req.session;
-    console.log(session);
     if(session.userid){
         res.redirect('/');
     } else {
@@ -129,7 +123,6 @@ const loginController = async (req,res) => {
     try {
 
         const user = await User.find({email: email});
-        // console.log(user);
         if(user.length === 1) {
 
             const isValidPassword = await bcrypt.compare(password , user[0].password);
@@ -141,14 +134,12 @@ const loginController = async (req,res) => {
                             session = req.session;
                             session.adminEmail = req.body.email;
                             session.adminId = user[0]._id ;
-                            console.log(req.session);
-                            res.redirect('/admin/users');
+                            res.redirect('/admin/dashboard');
                         }
                         else {
                             session = req.session;
                             session.userid = req.body.email;
                             session._userId = user[0]._id ;
-                            console.log(req.session);
                             res.redirect('/');
                         }
                         
@@ -181,7 +172,6 @@ const loginController = async (req,res) => {
 
 const newOtpController = async (req,res) => {
     const {email} = req.body ;
-    console.log(email);
     
     try {
         const user = await User.find({email: email});
@@ -219,8 +209,9 @@ const postResetController = async (req,res) => {
             user[0].forgetPasswordToken = random;
             user[0].forgotPswdExpiry = forgotPswdExpiry;
             await user[0].save();
+
+            // link to the route for changing the password
             const link = `${req.protocol}://${req.get("host")}/user/reset/${random}`;
-            console.log(link);
             const mailOptions = {
                 from: 'admin@gmail.com',
                 to: `${email}`,
@@ -238,7 +229,6 @@ const postResetController = async (req,res) => {
             const errMessage = `User doesn't exist, Please check your email.`;
             res.render('resetpswd' , {isUserExist: isUserExist , errMessage: errMessage ,email: email});
             }
-            console.log(user);
     } catch(e) {
         console.log(e);
     }
@@ -246,7 +236,6 @@ const postResetController = async (req,res) => {
 }
 
 const getResetTokenController = async (req,res) => {
-    // console.log(req.params.token);
     const {token} = req.params;
     try {
         const user = await User.find({forgetPasswordToken: token });
@@ -264,7 +253,6 @@ const getResetTokenController = async (req,res) => {
 };
 
 const postResetTokenController = async (req,res) => {
-    console.log(req.params.token);
     const {token} = req.params;
     const { password } = req.body ;
     try {

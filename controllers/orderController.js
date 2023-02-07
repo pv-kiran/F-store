@@ -22,7 +22,7 @@ const getOrderDetails = async (req,res) => {
             let isCouponExist = false ;
         
             const cartItems = user[0].cart.filter(item => item.id.isBlocked === false);
-            console.log(cartItems)
+            // console.log(cartItems)
             const totalQuantity = cartItems.reduce((total , item) => {
                 return total+item.quantity;
             } , 0);
@@ -102,7 +102,7 @@ const applyCoupon = async (req,res) => {
                          coupon[0].users.push(coupenUser);
                          await coupon[0].save();
                          totalPrice = totalPrice - (totalPrice * coupon[0].discountPercentage) / 100;
-                         console.log(totalPrice);
+                        //  console.log(totalPrice);
                     
                     //      let isCouponExist = false ;
     
@@ -185,7 +185,7 @@ const createOrder = async (req,res) => {
                // this should go in env
                let instance = new Razorpay({ key_id: process.env.RAZOR_KEY, key_secret: process.env.RAZOR_SECRET })
 
-               console.log(totalAmount);
+            //    console.log(totalAmount);
 
                const myOrder = await instance.orders.create({
                     amount: totalAmount * 100,
@@ -231,7 +231,7 @@ const getUserOrder = async  (req,res) => {
     }
     try {
         const orders = await Order.find({user: req.session._userId}).sort({'createdAt': -1}).populate('orderItems.id');
-        console.log(orders);
+        // console.log(orders);
         if(orders.length === 0) {
             res.render('emptyorder' , {isLoggedIn: isLoggedIn , id: req.session._userId});
         } else {
@@ -280,7 +280,7 @@ const cancelOrder = async (req,res) => {
 
     try {
         const order = await Order.find({id: id});
-        console.log(order[0].orderItems);
+        // console.log(order[0].orderItems);
     
         const updateStock = async (productId , quantity) => {
             const product = await Product.find({_id:productId});
@@ -303,7 +303,7 @@ const cancelOrder = async (req,res) => {
 
 const removeOrder = async (req,res) => {
     const id = req.params.id;
-    console.log(id);
+    // console.log(id);
     try {
     await Order.findOneAndDelete({orderId:id});
     res.json({redirect: '/order'});

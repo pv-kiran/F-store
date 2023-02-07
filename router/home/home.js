@@ -5,6 +5,7 @@ const Banner = require('../../models/banner');
 
 
 router.get('/' , async (req,res) => {
+    console.log(req.hostname);
     let isLoggedIn;
     if(req.session.userid) {
       isLoggedIn = true;

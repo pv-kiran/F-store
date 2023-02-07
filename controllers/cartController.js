@@ -20,14 +20,14 @@ const getCart = async (req,res) => {
         } else {
             user[0].cart.forEach((item) => {
                 if(item.quantity >= item.id.stock) {
-                    console.log(item.quantity) ;
-                    console.log(item.id.stock);
+                    // console.log(item.quantity) ;
+                    // console.log(item.id.stock);
                 }
             }) ;
 
             // removing the blocked products from th cart
             const cartItems = user[0].cart.filter(item => item.id.isBlocked === false);
-            console.log(cartItems)
+            // console.log(cartItems)
 
             // finding the total quantity of cart items
             const totalQuantity = cartItems.reduce((total , item) => {
@@ -42,15 +42,15 @@ const getCart = async (req,res) => {
             // logic for button disabling based on quantity
             cartItems.forEach((item) => {
                 if(item.quantity >= item.id.stock) {
-                    console.log(item.quantity);
-                    console.log(item.id.stock)
+                    // console.log(item.quantity);
+                    // console.log(item.id.stock)
                     item.isUpDisable = true
                 } 
                 else if(item.quantity === 1) {
                     item.isDownDisable = true;
                 }
             })
-            console.log(cartItems);
+            // console.log(cartItems);
 
             // rendering the cart page
             res.render('cart' , {cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId});
@@ -136,7 +136,7 @@ const cartDelete = async (req,res) => {
     try {
         const user = await User.find({email: req.session.userid});
         const index =  user[0].cart.findIndex((item) => { return item.id.valueOf() === `${id}` })
-        console.log(index);
+        // console.log(index);
         user[0].cart.splice(index , 1);
         await user[0].save();
         res.json({redirect: '/cart'});

@@ -1,10 +1,7 @@
-console.log('Hello from Chart.js');
 
 getChart();
 async function getChart() {
     const url = `/admin/chart` ;
-    console.log(url);
-
     const res = await fetch(url, {
                     method: 'GET',
                     credentials: "same-origin",
@@ -12,12 +9,8 @@ async function getChart() {
                     'Content-Type' : 'application/json'
                     }
                 });
-
+                
     const chartData = await res.json();
-    console.log(chartData);
-
-    
-
     // product wise sale
     new Chart(
       document.getElementById('products'),
@@ -79,8 +72,6 @@ async function getChart() {
     );
     
 
-    
-    
 }
 
 

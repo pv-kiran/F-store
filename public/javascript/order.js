@@ -47,7 +47,6 @@ if(btnRazor) {
     })
 }
 
-
 async function createOrder(e) {
 
     const url = `/order/create`;
@@ -59,7 +58,6 @@ async function createOrder(e) {
          methodOfPayment = 'Razor Pay';
     }
 
-    console.log(methodOfPayment);
     const res = await fetch(url, {
                     method: 'POST',
                     credentials: "same-origin",
@@ -77,7 +75,6 @@ async function createOrder(e) {
 
     if(redirectPath.myOrder) {
         
-        console.log(redirectPath.myOrder)
         var options = {
             key: "rzp_test_I7TMRHjNEnfLbl", // Key ID
             amount: redirectPath.myOrder.amount * 100, // Amount is in paise
@@ -102,12 +99,9 @@ async function createOrder(e) {
     }
 }
 
-
 // payment succcess
 async function orderSuccess(orderId , paymentId) {
     const url = `/order/success/${orderId}`;
-    console.log(orderId);
-    console.log(paymentId);
     const res = await fetch(url, {
                     method: 'PUT',
                     credentials: "same-origin",
@@ -135,7 +129,6 @@ if(orderContainer) {
 }
 async function removeOrder(e) {
     const orderId = e.target.dataset.url;
-    console.log(orderId);
     const url = `/order/cancel/${orderId}`;
     const res = await fetch(url, {
                     method: 'PUT',
@@ -153,7 +146,6 @@ async function removeOrder(e) {
 
 // remove / cancel order
 async function cancelOrder(orderId) {
-    console.log(orderId);
     const url = `/order/cancel/${orderId}`;
     const res = await fetch(url, {
                     method: 'DELETE',
@@ -180,7 +172,6 @@ if(returnContainer) {
 
 async function returnOrder(e) {
     const orderId = e.target.dataset.url;
-    console.log(orderId);
     const url = `/order/return/${orderId}`;
     const res = await fetch(url, {
                     method: 'PUT',

@@ -10,7 +10,6 @@ const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAll
 const {isAdminLoggedIn, isLoggedIn} = require('../../middlewares/authmiddleware');
 // const { cancelOrder } = require('../../controllers/orderController');
 
-const Order = require('../../models/order');
 
 
 

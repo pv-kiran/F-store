@@ -11,7 +11,7 @@ const getUserProfile = async (req,res) => {
     }
     try {
         const user = await User.find({_id: id});
-        console.log(user);
+        // console.log(user);
         res.render('userprofile' , {user: user[0] , isLoggedIn: isLoggedIn , id: req.session._userId}); 
     } catch(e) {
         console.log(e);
@@ -47,7 +47,7 @@ const getAddressController = async (req,res) => {
             return item._id.valueOf() === id ;
         })
         const address = user[0].address[index];
-        console.log(address);
+        // console.log(address);
         res.render('usereditprofile' , {user: user[0] , address: address , isLoggedIn: isLoggedIn , id: req.session._userId});
     } catch(e) {
         console.log(e);
@@ -63,7 +63,7 @@ const updateAddressController = async (req,res) => {
         const index = user[0].address.findIndex((item) => {
             return item._id.valueOf() === id ;
         })
-        console.log(index);
+        // console.log(index);
         user[0].address[index].houseName = houseName;
         user[0].address[index].phone = phone;
         user[0].address[index].city = city;
@@ -71,7 +71,7 @@ const updateAddressController = async (req,res) => {
         user[0].address[index].state = state;
         user[0].address[index].coutry = coutry;
         await user[0].save();
-        console.log(user[0]);
+        // console.log(user[0]);
         res.json({redirect: `/profile/${user[0]._id}`});
     } catch(e) {
         console.log(e);
@@ -87,7 +87,7 @@ const removeAddressController = async (req,res) => {
         const index = user[0].address.findIndex((item) => {
             return item._id.valueOf() === id ;
         })
-        console.log(index);
+        // console.log(index);
         user[0].address.splice(index , 1);
         await user[0].save();
         res.json({redirect: `/profile/${user[0]._id}`});
@@ -99,8 +99,8 @@ const removeAddressController = async (req,res) => {
 
 const updateUserController = async (req,res) => {
     const {id} = req.params ;
-    console.log(id);
-    console.log(req.body);
+    // console.log(id);
+    // console.log(req.body);
     try {
        const user = await User.findByIdAndUpdate(id , req.body , {
            new: true
@@ -120,7 +120,7 @@ const getChangePasswordForm = async (req,res) => {
     }
     try {
         const user = await User.find({_id: req.session._userId});
-        console.log(user);
+        // console.log(user);
         res.render('changepassword' , {user: user[0] , isLoggedIn: isLoggedIn , id: req.session._userId}); 
     } catch(e) {
         console.log(e);
@@ -138,7 +138,7 @@ const changeUserPassword = async (req,res) => {
     try {
 
         const encPassword = await bcrypt.hash(req.body.password , 10);
-        console.log(encPassword);
+        // console.log(encPassword);
         
 
         req.body.password = encPassword;
