@@ -1,0 +1,30 @@
+<section class="form-container">
+        
+
+        <form id="register_form" action="/user/login" method="post">
+            <a href="/" class="icon-container">
+                <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_j29ggt.json" background="transparent"  speed="1"  style="width: 150px; height: 150px;" loop autoplay></lottie-player>
+            </a>
+            <h2 class="form-heading">LOGIN</h2>
+            <div class="input-container">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" value="{{email}}">
+            </div>
+            <div class="input-container">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" value="{{password}}">
+            </div>
+            <div class="error"></div>
+            {{#if isLogin}}
+                    <div class="errorMsg">{{errMessage}}</div>
+            {{/if}}
+            <div class="btn-container">
+                <input type="submit" value="LOGIN" class="btn-submit">
+                {{!-- <h3 class="signin_text"><a href="/user/resetpswd">Forgot Password</a></h3> --}}
+            </div>
+            {{!-- <h3 class="signin_text"> 
+                Don't vave an account ? 
+                <a href="/user/signup">Register</a>
+            </h3> --}}
+        </form>
+</section>

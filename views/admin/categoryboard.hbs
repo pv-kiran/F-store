@@ -3,13 +3,13 @@
         <section class="dashboard-container">
             <div class="dashboard-nav">
                 <div class="dashboard-left">
-                    <div>
+                     <div>
                         <i id="menu-btn" class="fas fa-bars"></i>
                     </div>
-                    <div class="search">
+                    {{!-- <div class="search">
                         <i class="fas fa-search"></i>
                         <input type="text" name="search" id="search" placeholder="search">
-                    </div>
+                    </div>  --}}
                 </div>
                 <div class="dashboard-right">
                     <a href="/admin/logout">
@@ -29,6 +29,9 @@
                 <input type="text" name="category" id="category" required>
                 <button type="submit">Save</button>   
             </form>
+            {{#if isCategoryExist}}
+               <h3>Category already Exist</h3>
+            {{/if}}
         
         
             <div class="dashboard">

@@ -485,6 +485,7 @@ const addProduct = async (req,res) => {
             const newProduct = await Product.create({
                productName: productName ,
                price: parseInt(price) ,
+               actualPrice:parseInt(price) ,
                description: description ,
                categories: categories ,
                material: material ,
@@ -546,6 +547,7 @@ const updateProduct = async (req, res) => {
     const {id} = req.params;
     req.body.price = parseInt(req.body.price);
     req.body.stock = parseInt(req.body.stock);
+    req.body.actualPrice = parseInt(req.body.price);
     // console.log(req.body);
     // console.log(id);
 
@@ -599,15 +601,27 @@ const getCategories = async (req,res) => {
 const addCategory = async (req,res) => {
     const {category} = req.body ; 
     try {
-       const newCategory = await Category.create({
-           categoryName: category ,
-           isAvailable: true
-       });
-       res.redirect('/admin/categories')
+       const categories  = await Category.find({categoryName: category});
+       if(categories.length > 0) {
+        
+          res.redirect('/admin/categories');
+
+       } else {
+
+          const newCategory = await Category.create({
+            categoryName: category ,
+            isAvailable: true
+          });
+
+          res.redirect('/admin/categories')
+
+
+       }
+
+       
     } catch(e) {
        console.log(e);
     }
- 
 }
 
 const updateCategory = async (req,res) => {

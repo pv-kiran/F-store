@@ -19,6 +19,13 @@ const {isAdminLoggedIn, isLoggedIn} = require('../../middlewares/authmiddleware'
 const Order = require('../../models/order');
 
 
+
+// admin login form
+router.get('/signin' , (req,res) => {
+    res.render('admin/adminLogin');
+})
+
+
 // route for the main dashboard
 router.get('/dashboard' , isAdminLoggedIn  , getDashBoard)
 
@@ -147,7 +154,7 @@ router.put('/categoryoffer/:id' , isAdminLoggedIn , removeCategoryOffer)
 router.get('/logout' , (req,res) => {
     req.session.adminEmail = null;
     req.session.adminId = null;
-    res.redirect('/user/signin');
+    res.redirect('/admin/signin');
 })
 
 module.exports = router;

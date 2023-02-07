@@ -12,10 +12,9 @@ const isAdminLoggedIn = (req,res, next) => {
     if(session.adminId){
         next();
     } else {
-        res.redirect('/user/signin');
+        res.redirect('/admin/signin');
     }
 }
-
 
 module.exports = {
     isLoggedIn ,

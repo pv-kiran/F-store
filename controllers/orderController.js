@@ -30,7 +30,7 @@ const getOrderDetails = async (req,res) => {
                 return total+ (item.quantity * item.id.price) 
             } , 0);
 
-            
+            // coupon - only applicable if it is not expired
             let coupon =  await Coupon.find({isAvailable: true , expiryDate: { $gt: Date.now()}});
             if(coupon.length > 0) {
                 isCouponExist = true;
@@ -68,9 +68,16 @@ const applyCoupon = async (req,res) => {
             } , 0);
 
             const coupon = await Coupon.find({couponCode: req.body.coupon});
+
+            if(coupon.length === 0) {
+                let isCouponExist = true ;
+                let isWrongCoupon = true
+                res.render('orderdetails' , {user: user[0] ,cartItems : cartItems , totalQuantity: totalQuantity , totalPrice: totalPrice , isLoggedIn: isLoggedIn , id: req.session._userId , isCouponExist: isCouponExist , 
+                   isWrongCoupon: isWrongCoupon , couponMsg: 'Please enter a valid coupon' });
+            }
             // console.log(coupon[0].discountPercentage);
 
-            console.log(coupon[0].users);
+            // console.log(coupon[0].users);
             let isCouponUsed = coupon[0].users.some((item) => {
                     return item.id.valueOf() === `${req.session._userId}`
             });
@@ -341,45 +348,3 @@ module.exports = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// create order logic
-
-   // removing the cart items
-            //    await user[0].cart.splice(0);
-            //    await user[0].save({validateBeforeSave: false});
-
-                // updating the product stock
-            //    const updateStock = async (productId , quantity) => {
-            //       const product = await Product.find({_id:productId});
-            //       product[0].stock = product[0].stock - quantity ;
-            //       product[0].save({validateBeforeSave: false});
-            //    }
-    
-            //     newOrder.orderItems.forEach(async (item) => {
-            //         await updateStock(item.id , item.quantity )
-            //     })

@@ -7,11 +7,6 @@
                 <div>
                     <i id="menu-btn" class="fas fa-bars"></i>
                 </div>
-                <form class="search" action="/admin/search" method="post">
-                    <input type="text" name="name" id="search" placeholder="search">
-                    <button class="btn-search" type="submit"><i class="fas fa-search"></i></button>
-                    {{!-- <i class="fas fa-search"></i> --}}
-                </form>
             </div>
             <div class="dashboard-right">
                 {{!-- <i class="far fa-bell notification"></i> --}}
@@ -88,7 +83,7 @@
                         <td class="offer-container">
                           <form action="/admin/offer/{{_id}}" method="post" class="offer-form">
                              <div class="input-container">
-                                <input type="number" name="offer" id="offer" placeholder="offer in %" required>
+                                <input type="number" name="offer" id="offer" placeholder="offer %" required>
                                 <button type="submit">Apply</button>
                                 <a class="btn-clear" data-url="{{_id}}">Clear</a>
                              </div>

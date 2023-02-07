@@ -2372,18 +2372,9 @@ footer h1 {
 
    .product-card  {
       width: 100%;
+      margin: auto;
+      margin-bottom: 1rem;
    }
-   /* .best-products-list {
-      flex-wrap: wrap;
-   } */
-   /* .best-product {
-      width: 75%;
-      height: 25rem;
-      margin: 3rem .5rem;
-    }  */
-    /* .best-product a {
-      width: 100%;
-    } */
     .best-products-heading h2 {
        font-size: 3rem;
     }
