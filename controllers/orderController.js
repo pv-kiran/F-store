@@ -183,11 +183,9 @@ const createOrder = async (req,res) => {
             // integration with razorpay
             
                // this should go in env
-               let instance = new Razorpay({
-                key_id: 'rzp_test_I7TMRHjNEnfLbl',
-                key_secret: 'iMwgAhmFKNbOOI3JMbKJtkSS'
-               });
+               let instance = new Razorpay({ key_id: process.env.RAZOR_KEY, key_secret: process.env.RAZOR_SECRET })
 
+               console.log(totalAmount);
 
                const myOrder = await instance.orders.create({
                     amount: totalAmount * 100,
@@ -195,7 +193,7 @@ const createOrder = async (req,res) => {
                     receipt: "receipt#1"
                })
 
-               console.log(myOrder);
+            //    console.log(myOrder);
 
 
                const newOrder = await Order.create({

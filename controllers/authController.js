@@ -14,8 +14,8 @@ const transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-      user: 'mail4kpv@gmail.com',
-      pass: 'uofaomcvaaouegym'
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PWSWD
     } ,
     tls: {
         ciphers:'SSLv3'
@@ -96,15 +96,9 @@ const signInController = (req,res) => {
 const verifyController = async (req,res) => {
 
     const {email , otp} = req.body ;
-    console.log(otp);
-    console.log(email);
     try {
 
         const user = await User.find({email:email});
-        // console.log(Date.now());
-        // console.log(user[0].otpExpiry);
-        // console.log(user);
-        console.log(Date.now() < user[0].otpExpiry);
         if(parseInt(otp) === user[0].otp) {
         if(Date.now() < user[0].otpExpiry) {
                 await User.findOneAndUpdate({email:email} , { $set : {isVerified: true}});

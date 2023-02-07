@@ -1,14 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const Banner = require('../../models/banner');
 
-const cloudinary = require('cloudinary').v2;
-cloudinary.config({
-    cloud_name : "dk81bsiz2" ,
-    api_key: "334739518657796" ,
-    api_secret: "9OxvjE_0mewIx-NNfeLVKd8U_C0"
- });
+
 
 
 const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage, cancelOrders , orderTracking , getCouponDashboard , addCoupon , updateCoupon , addProductOffer , removeProductOffer , addCategoryOffer , removeCategoryOffer , dialyWiseXlsxReport , productWiseXlsxReport , refundDashboard , refundInitiation , getBannerDashboard , addBanner , activateBanner  } = require('../../controllers/adminController');

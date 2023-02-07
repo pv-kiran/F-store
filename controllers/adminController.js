@@ -1,13 +1,13 @@
-const cloudinary = require('cloudinary').v2;
 const puppeteer = require('puppeteer');
 const XLSX = require('xlsx');
 
 const Razorpay = require('razorpay');
 
+const cloudinary = require('cloudinary').v2;
 cloudinary.config({
-   cloud_name : "dk81bsiz2" ,
-   api_key: "334739518657796" ,
-   api_secret: "9OxvjE_0mewIx-NNfeLVKd8U_C0"
+   cloud_name : process.env.CLOUD_NAME ,
+   api_key: process.env.CLOUDINARY_KEY ,
+   api_secret: process.env.CLOUDINARY_SECRET
 });
 
 const User = require('../models/user');
@@ -857,11 +857,10 @@ const refundDashboard =  async (req,res) => {
 const refundInitiation = async (req,res) => {
 
   const {id} = req.params ;
-  console.log('Hello');
   try {
       const order = await Order.find({_id: id});
 
-      let instance = new Razorpay({ key_id: 'rzp_test_I7TMRHjNEnfLbl', key_secret: 'iMwgAhmFKNbOOI3JMbKJtkSS' })
+      let instance = new Razorpay({ key_id: process.env.RAZOR_KEY , key_secret: process.env.RAZOR_SECRET })
 
       instance.payments.refund(order[0].paymentId , {
           amount: order[0].totalAmount * 100,

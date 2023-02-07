@@ -17,16 +17,18 @@ mongoose.set('strictQuery', true);
 const sessions = require('express-session');
 const cookieParser = require("cookie-parser");
 
+require('dotenv').config()
+
+
 
 // application setup
 const app = express(); 
 
 
-require('dotenv').config()
 // console.log(process.env);
 
 
-const {PORT , MONGO_URL } = process.env ;
+// const {PORT , MONGO_URL } = process.env ;
 
 
 
@@ -111,7 +113,11 @@ app.use('/' , homeRouter);
 //    res.render('admin/dashboard');
 // })
 
-mongoose.connect(MONGO_URL)
+
+const PORT = process.env.PORT || 4000;
+
+
+mongoose.connect(process.env.MONGO_URL)
 .then(() => {
   app.listen(PORT , () => {
     console.log(`Server is up and running ${PORT}`);
