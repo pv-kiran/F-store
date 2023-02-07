@@ -38,7 +38,11 @@ const getProduct = async (req,res) => {
     }
     try {
         const product = await Product.findById({_id: id});
-        res.render('productdetails' , {product: product , isLoggedIn: isLoggedIn});
+        if(product === null) {
+            res.redirect('/product');
+        } else {
+            res.render('productdetails' , {product: product , isLoggedIn: isLoggedIn});
+        }
     } catch (e) {
         console.log(e);
     }

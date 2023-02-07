@@ -99,23 +99,11 @@ app.use('/order' , orderRouter);
 app.use('/' , homeRouter);
 
 
-// app.get('/' , (req,res) => {
-//   session=req.session;
-//   console.log(session);
-//     if(session.userid){
-//         // res.send("Welcome User <a href=\'/logout'>click to logout</a>");
-//         res.redirect('/user')
-//     }else
-//     res.redirect('/user/signin');
-// })
-
-// app.get('/dashboard' , (req,res) => {
-//    res.render('admin/dashboard');
-// })
-
+app.get('*' , (req,res) => {
+  res.render('404');
+})
 
 const PORT = process.env.PORT || 4000;
-
 
 mongoose.connect(process.env.MONGO_URL)
 .then(() => {

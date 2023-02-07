@@ -38,6 +38,7 @@
             <div class="input-container">
                 <label for="fullname">Category</label>
                 <select name="categories" id="categories">
+                    <option value="{{productCategoryId}}">{{productCategory}}</option>
                     {{#each category}}
                         <option  value="{{_id}}" > {{categoryName}} </option>
                     {{/each}}

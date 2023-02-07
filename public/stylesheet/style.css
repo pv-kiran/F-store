@@ -2058,7 +2058,7 @@ footer h1 {
       align-items: flex-start;
       
       padding: .7rem .5rem;
-      height: 7vh;
+      height: 8vh;
       overflow: hidden;
       transition: all .3s;
    }
@@ -2081,7 +2081,7 @@ footer h1 {
       display: block;
    }
    .nav-container.active {
-      height: 33.5vh;
+      height: 42vh;
    }
    .nav-list.active {
       opacity: 1;

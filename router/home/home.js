@@ -5,7 +5,7 @@ const Banner = require('../../models/banner');
 
 
 router.get('/' , async (req,res) => {
-    console.log(req.hostname);
+    // console.log(req.hostname);
     let isLoggedIn;
     if(req.session.userid) {
       isLoggedIn = true;
@@ -19,7 +19,7 @@ router.get('/' , async (req,res) => {
         const productList = await Product.find({ isBlocked: false , stock: {$gt: 0}}).populate('categories');
 
         const banner = await Banner.find({isActive: true});
-        console.log(productList);
+        // console.log(productList);
 
         const product = productList.slice(0,4);
         
@@ -40,7 +40,7 @@ router.get('/' , async (req,res) => {
 
         tableList = tableList.slice(0,4);
 
-        console.log(tableList);
+        // console.log(tableList);
 
 
         res.render('home' , {productList : product  , sofaList: sofaList, tableList: tableList , id: req.session._userId , isLoggedIn: isLoggedIn , banner: banner[0]});

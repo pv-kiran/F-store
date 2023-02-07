@@ -534,10 +534,21 @@ const updateProductStatus = async (req,res) => {
 const getProduct = async (req,res) => {
     const {id} = req.params ;
     try {
-        const category = await Category.find({isAvailable:true});
-        const product = await Product.find({_id:id});
+        let categories = await Category.find({isAvailable:true});
+        const product = await Product.find({_id:id}).populate('categories');
+
+        const productCategory = product[0].categories.categoryName;
+        const productCategoryId = product[0].categories._id;
+
+        // console.log(categories);
+        categories = categories.filter((item) => {
+          if(item.categoryName != productCategory) {
+            return item ;
+          }
+        })
+
         res.render('admin/updateproduct' , 
-                   {product : product[0] , category: category});
+                   {product : product[0] , category: categories , productCategory: productCategory , productCategoryId: productCategoryId});
     } catch(e) {
         console.log(e);
     }
