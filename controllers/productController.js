@@ -85,8 +85,52 @@ const filteredProducts = async (req,res) => {
 
 }
 
+const searchedProducts = async (req,res) => {
+    const {productName} = req.body ;
+    let isLoggedIn;
+    if(req.session.userid) {
+      isLoggedIn = true;
+    } else {
+        isLoggedIn = false;
+    }
+    try {
+        const queryObject = {};
+        if(productName) {
+            queryObject.productName = {$regex: productName , $options: 'i'};
+        }
+        const categories = await Category.find({isAvailable: true});
+        const products = await Product.find(queryObject);
+        res.render('allproducts' , {productList: products , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn , request: productName});
+        
+    } catch(e) {
+        console.log(e);
+    }
+}
+
+const productPriceFilter = async (req,res) => {
+    const {min , max} = req.body ;
+    let isLoggedIn;
+    if(req.session.userid) {
+      isLoggedIn = true;
+    } else {
+        isLoggedIn = false;
+    }
+    try {
+        const categories = await Category.find({isAvailable: true});
+        const products = await Product.find({ $and: [{ price: { $gt: min } }, { price: { $lte: max } }] });
+        // console.log(products);
+        res.render('allproducts' , {productList: products , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn , min: min , max: max});
+        
+    } catch(e) {
+        console.log(e);
+    }
+
+}
+
 module.exports = {
     getAllProducts ,
     getProduct ,
-    filteredProducts
+    filteredProducts ,
+    searchedProducts ,
+    productPriceFilter
 };

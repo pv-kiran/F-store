@@ -152,7 +152,8 @@ function productValidate(isAddProduct) {
                 } 
             }
         }
-    } else {
+    } 
+    else {
         if(document.querySelector('#imagefile')) {
 
             let imageFile = document.querySelector('#imagefile');
@@ -607,12 +608,8 @@ async function bannerActivate(e) {
                     'Content-Type' : 'application/json'
                     }
                 });
-                
-
-    
     const redirectPath = await res.json();
     window.location.href = redirectPath.redirect;
-    
 }
 
 

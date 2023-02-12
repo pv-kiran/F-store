@@ -41,7 +41,7 @@
     {{>nav}}
     <section class="home-container buy-product"> 
       <section class="best-products-container">
-           <div class="best-products-heading">
+           <div class="best-products-heading allproducts-heading-container">
               <h4 class="secondery_head">Shop till you drop</h4>
               <h2 class="primary_head">Let's Get Shopping</h2>
               <p class="tertiary_head">The coolest, hottest furniture pieces.</p>
@@ -54,6 +54,24 @@
                      <a href="/product/category/{{categoryName}}">{{categoryName}}</a>
                   {{/each}}
               </div>
+              <div class="search-container">
+                <form class="search" action="/product/search" method="post">
+                  <input type="text" name="productName" id="search" value="{{request}}" placeholder="search" required>
+                  <button class="btn-search" type="submit">
+                      <i class="fas fa-search"></i>
+                  </button>  
+                </form>
+                <form class="price_filter" action="/product/price" method="post">
+                   {{!-- <label>Min</label> --}}
+                   <input type="number" name="min" id="price_range" value="{{min}}" placeholder="min price">
+                   {{!-- <label>Max</label> --}}
+                   <input type="number" name="max" id="price_range" value="{{max}}" placeholder="max price">
+                  <button class="btn-search" type="submit">
+                      <i class="fas fa-search"></i>
+                  </button>  
+                </form>
+              </div>
+              
            </div>
       </section>
       <section class="best-products-container">

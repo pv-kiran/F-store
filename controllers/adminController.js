@@ -171,6 +171,61 @@ const dailySalesReportDownload = async (req,res) => {
       
 }
 
+
+//  ----------------------- for linux system  -------------------- //
+// const dailySalesReportDownload = async (req,res) => {
+
+
+//   try {
+//         /*  const firefoxOptions = {
+//         executablePath:'/usr/bin/firefox',
+//         headless:false,
+//         product: 'firefox',
+//         extraPrefsFirefox: {
+//           // Enable additional Firefox logging from its protocol implementation
+//           // 'remote.log.level': 'Trace',
+//         },
+//         // Make browser logs visible
+//         dumpio: true,
+//         }; */
+//                 // Create a browser instance
+//         const browser =  await puppeteer.launch(
+//                             //firefoxOptions
+//                             {executablePath: '/usr/bin/chromium-browser'}
+//                          );
+
+//         // Create a new page
+//         const page = await browser.newPage();
+
+//         // this needs to change {Hosting}
+//         // const website_url = 'http://localhost:4000/admin/dailywise/report';
+
+//         const website_url = `${req.protocol}://${req.get("host")}/admin/dailywise/report`;
+
+
+//         await page.goto(website_url, { waitUntil: 'networkidle0' });
+
+//         //To reflect CSS used for screens instead of print
+//         await page.emulateMediaType('screen');
+
+//         const pdf = await page.pdf({
+//           path: 'result.pdf',
+//           margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
+//           printBackground: true,
+//           format: 'A4',
+//         });
+
+//         res.download('result.pdf');
+
+//         await browser.close();
+
+//   } catch(e) {
+//      console.log(e);
+//   }
+
+// }
+
+
 const getDailySalesReportPage = async (req,res) => {
 
     try {
@@ -217,6 +272,7 @@ const getDailySalesReportPage = async (req,res) => {
     
 }
 
+
 const productWiseReportDownload = async (req,res) => {
 
 
@@ -253,6 +309,60 @@ const productWiseReportDownload = async (req,res) => {
     }
       
 }
+
+//  ------------------  FOR LINUX SYSTEM  --------------------  //
+// const productWiseReportDownload = async (req,res) => {
+
+
+//   try {
+//         /*const firefoxOptions = {
+//         executablePath:'/usr/bin/firefox',
+//         headless:false,
+//         product: 'firefox',
+//         extraPrefsFirefox: {
+//           // Enable additional Firefox logging from its protocol implementation
+//           // 'remote.log.level': 'Trace',
+//         },
+//         // Make browser logs visible
+//         dumpio: true,
+//         };*/
+
+//         // Create a browser instance
+//         const browser = await puppeteer.launch(
+//                           //firefoxOptions
+//                           {executablePath: '/usr/bin/chromium-browser'}
+//                         );
+
+//         // Create a new page
+//         const page = await browser.newPage();
+
+//         // this needs to change {Hosting}
+//         // const website_url = 'http://localhost:4000/admin/productwise/report';
+//         const website_url = `${req.protocol}://${req.get("host")}/admin/productwise/report`;
+
+
+//         await page.goto(website_url, { waitUntil: 'networkidle0' });
+
+//         //To reflect CSS used for screens instead of print
+//         await page.emulateMediaType('screen');
+
+//         const pdf = await page.pdf({
+//           path: 'productresult.pdf',
+//           margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
+//           printBackground: true,
+//           format: 'A4',
+//         });
+
+//         res.download('productresult.pdf');
+
+//         await browser.close();
+
+//   } catch(e) {
+//      console.log(e);
+//   }
+
+// }
+
 
 const getProductWiseReportpage = async (req,res) => {
 

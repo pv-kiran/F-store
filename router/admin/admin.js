@@ -15,7 +15,13 @@ const {isAdminLoggedIn, isLoggedIn} = require('../../middlewares/authmiddleware'
 
 // admin login form
 router.get('/signin' , (req,res) => {
-    res.render('admin/adminLogin');
+    session=req.session;
+    if(session.adminId){
+        res.redirect('/admin/dashboard');
+    } else {
+        res.render('admin/adminLogin');
+    }
+    
 })
 
 
