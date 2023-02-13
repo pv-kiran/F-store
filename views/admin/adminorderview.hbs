@@ -1,0 +1,53 @@
+<section class="userorder-container">
+        <h1 class="date">{{order.createdAt}}</h1>
+        <div class="my-details-order">
+            <div class="order-shipping-address">
+                <h4>{{order.user.name}}</h4>
+                <h4>{{order.shippingInfo.houseName}}</h4>
+                <h4>{{order.shippingInfo.phone}}</h4>
+                <h4>{{order.shippingInfo.city}}, {{order.shippingInfo.postalCode}}</h4>
+                <h4>{{order.shippingInfo.state}} , {{order.shippingInfo.coutry}}</h4>
+            </div>
+            <div class="order-products-image">
+                {{#each order.orderItems}}
+                <img src="{{id.images.[0].secured_url}}" alt="hello">
+                {{/each}}
+            </div>
+            <div class="order-products">
+                {{#each order.orderItems}}
+                    <h4>{{id.productName}}</h4>
+                {{/each}}
+            </div>
+            <div class="order-payment-mode">
+                {{!-- <h4>{{orderStatus}}</h4> --}}
+                {{#if order.isDelivered}}
+                        <h4>Deleivered</h4> 
+                    {{else}}
+                        {{#if order.isCancelled}}
+                           <h4>Cancelled</h4> 
+                        {{else}}
+                            <h4>{{order.trackingInfo}}</h4>
+                        {{/if}}
+                {{/if}}
+            </div>
+            <div class="order-payment-status">
+                <h4>{{order.paymentMode}}</h4>
+            </div>
+            <div class="order-total">
+                <h4>{{order.totalAmount}}</h4>
+            </div>     
+        </div>
+        <a class="back-btn" href="/admin/orders">DASHBOARD</a>
+</section>
+
+<script>
+    const dateContainer = document.querySelectorAll('.date');
+    for (let index = 0; index < dateContainer.length; index++) {
+        const element = dateContainer[index];
+        let date = new Date(element.textContent.replace('IST', ''));
+        let day = date.getDate();
+        let month = date.getMonth()+1;
+        let year = date.getFullYear();
+        element.textContent = 'Ordered On' + " " + day+"-"+month+"-"+ year ;
+    }
+</script>

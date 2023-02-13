@@ -68,6 +68,11 @@
                         </td>
                         <td>
                             <div class="order-action">
+                                <a href="/admin/order/view/{{id}}" class="btn-edit">
+                                    <span class="material-symbols-outlined">
+                                      visibility
+                                    </span>
+                                </a>
                                 {{#if isDelivered}}
                                       <a class="success">Processed</a>
                                 {{else}} 
@@ -90,7 +95,7 @@
                                     {{/if}}
                                 {{/if}}
                             </div>
-                           
+                            
                         </td>
                        
                     </tr>

@@ -8,7 +8,7 @@ const router = express.Router();
 const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage, cancelOrders , orderTracking , getCouponDashboard , addCoupon , updateCoupon , addProductOffer , removeProductOffer , addCategoryOffer , removeCategoryOffer , dialyWiseXlsxReport , productWiseXlsxReport , refundDashboard , refundInitiation , getBannerDashboard , addBanner , activateBanner  } = require('../../controllers/adminController');
 
 const {isAdminLoggedIn, isLoggedIn} = require('../../middlewares/authmiddleware');
-// const { cancelOrder } = require('../../controllers/orderController');
+const Order = require('../../models/order');
 
 
 
@@ -94,6 +94,14 @@ router.put('/categorystatus/:id' , isAdminLoggedIn , updateCategory);
 
 // get all orders
 router.get('/orders' ,  isAdminLoggedIn , getOrders);
+
+
+// view order
+router.get('/order/view/:id' , async (req,res) => {
+     const {id} = req.params; 
+     const order = await Order.find({_id:id}).populate('orderItems.id').populate('user');
+     res.render('admin/adminorderview' , {order: order[0]})
+})
 
 // cancell order
 router.put('/order/cancel/:id' , isAdminLoggedIn , cancelOrders);
