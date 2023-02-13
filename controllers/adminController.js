@@ -133,6 +133,8 @@ const getChartData = async (req,res) => {
     }
 }
 
+
+// ............... For windows ............... ///
 const dailySalesReportDownload = async (req,res) => {
 
 
@@ -238,11 +240,6 @@ const getDailySalesReportPage = async (req,res) => {
               }
             } ,
             {
-              '$sort': {
-                'createdAt': -1
-              }
-            } ,
-            {
               '$project': {
                 'totalAmount': 1, 
                 'orderItems': {
@@ -260,7 +257,12 @@ const getDailySalesReportPage = async (req,res) => {
                   '$sum': '$totalAmount'
                 }
               }
-            } 
+            } ,
+            {
+              '$sort': {
+                'createdAt': -1
+              }
+            } ,
           ]
         )
         // console.log(dailyWiseSale);
@@ -272,7 +274,7 @@ const getDailySalesReportPage = async (req,res) => {
     
 }
 
-
+// ............. WINDOWS ................. //
 const productWiseReportDownload = async (req,res) => {
 
 

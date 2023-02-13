@@ -172,6 +172,7 @@ function validate() {
 const addressForm = document.querySelector(".adress-form");
 if(addressForm) {
     addressForm.addEventListener('submit' , function(e) {
+        console.log('Heloo');
         e.preventDefault(); 
         let isValid = addressvalidation();
         if(isValid) {
@@ -220,6 +221,8 @@ async function sendAddressUpdateReq(){
 
 // Address validation
 function addressvalidation() {
+
+    console.log('Hello ....!!')
     let addressErr = document.querySelector('.addr-error');
     let text ;
 

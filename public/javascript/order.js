@@ -9,18 +9,23 @@ for (let index = 0; index < dateContainer.length; index++) {
     element.textContent = 'Ordered On' + " " + day+"-"+month+"-"+ year ;
 }
 
+
+// hiding / displaying the add address form
+let shippingAddressForm = document.getElementById('adress-form');
+if(shippingAddressForm) {
+   shippingAddressForm.style.display = 'none';
+}
+
+
 // automaticaly selecting an address
 let addressRadio = document.getElementById('address');
 if(addressRadio) {
   addressRadio.checked = true;
+} else {
+    shippingAddressForm.style.display = 'block';
 }
 
 
-// hiding / displaying the add address form
- let shippingAddressForm = document.getElementById('adress-form');
- if(shippingAddressForm) {
-    shippingAddressForm.style.display = 'none';
- }
 
  let addressShowbtn = document.querySelector('.btn-address-show');
  if(addressShowbtn) {
