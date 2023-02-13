@@ -2014,6 +2014,19 @@ footer h1 {
    outline: none;
 }
 
+.address-err {
+   background-color: rgb(186, 82, 82);
+   color: white;
+   text-align: center;
+   font-size: 1.2rem;
+   padding: .5rem;
+   margin: .5rem 0;
+   border-radius: .3rem;
+   display: none;
+}
+
+
+
 
 
 

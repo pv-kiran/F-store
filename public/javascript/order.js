@@ -16,6 +16,8 @@ if(shippingAddressForm) {
    shippingAddressForm.style.display = 'none';
 }
 
+console.log('Hello');
+
 
 // automaticaly selecting an address
 let addressRadio = document.getElementById('address');
@@ -26,21 +28,26 @@ if(addressRadio) {
 }
 
 
-
- let addressShowbtn = document.querySelector('.btn-address-show');
- if(addressShowbtn) {
+let addressShowbtn = document.querySelector('.btn-address-show');
+if(addressShowbtn) {
     addressShowbtn.addEventListener('click' , (e) => {
         shippingAddressForm.style.display = 'block';
      })
- }
+}
  
 
 
 // creating an order for cash on delivery
 let codBtn = document.querySelector('.btn-cod');
+const addrErrDiv = document.querySelector('.address-err');
 if(codBtn){
     codBtn.addEventListener('click' , (e) => {
-        createOrder(e);
+        if(addressRadio) {
+            createOrder(e);
+        } else {
+            console.log('Please choose an address');
+            addrErrDiv.style.display = 'block';
+        }
     }) 
 }
 
@@ -48,7 +55,12 @@ if(codBtn){
 let btnRazor = document.querySelector('.btn-razor');
 if(btnRazor) {
     btnRazor.addEventListener('click' , (e) => {
-        createOrder(e);
+        if(addressRadio) {
+            createOrder(e);
+        } else {
+            console.log('Please choose an address');
+            addrErrDiv.style.display = 'block';
+        }
     })
 }
 

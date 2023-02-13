@@ -123,7 +123,7 @@ const newShippingAddress = async (req,res) => {
     try {
         const user = await User.find({_id: id});
         user[0].address.push(req.body);
-        user[0].save();
+        await user[0].save();
         res.redirect(`/order`);
     } catch(e) {
         console.log(e);

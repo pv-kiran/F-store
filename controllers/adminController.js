@@ -539,7 +539,14 @@ const softDelete = async (req,res) => {
     try {
         const user = await User.findById({ _id: id});
         const isBlocked = user.isBlocked ;
-        user.isBlocked = !isBlocked;
+        console.log(isBlocked);
+        if(isBlocked) {
+           user.isBlocked = !isBlocked;
+        } else {
+           req.session.userid = null;
+           req.session._userId = null;
+           user.isBlocked = !isBlocked;
+        }
         await user.save();
         res.json({redirect: '/admin/users'});
     } catch(e) {
