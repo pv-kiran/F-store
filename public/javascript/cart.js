@@ -42,7 +42,19 @@ async function incQuantity(e) {
                 });
                 
     const redirectPath = await res.json();
-    window.location.href = redirectPath.redirect;
+    console.log(redirectPath);
+    e.target.parentNode.parentNode.querySelector('.quantity').textContent = redirectPath.quantity;
+    document.querySelector('.totalQuantity').textContent = redirectPath.totalQuantity;
+    document.querySelector('.totalAmount').textContent = `Amount : ${redirectPath.totalPrice}`;
+    if(redirectPath.quantity === 1) {
+        e.target.parentNode.querySelector('.quantity-down').disabled = true;
+    } else {
+        e.target.parentNode.querySelector('.quantity-down').disabled = false;
+    }
+    if(redirectPath.buttonUpDisable) {
+        e.target.parentNode.querySelector('.quantity-up').disabled = true;
+    }
+    // window.location.href = redirectPath.redirect;
 }
 
 async function decQuantity(e) {
@@ -57,5 +69,15 @@ async function decQuantity(e) {
                 });
                 
     const redirectPath = await res.json();
-    window.location.href = redirectPath.redirect;
+    console.log(redirectPath);
+    e.target.parentNode.parentNode.querySelector('.quantity').textContent = redirectPath.quantity;
+    document.querySelector('.totalQuantity').textContent = redirectPath.totalQuantity;
+    document.querySelector('.totalAmount').textContent = `Amount : ${redirectPath.totalPrice}`;
+    if(redirectPath.quantity === 1) {
+        e.target.parentNode.querySelector('.quantity-down').disabled = true;
+    } else {
+        e.target.parentNode.querySelector('.quantity-down').disabled = false;
+    }
+    e.target.parentNode.querySelector('.quantity-up').disabled = false;
+    // window.location.href = redirectPath.redirect;
 }

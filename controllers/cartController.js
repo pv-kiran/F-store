@@ -95,6 +95,7 @@ const addToCart = async (req,res) => {
             }
             
             await user[0].save();
+
            
         }
     } catch(e) {
@@ -102,6 +103,8 @@ const addToCart = async (req,res) => {
     }
 
     res.redirect('/cart');
+
+
     
 }
 
@@ -112,7 +115,47 @@ const cartIncrement = async  (req,res) => {
         const index =  user[0].cart.findIndex((item) => { return item.id.valueOf() === `${id}` });
         user[0].cart[index].quantity = user[0].cart[index].quantity + 1;
         await  user[0].save();
-        res.json({redirect: '/cart'});
+
+
+        // return - quantity of incremanted item , totalQuantity , total price , button logic
+
+        const quantity = user[0].cart[index].quantity ;
+
+        const updatedUser = await User.find({email: req.session.userid}).populate('cart.id');
+        const cartItems = updatedUser[0].cart.filter(item => item.id.isBlocked === false);
+
+
+        const totalQuantity = cartItems.reduce((total , item) => {
+            return total+item.quantity;
+        } , 0);
+
+        const totalPrice = cartItems.reduce((total , item) => {
+            return total+ (item.quantity * item.id.price) 
+        } , 0);
+
+        let buttonUpDisable = false;
+        let buttonDownDisable = false; 
+        cartItems.forEach((item) => {
+            if(item.quantity >= item.id.stock) {
+                buttonUpDisable = true
+            } 
+        })
+
+        await  user[0].save();
+
+        res.json({
+            quantity: quantity ,
+            totalQuantity: totalQuantity ,
+            totalPrice: totalPrice ,
+            buttonUpDisable: buttonUpDisable ,
+        })
+        
+
+
+        // res.json({redirect: '/cart'});
+
+
+
     } catch(e) {
         console.log(e);
     }
@@ -121,11 +164,56 @@ const cartIncrement = async  (req,res) => {
 const cartDecrement = async  (req,res) => {
     const {id} = req.params;
     try {
-        const user = await User.find({email: req.session.userid});
-        const index =  user[0].cart.findIndex((item) => { return item.id.valueOf() === `${id}` });
-        user[0].cart[index].quantity = user[0].cart[index].quantity - 1;
-        await  user[0].save();
-        res.json({redirect: '/cart'});
+            const user = await User.find({email: req.session.userid});
+            const index =  user[0].cart.findIndex((item) => { return item.id.valueOf() === `${id}` });
+            user[0].cart[index].quantity = user[0].cart[index].quantity - 1;
+            await  user[0].save();
+
+
+            // return - quantity of incremanted item , totalQuantity , total price , button logic
+
+            const quantity = user[0].cart[index].quantity ;
+
+            const updatedUser = await User.find({email: req.session.userid}).populate('cart.id');
+            const cartItems = updatedUser[0].cart.filter(item => item.id.isBlocked === false);
+
+
+            const totalQuantity = cartItems.reduce((total , item) => {
+                return total+item.quantity;
+            } , 0);
+
+            const totalPrice = cartItems.reduce((total , item) => {
+                return total+ (item.quantity * item.id.price) 
+            } , 0);
+
+            let buttonDownDisable = false; 
+            cartItems.forEach((item) => {
+                 if(item.quantity === 1) {
+                    buttonDownDisable = true ;
+                }
+            })
+
+
+            // console.log(quantity);
+            // console.log(totalQuantity);
+            // console.log(totalPrice)
+            // console.log(buttonDownDisable);
+
+
+            await  user[0].save();
+
+            res.json({
+                quantity: quantity ,
+                totalQuantity: totalQuantity ,
+                totalPrice: totalPrice ,
+                buttonDownDisable: buttonDownDisable
+            })
+
+
+
+            // res.json({redirect: '/cart'});
+
+
     } catch(e) {
         console.log(e);
     }
