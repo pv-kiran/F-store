@@ -97,7 +97,12 @@ const searchedProducts = async (req,res) => {
         const queryObject = {};
         if(productName) {
             queryObject.productName = {$regex: productName , $options: 'i'};
+        } else {
+            console.log(productName);
         }
+
+
+
         const categories = await Category.find({isAvailable: true});
         const products = await Product.find(queryObject);
         res.render('allproducts' , {productList: products , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn , request: productName});
@@ -116,15 +121,31 @@ const productPriceFilter = async (req,res) => {
         isLoggedIn = false;
     }
     try {
-        const categories = await Category.find({isAvailable: true});
-        const products = await Product.find({ $and: [{ price: { $gt: min } }, { price: { $lte: max } }] });
-        // console.log(products);
-        res.render('allproducts' , {productList: products , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn , min: min , max: max});
-        
+          let categories , products ;
+          // no min no max
+          if(min === '' && max === '') {
+              categories = await Category.find({isAvailable: true});
+              products = await Product.find({});
+          }
+          else if(min === '' && max != '') {
+            console.log(max);
+             categories = await Category.find({isAvailable: true});
+             products = await Product.find({ $and: [{ price: { $gt: 0 } }, { price: { $lte: max } }] });
+          }
+          else if(min != '' && max === '') {
+            categories = await Category.find({isAvailable: true});
+            products = await Product.find({price: {$gt : min}});
+          } 
+          else if(min != '' && max == '') {
+             categories = await Category.find({isAvailable: true});
+             products = await Product.find({ $and: [{ price: { $gt: min } }, { price: { $lte: max } }] })
+          }
+
+          res.render('allproducts' , {productList: products , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn , min: min , max: max});
+
     } catch(e) {
         console.log(e);
     }
-
 }
 
 module.exports = {
@@ -134,3 +155,34 @@ module.exports = {
     searchedProducts ,
     productPriceFilter
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // try {
+    //     const categories = await Category.find({isAvailable: true});
+    //     const products = await Product.find({ $and: [{ price: { $gt: min } }, { price: { $lte: max } }] });
+    //     // console.log(products);
+    //     res.render('allproducts' , {productList: products , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn , min: min , max: max});
+        
+    // } catch(e) {
+    //     console.log(e);
+    // }

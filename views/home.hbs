@@ -37,9 +37,7 @@
       </div>
     </section> 
     <section class="hero-img">
-      {{!-- <img src="/images/hero.jpeg" alt=""> --}}
-      <img src="{{banner.secured_url}}" alt="">
-
+      <img src="{{banner.secured_url}}" alt="banner">
     </section>
     <section class="best-products-container">
        <div class="best-products-heading">
@@ -49,7 +47,7 @@
        </div>
        <div class="best-products-list">
              {{#each productList}}
-                <div class="product-card">
+                <div class="product-card home-product-card">
                    <img src="{{images.[0].secured_url}}" alt="best">
                    <h2 class="product_name">{{productName}}</h2>
                    <h3 class="price">{{price}}</h3>
@@ -65,7 +63,7 @@
        </div>
        <div class="best-products-list">
              {{#each sofaList}}
-                <div class="product-card">
+                <div class="product-card home-product-card">
                    <img src="{{images.[0].secured_url}}" alt="best">
                    <h2 class="product_name">{{productName}}</h2>
                    <h3 class="price">{{price}}</h3>
@@ -81,7 +79,7 @@
        </div>
        <div class="best-products-list">
              {{#each tableList}}
-                <div class="product-card">
+                <div class="product-card home-product-card">
                    <img src="{{images.[0].secured_url}}" alt="best">
                    <h2 class="product_name">{{productName}}</h2>
                    <h3 class="price">{{price}}</h3>

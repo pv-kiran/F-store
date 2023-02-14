@@ -811,8 +811,9 @@ li {
 .best-products-list {
    /* height: 200vh; */
    display: flex;
-   justify-content: flex-start;
+   justify-content: space-between;
    flex-wrap: wrap;
+
 }
 
 .product-card {
@@ -824,6 +825,14 @@ li {
   border-radius: .4rem;
   /* position: relative; */
 }
+
+.home-product-card:last-child {
+   margin-right: 0;
+}
+
+
+
+
 
 .product-card img {
    width: 100%;
@@ -2394,7 +2403,11 @@ footer h1 {
    
 }
 
-
+@media (max-width: 542px) {
+   .product-card {
+      margin-right: 0;
+   }
+}
 
 
 @media (max-width: 476px) {
