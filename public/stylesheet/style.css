@@ -806,12 +806,19 @@ li {
    font-weight: 100;
 }
 
-
+.best-products-list-home {
+   /* height: 200vh; */
+   display: flex;
+   justify-content: space-between;
+   flex-wrap: wrap;
+   
+   border: 1px red solid;
+}
 
 .best-products-list {
    /* height: 200vh; */
    display: flex;
-   justify-content: space-between;
+   justify-content: flex-start;
    flex-wrap: wrap;
 
 }

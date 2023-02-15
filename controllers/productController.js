@@ -136,7 +136,7 @@ const productPriceFilter = async (req,res) => {
             categories = await Category.find({isAvailable: true});
             products = await Product.find({price: {$gt : min}});
           } 
-          else if(min != '' && max == '') {
+          else if(min != '' && max != '') {
              categories = await Category.find({isAvailable: true});
              products = await Product.find({ $and: [{ price: { $gt: min } }, { price: { $lte: max } }] })
           }
