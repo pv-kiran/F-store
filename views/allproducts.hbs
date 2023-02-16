@@ -51,24 +51,36 @@
                   <a href="#">Chairs</a>
                   <a href="#">Tables</a> --}}
                   {{#each categories}}
-                     <a href="/product/category/{{categoryName}}">{{categoryName}}</a>
+                     {{!-- <a href="/product/category/{{categoryName}}">{{categoryName}}</a> --}}
+                     <a class="category" data-url="{{categoryName}}">{{categoryName}}</a>
                   {{/each}}
               </div>
               <div class="search-container">
-                <form class="search" action="/product/search" method="post">
+                {{!-- <form class="search" action="/product/search" method="post">
                   <input type="text" name="productName" id="search" value="{{request}}" placeholder="search">
                   <button class="btn-search" type="submit">
                       <i class="fas fa-search"></i>
                   </button>  
+                </form> --}}
+                <form class="search">
+                  <input type="text" name="productName" id="search" class="search-product" value="{{request}}" placeholder="search">
+                  <button class="btn-search" type="submit">
+                      <i class="fas fa-search"></i>
+                  </button>  
                 </form>
-                <form class="price_filter" action="/product/price" method="post">
-                   {{!-- <label>Min</label> --}}
+                {{!-- <form class="price_filter" action="/product/price" method="post">
                    <input type="number" name="min" id="price_range" value="{{min}}" placeholder="min price">
-                   {{!-- <label>Max</label> --}}
                    <input type="number" name="max" id="price_range" value="{{max}}" placeholder="max price">
                   <button class="btn-search" type="submit">
                       <i class="fas fa-search"></i>
                   </button>  
+                </form> --}}
+                <form class="price_filter">
+                   <input type="number" name="min" class="minPrice" id="price_range" value="{{min}}" placeholder="min price">
+                   <input type="number" name="max" class="maxPrice" id="price_range" value="{{max}}" placeholder="max price">
+                   <button class="btn-search" type="submit">
+                      <i class="fas fa-search"></i>
+                   </button>  
                 </form>
               </div>
               
@@ -81,7 +93,6 @@
             <p>Everything you need in one place</p>
         </div> --}}
         <div class="best-products-list">
-            
 
               {{#each productList}}
                 <div class="product-card">
@@ -102,7 +113,8 @@
               {{/each}}
         </div>
       </section>
-      <footer> 
+      {{!-- <footer> 
         <h1>EVOKE, 2022 All Rights Reserved.</h1>
-      </footer>
+      </footer> --}}
     </section>
+    <script src="/javascript/product.js"></script>

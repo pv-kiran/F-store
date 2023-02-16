@@ -154,10 +154,8 @@ async function removeOrder(e) {
                     'Content-Type' : 'application/json'
                     }
                 });
-
     const redirectPath = await res.json();
-    window.location.href = redirectPath.redirect;
-    
+    window.location.href = redirectPath.redirect; 
 }
 
 

@@ -52,12 +52,12 @@ const filteredProducts = async (req,res) => {
 
     const {id} = req.params ;
 
-    let isLoggedIn;
-    if(req.session.userid) {
-      isLoggedIn = true
-    } else {
-        isLoggedIn = false
-    }
+    // let isLoggedIn;
+    // if(req.session.userid) {
+    //   isLoggedIn = true
+    // } else {
+    //     isLoggedIn = false
+    // }
 
     // console.log(id);
 
@@ -74,9 +74,13 @@ const filteredProducts = async (req,res) => {
 
 
 
-        const categories = await Category.find({isAvailable: true});
+        // const categories = await Category.find({isAvailable: true});
 
-        res.render('allproducts' , {productList: productList , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn});
+        res.json({
+            products: productList
+        });
+
+        // res.render('allproducts' , {productList: productList , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn});
 
     }  catch(e) {
         console.log(e);
@@ -87,12 +91,12 @@ const filteredProducts = async (req,res) => {
 
 const searchedProducts = async (req,res) => {
     const {productName} = req.body ;
-    let isLoggedIn;
-    if(req.session.userid) {
-      isLoggedIn = true;
-    } else {
-        isLoggedIn = false;
-    }
+    // let isLoggedIn;
+    // if(req.session.userid) {
+    //   isLoggedIn = true;
+    // } else {
+    //     isLoggedIn = false;
+    // }
     try {
         const queryObject = {};
         if(productName) {
@@ -105,7 +109,11 @@ const searchedProducts = async (req,res) => {
 
         const categories = await Category.find({isAvailable: true});
         const products = await Product.find(queryObject);
-        res.render('allproducts' , {productList: products , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn , request: productName});
+
+        res.json({
+            products: products
+        });
+        // res.render('allproducts' , {productList: products , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn , request: productName});
         
     } catch(e) {
         console.log(e);
@@ -114,34 +122,37 @@ const searchedProducts = async (req,res) => {
 
 const productPriceFilter = async (req,res) => {
     const {min , max} = req.body ;
-    let isLoggedIn;
-    if(req.session.userid) {
-      isLoggedIn = true;
-    } else {
-        isLoggedIn = false;
-    }
+    // let isLoggedIn;
+    // if(req.session.userid) {
+    //   isLoggedIn = true;
+    // } else {
+    //     isLoggedIn = false;
+    // }
     try {
-          let categories , products ;
+          let  products ;
           // no min no max
           if(min === '' && max === '') {
-              categories = await Category.find({isAvailable: true});
-              products = await Product.find({});
+            //   categories = await Category.find({isAvailable: true});
+              products = await Product.find({isBlocked: false});
           }
           else if(min === '' && max != '') {
             console.log(max);
-             categories = await Category.find({isAvailable: true});
-             products = await Product.find({ $and: [{ price: { $gt: 0 } }, { price: { $lte: max } }] });
+            //  categories = await Category.find({isAvailable: true});
+             products = await Product.find({ isBlocked: false , $and: [{ price: { $gt: 0 } }, { price: { $lte: max } }] });
           }
           else if(min != '' && max === '') {
-            categories = await Category.find({isAvailable: true});
-            products = await Product.find({price: {$gt : min}});
+            // categories = await Category.find({isAvailable: true});
+            products = await Product.find({ isBlocked: false , price: {$gt : min}});
           } 
           else if(min != '' && max != '') {
-             categories = await Category.find({isAvailable: true});
-             products = await Product.find({ $and: [{ price: { $gt: min } }, { price: { $lte: max } }] })
+            //  categories = await Category.find({isAvailable: true});
+             products = await Product.find({ isBlocked: false , $and: [{ price: { $gt: min } }, { price: { $lte: max } }] })
           }
 
-          res.render('allproducts' , {productList: products , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn , min: min , max: max});
+          res.json({
+            products: products
+          });
+        //   res.render('allproducts' , {productList: products , categories: categories, id: req.session._userId , isLoggedIn: isLoggedIn , min: min , max: max});
 
     } catch(e) {
         console.log(e);
