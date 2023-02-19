@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 
-const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage, cancelOrders , orderTracking , getCouponDashboard , addCoupon , updateCoupon , addProductOffer , removeProductOffer , addCategoryOffer , removeCategoryOffer , dialyWiseXlsxReport , productWiseXlsxReport , refundDashboard , refundInitiation , getBannerDashboard , addBanner , activateBanner  } = require('../../controllers/adminController');
+const { getAllUsers, softDelete , searchUser, getProductForm, addProduct, getAllProducts, updateProductStatus, getProduct, getCategories, addCategory, updateCategory, getOrders, deliverOrder, updateProduct , getDashBoard , getChartData,dailySalesReportDownload , getDailySalesReportPage , productWiseReportDownload , getProductWiseReportpage, cancelOrders , orderTracking , getCouponDashboard , addCoupon , updateCoupon , addProductOffer , removeProductOffer , addCategoryOffer , removeCategoryOffer , dialyWiseXlsxReport , productWiseXlsxReport , refundDashboard , refundInitiation , getBannerDashboard , addBanner , activateBanner , deleteProductImg , viewOrder  } = require('../../controllers/adminController');
 
 const {isAdminLoggedIn, isLoggedIn} = require('../../middlewares/authmiddleware');
 const Order = require('../../models/order');
@@ -82,6 +82,9 @@ router.get('/product/:id' , isAdminLoggedIn , getProduct);
 // to update the product
 router.post('/product/:id' ,  isAdminLoggedIn, updateProduct);
 
+// for delete the product image
+router.delete('/product/image/:id' , isAdminLoggedIn , deleteProductImg )
+
 // get category list
 router.get('/categories' ,isAdminLoggedIn, getCategories);
 
@@ -97,11 +100,7 @@ router.get('/orders' ,  isAdminLoggedIn , getOrders);
 
 
 // view order
-router.get('/order/view/:id' , async (req,res) => {
-     const {id} = req.params; 
-     const order = await Order.find({_id:id}).populate('orderItems.id').populate('user');
-     res.render('admin/adminorderview' , {order: order[0]})
-})
+router.get('/order/view/:id' , isAdminLoggedIn,viewOrder )
 
 // cancell order
 router.put('/order/cancel/:id' , isAdminLoggedIn , cancelOrders);

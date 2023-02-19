@@ -527,7 +527,7 @@ const productWiseXlsxReport = async (req,res) => {
 
 const getAllUsers = async (req,res) => {
     try {
-       const user = await User.find({});
+       const user = await User.find({role: {$ne: 'admin'}});
        res.render('admin/userboard' , {userList: user});
     } catch(e) {
        console.log(e);
@@ -539,7 +539,6 @@ const softDelete = async (req,res) => {
     try {
         const user = await User.findById({ _id: id});
         const isBlocked = user.isBlocked ;
-        console.log(isBlocked);
         if(isBlocked) {
            user.isBlocked = !isBlocked;
         } else {
@@ -666,6 +665,8 @@ const getProduct = async (req,res) => {
           }
         })
 
+        // console.log(product[0]);
+
         res.render('admin/updateproduct' , 
                    {product : product[0] , category: categories , productCategory: productCategory , productCategoryId: productCategoryId});
     } catch(e) {
@@ -717,6 +718,36 @@ const updateProduct = async (req, res) => {
        console.log(e);
     }
     
+}
+
+const deleteProductImg = async (req,res) => {
+
+   const {id} = req.params ;
+   const {imageId} = req.body;
+   try {
+
+      const product = await Product.find({_id:id}).populate('categories');
+
+      const res = await cloudinary.uploader.destroy(imageId);
+
+      const index = product[0].images.findIndex((image)=> {
+         return image.id === imageId ;
+      })
+
+      product[0].images.splice(index , 1);
+
+      await product[0].save();
+
+      // res.json({redirect: '/admin/categories'});
+
+  
+    } catch(e) {
+       console.log(e);
+    }
+
+
+    res.json({redirect: `/admin/product/${id}`})
+
 }
 
 const getCategories = async (req,res) => {
@@ -777,6 +808,12 @@ const getOrders = async  (req,res) => {
         console.log(e);
     }
     
+}
+
+const viewOrder = async (req,res) => {
+  const {id} = req.params; 
+  const order = await Order.find({_id:id}).populate('orderItems.id').populate('user');
+  res.render('admin/adminorderview' , {order: order[0]})
 }
 
 const orderTracking = async (req,res) => {
@@ -1054,7 +1091,6 @@ const activateBanner = async (req,res) => {
   }
 }
 
-
 module.exports = {
     getDashBoard,
     getAllUsers ,
@@ -1069,10 +1105,12 @@ module.exports = {
     addCategory ,
     updateCategory ,
     getOrders ,
+    viewOrder,
     cancelOrders ,
     deliverOrder ,
     orderTracking ,
     updateProduct ,
+    deleteProductImg,
     getChartData ,
     dailySalesReportDownload ,
     getDailySalesReportPage,
@@ -1091,5 +1129,5 @@ module.exports = {
     refundInitiation ,
     addBanner ,
     getBannerDashboard ,
-    activateBanner
+    activateBanner 
 };

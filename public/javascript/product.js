@@ -203,7 +203,6 @@ async function filterProductByPrice(){
     }
 
 
-    
 
 }
 

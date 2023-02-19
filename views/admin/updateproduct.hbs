@@ -50,13 +50,26 @@
             </div>
             <div class="input-container" id="image">
                 <label for="imagefile">Product Image</label>
-                <input type="file" name="imagefile" id="imagefile" multiple >
+                <input type="file" name="imagefile" id="imagefile" accept=".jpg ,.png , .avif" multiple >
             </div>
             <div class="error dfull"></div>
             {{#if isExisting}}
                     <div class="errorMsg dfull">{{errMessage}}</div>
             {{/if}}
+            <div class="image-container" data-pid="{{product.id}}">
+                {{#each product.images}}
+                <div class="img">
+                   <img src="{{secured_url}}" alt="">
+                   <a>
+                        <span class="material-symbols-outlined btn-img-dlt" data-url="{{id}}">
+                            delete_forever
+                        </span>
+                   </a>
+                </div>
+                {{/each}}
+            </div>
             <input type="submit" value="UPDATE PRODUCT" class="btn-submit btn-product" id="btn-submit">
+            
         </form>
     </section>
 

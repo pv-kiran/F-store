@@ -128,7 +128,6 @@ function productValidate(isAddProduct) {
         }
     }
 
-
     if(isAddProduct) {
         if(document.querySelector('#imagefile')) {
 
@@ -331,6 +330,40 @@ async function blockProducts(e) {
 
 
 
+// deleting product image
+let productImageContainer = document.querySelector('.image-container')
+productImageContainer.addEventListener('click' , (e) => {
+    console.log(e.target);
+    if(e.target.classList.contains('btn-img-dlt')){
+        deleteProductImage(e);
+    }
+})
+
+
+async function deleteProductImage(e) {
+    console.log('HEllo');
+    const imageId = e.target.dataset.url;
+    const productId = e.target.parentNode.parentNode.parentNode.dataset.pid;
+    console.log(imageId);
+    console.log(productId); 
+    const url = `/admin/product/image/${productId}` ;
+    // console.log(url);
+    // console.log(document.getElementById('tracking_info').value);
+    const res = await fetch(url, {
+                    method: 'DELETE',
+                    credentials: "same-origin",
+                    headers: {
+                    'Content-Type' : 'application/json'
+                    } ,
+                    body: JSON.stringify({
+                        imageId: imageId
+                    })
+                });
+    const redirectPath = await res.json();
+    window.location.href = redirectPath.redirect;
+}
+
+
 // changing the status of categories
 let editCategory = document.querySelector('table');
 if(editCategory) {
@@ -409,12 +442,8 @@ async function updateTrackingInfo(e) {
                         tracking_info: e.target.value
                     })
                 });
-                
-
-    
     const redirectPath = await res.json();
     window.location.href = redirectPath.redirect;
-    
 }
 
 //cancelling order
